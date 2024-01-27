@@ -1,7 +1,15 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 
-export function catchAsync(fn: RequestHandler) {
-  return (req: Request, res: Response, next: NextFunction) => {
+type ReqBody = Record<string, unknown>;
+
+export function catchAsync<T extends ReqBody = any, P extends string = ''>(
+  fn: RequestHandler<Record<P, string>, {}, T>
+) {
+  return (
+    req: Request<Record<P, string>, {}, T>,
+    res: Response,
+    next: NextFunction
+  ) => {
     Promise.resolve(fn(req, res, next)).catch((err) => next(err));
   };
 }
