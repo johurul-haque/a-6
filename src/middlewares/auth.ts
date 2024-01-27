@@ -5,14 +5,17 @@ import jwt from 'jsonwebtoken';
 
 export const verifyToken = catchAsync((req, res, next) => {
   try {
-    const token = req.headers.authorization;
+    const bearerHeader = req.headers.authorization;
 
-    if (!token) throw new Error();
+    if (!bearerHeader || !bearerHeader.startsWith('Bearer')) throw new Error();
+
+    // Extract the token by removing the "Bearer " prefix
+    const token = bearerHeader.split(' ')[1];
 
     jwt.verify(token, env.JWT_SECRET, (err, decoded) => {
       if (err) throw err;
 
-      req.user = jwtPayload.parse(decoded);
+      req.jwtPayload = jwtPayload.parse(decoded);
 
       next();
     });

@@ -2,7 +2,7 @@ import { env } from '@/config';
 import { AppError } from '@/utils';
 import { compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { LoginPayload, User } from './user.interface';
+import { LoginPayload, TJwtPayload, User } from './user.interface';
 import { UserModel } from './user.model';
 
 export async function create(payload: User) {
@@ -27,4 +27,12 @@ export async function login(payload: LoginPayload) {
     user,
     token,
   };
+}
+
+export async function getUser(payload: TJwtPayload) {
+  const user = await UserModel.findById(payload._id);
+
+  if (!user) throw new AppError(404, 'User not found');
+
+  return user;
 }

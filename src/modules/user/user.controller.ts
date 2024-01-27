@@ -1,5 +1,6 @@
 import { catchAsync } from '@/utils';
 import { sendResponse } from '@/utils/send-response';
+import { setCookie } from '@/utils/set-cookie';
 import { LoginPayload, User } from './user.interface';
 import * as userServices from './user.service';
 
@@ -14,13 +15,21 @@ export const registerUser = catchAsync<User>(async (req, res) => {
 });
 
 export const loginUser = catchAsync<LoginPayload>(async (req, res) => {
-  const { token } = await userServices.login(req.body);
+  const { token, user } = await userServices.login(req.body);
 
-  res.cookie('token', token, {
-    httpOnly: true,
-  });
+  setCookie(res, token);
 
   return sendResponse(res, {
     message: 'Login successful',
+    data: user,
+  });
+});
+
+export const getUserData = catchAsync(async (req, res) => {
+  const data = await userServices.getUser(req.jwtPayload);
+
+  return sendResponse(res, {
+    message: 'User data retrieved successfully',
+    data,
   });
 });
