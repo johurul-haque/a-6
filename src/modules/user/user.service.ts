@@ -1,6 +1,30 @@
-import { User } from './user.interface';
+import { env } from '@/config';
+import { AppError } from '@/utils';
+import { compare } from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { LoginPayload, User } from './user.interface';
 import { UserModel } from './user.model';
 
 export async function create(payload: User) {
   return UserModel.create(payload);
+}
+
+export async function login(payload: LoginPayload) {
+  const user = await UserModel.findOne({ email: payload.email });
+
+  if (!user) throw new AppError(404, 'User not found');
+
+  const isMatched = await compare(payload.password, user.password);
+
+  if (!isMatched)
+    throw new AppError(401, 'Authentication failed. Password does not match');
+
+  const token = jwt.sign({ _id: user._id }, env.JWT_SECRET, {
+    expiresIn: '15d',
+  });
+
+  return {
+    user,
+    token,
+  };
 }

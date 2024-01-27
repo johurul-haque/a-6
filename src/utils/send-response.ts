@@ -3,7 +3,7 @@ import { Response } from 'express';
 type Options<T> = {
   status?: number;
   message: string;
-  data: T;
+  data?: T;
 };
 
 export function sendResponse<T>(
