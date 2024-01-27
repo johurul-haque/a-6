@@ -2,11 +2,11 @@ import { NextFunction, Request, RequestHandler, Response } from 'express';
 
 type ReqBody = Record<string, unknown>;
 
-export function catchAsync<T extends ReqBody = any, P extends string = ''>(
-  fn: RequestHandler<Record<P, string>, {}, T>
+export function catchAsync<T extends ReqBody = any>(
+  fn: RequestHandler<Record<string, string>, {}, T>
 ) {
   return (
-    req: Request<Record<P, string>, {}, T>,
+    req: Request<Record<string, string>, {}, T>,
     res: Response,
     next: NextFunction
   ) => {
