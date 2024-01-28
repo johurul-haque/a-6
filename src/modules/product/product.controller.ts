@@ -1,13 +1,29 @@
 import { AppError, catchAsync } from '@/utils';
 import { sendResponse } from '@/utils/send-response';
+import { Query } from './product.interface';
 import * as productServices from './product.service';
 
 export const addProduct = catchAsync(async (req, res) => {
-  const data = await productServices.add(req.body);
+  const { _id } = req.jwtPayload;
+  console.log(_id);
+
+  const data = await productServices.add(req.body, _id);
 
   sendResponse(res, {
     status: 201,
     message: 'Product added successfully',
+    data,
+  });
+});
+
+export const getProducts = catchAsync(async (req, res) => {
+  const queries = req.query as Query,
+    { _id } = req.jwtPayload;
+
+  const data = await productServices.get(queries, _id);
+
+  sendResponse(res, {
+    message: 'Product successfully retrieved',
     data,
   });
 });
@@ -29,7 +45,7 @@ export const updateProduct = catchAsync(async (req, res) => {
 export const deleteProduct = catchAsync(async (req, res) => {
   const { productId } = req.params;
 
-  const result = await productServices.deleteProduct(productId);
+  const result = await productServices.remove(productId);
 
   if (!result.deletedCount) throw new AppError(404, 'Product not found');
 

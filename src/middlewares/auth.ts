@@ -1,6 +1,6 @@
 import { env } from '@/config';
 import { jwtPayload } from '@/modules/user/user.validation';
-import { AppError, catchAsync } from '@/utils';
+import { catchAsync } from '@/utils';
 import jwt from 'jsonwebtoken';
 
 export const verifyToken = catchAsync((req, res, next) => {
@@ -20,6 +20,7 @@ export const verifyToken = catchAsync((req, res, next) => {
       next();
     });
   } catch (err) {
-    throw new AppError(401, 'Unauthorized access');
+    res.redirect(`${env.CLIENT_DOMAIN}/login`);
+    // throw new AppError(401, 'Unauthorized access');
   }
 });
