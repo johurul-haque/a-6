@@ -5,12 +5,14 @@ import { LoginPayload, User } from './user.interface';
 import * as userServices from './user.service';
 
 export const registerUser = catchAsync<User>(async (req, res) => {
-  const data = await userServices.create(req.body);
+  const { user, token } = await userServices.create(req.body);
+
+  setCookie(res, token);
 
   return sendResponse(res, {
     status: 201,
     message: 'User created successfully',
-    data,
+    data: user,
   });
 });
 

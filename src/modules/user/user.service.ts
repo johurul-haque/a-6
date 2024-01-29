@@ -6,7 +6,14 @@ import { LoginPayload, TJwtPayload, User } from './user.interface';
 import { UserModel } from './user.model';
 
 export async function create(payload: User) {
-  return UserModel.create(payload);
+  const user = await UserModel.create(payload);
+
+  const token = jwt.sign({ _id: user._id }, env.JWT_SECRET, {
+    expiresIn: '15d',
+  });
+
+  return {user, token};
+
 }
 
 export async function login(payload: LoginPayload) {
