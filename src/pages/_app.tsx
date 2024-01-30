@@ -1,3 +1,4 @@
+import { NextHead } from '@/components/next-head';
 import { store } from '@/redux/store';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
@@ -8,10 +9,14 @@ const inter = Inter({ subsets: ['latin'] });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
-      <main className={`${inter.className} container`}>
-        <Component {...pageProps} />
-      </main>
-    </Provider>
+    <>
+      <NextHead title="Dashboard" favicon="/favicon.png" />
+
+      <Provider store={store}>
+        <main className={`${inter.className}`}>
+          <Component {...pageProps} />
+        </main>
+      </Provider>
+    </>
   );
 }

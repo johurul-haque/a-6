@@ -1,5 +1,4 @@
-import { cleanEnv, str } from 'envalid';
-
-export const env = cleanEnv(process.env, {
-    SERVER_DOMAIN: str()
-})
+export const SERVER_DOMAIN =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:8080/api'
+    : 'https://api-a-5.vercel.app/api';

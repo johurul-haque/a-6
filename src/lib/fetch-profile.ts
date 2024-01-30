@@ -1,7 +1,7 @@
-import { env } from '@/config';
+import { SERVER_DOMAIN } from '@/config';
 
 export function fetchProfile(cookie: string) {
-  return fetch(`${env.SERVER_DOMAIN}/profile`, {
+  return fetch(`${SERVER_DOMAIN}/profile`, {
     headers: {
       Authorization: cookie,
     },
