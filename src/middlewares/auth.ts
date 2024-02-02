@@ -5,7 +5,8 @@ import jwt from 'jsonwebtoken';
 
 export const verifyToken = catchAsync((req, res, next) => {
   try {
-    const bearerHeader = req.headers.authorization;
+
+    const bearerHeader: string = req.cookies.token || req.headers.authorization;
 
     if (!bearerHeader || !bearerHeader.startsWith('Bearer')) throw new Error();
 
@@ -20,6 +21,6 @@ export const verifyToken = catchAsync((req, res, next) => {
       next();
     });
   } catch (err) {
-    throw new AppError(401, 'Unauthorized access');
+    throw new AppError(401, 'Unauthorized access.');
   }
 });
