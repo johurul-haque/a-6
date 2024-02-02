@@ -19,12 +19,11 @@ export async function create(payload: User) {
 export async function login(payload: LoginPayload) {
   const user = await UserModel.findOne({ email: payload.email });
 
-  if (!user) throw new AppError(404, 'User not found');
+  if (!user) throw new AppError(404, 'User is not registered.');
 
   const isMatched = await compare(payload.password, user.password);
 
-  if (!isMatched)
-    throw new AppError(401, 'Authentication failed. Password does not match');
+  if (!isMatched) throw new AppError(401, 'Password does not match.');
 
   const token = jwt.sign({ _id: user._id }, env.JWT_SECRET, {
     expiresIn: '15d',
@@ -39,7 +38,7 @@ export async function login(payload: LoginPayload) {
 export async function getUser(payload: TJwtPayload) {
   const user = await UserModel.findById(payload._id);
 
-  if (!user) throw new AppError(404, 'User not found');
+  if (!user) throw new AppError(404, 'User does not exist.');
 
   return user;
 }

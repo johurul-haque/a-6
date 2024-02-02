@@ -5,7 +5,6 @@ import * as productServices from './product.service';
 
 export const addProduct = catchAsync(async (req, res) => {
   const { _id } = req.jwtPayload;
-  console.log(_id);
 
   const data = await productServices.add(req.body, _id);
 
@@ -33,7 +32,7 @@ export const updateProduct = catchAsync(async (req, res) => {
 
   const data = await productServices.update(req.body, productId);
 
-  if (!data) throw new AppError(404, 'Product not found');
+  if (!data) throw new AppError(404, 'Product not found.');
 
   sendResponse(res, {
     status: 200,
@@ -47,7 +46,7 @@ export const deleteProduct = catchAsync(async (req, res) => {
 
   const result = await productServices.remove(productId);
 
-  if (!result.deletedCount) throw new AppError(404, 'Product not found');
+  if (!result.deletedCount) throw new AppError(404, 'Product not found.');
 
   sendResponse(res, {
     status: 200,
