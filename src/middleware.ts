@@ -12,6 +12,8 @@ export async function middleware(request: NextRequest) {
   const res = await fetchProfile(cookie?.value as string);
 
   if (res.status === 401 && path !== '/login' && path !== '/register') {
+    const result = await res.json();
+    console.log(result);
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
