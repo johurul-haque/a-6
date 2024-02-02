@@ -1,17 +1,27 @@
 import { SERVER_DOMAIN } from '@/config';
 import { loginFormSchema, registerFormSchema } from '@/schema/form-schema';
+import { NextRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 
-export async function handleRegister(
-  values: registerFormSchema,
-  setIsLoading: Dispatch<SetStateAction<boolean>>
-) {
+type HandleRegister = {
+  values: registerFormSchema;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  setIsErr: Dispatch<SetStateAction<boolean>>;
+  router: NextRouter;
+};
+
+export async function handleRegister({
+  values,
+  setIsLoading,
+  setIsErr,
+  router,
+}: HandleRegister) {
   setIsLoading(true);
 
   const { confirm_password, ...rest } = values;
 
   try {
-    await fetch(`${SERVER_DOMAIN}/register`, {
+    const res = await fetch(`${SERVER_DOMAIN}/register`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -19,8 +29,14 @@ export async function handleRegister(
       },
       body: JSON.stringify(rest),
     });
+
+    if (res.status === 201) {
+      router.reload();
+    } else {
+      setIsErr(true);
+    }
   } catch (err) {
-    console.log(err);
+    setIsErr(true);
   }
 }
 

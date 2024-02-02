@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -15,17 +15,26 @@ import {
 } from '@/components/ui/form';
 import { handleRegister } from '@/handler/handle-submit';
 import { registerFormSchema } from '@/schema/form-schema';
+import { useRouter } from 'next/router';
 import { Eye } from '../icons';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 
 const passwordFields = ['password', 'confirm_password'] as const;
 
-type RegisterFormProps = React.HTMLAttributes<HTMLDivElement>;
+type RegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
+  setIsErr: React.Dispatch<SetStateAction<boolean>>;
+};
 
-export function RegisterForm({ className, ...props }: RegisterFormProps) {
+export function RegisterForm({
+  className,
+  setIsErr,
+  ...props
+}: RegisterFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const router = useRouter();
 
   const form = useForm<registerFormSchema>({
     resolver: zodResolver(registerFormSchema),
@@ -36,7 +45,7 @@ export function RegisterForm({ className, ...props }: RegisterFormProps) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit((values) =>
-            handleRegister(values, setIsLoading)
+            handleRegister({ values, setIsLoading, router, setIsErr })
           )}
           className="grid gap-3"
         >

@@ -3,10 +3,14 @@ import Link from 'next/link';
 import { RegisterForm } from '@/components/layouts/register-form';
 import { Logo } from '@/components/logo';
 import { NextHead } from '@/components/next-head';
+import { AlertDestructive } from '@/components/ui/alert';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
 
 export default function Register() {
+  const [isErr, setIsErr] = useState(false);
+
   return (
     <>
       <NextHead title="Register" />
@@ -42,7 +46,8 @@ export default function Register() {
               </p>
             </div>
 
-            <RegisterForm />
+            {isErr && <AlertDestructive />}
+            <RegisterForm setIsErr={setIsErr} />
           </div>
         </div>
       </div>
