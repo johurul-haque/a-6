@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
 export default function Register() {
-  const [isErr, setIsErr] = useState(false);
+  const [error, setError] = useState('');
 
   return (
     <>
@@ -46,8 +46,8 @@ export default function Register() {
               </p>
             </div>
 
-            {isErr && <AlertDestructive />}
-            <RegisterForm setIsErr={setIsErr} />
+            {error && <AlertDestructive message={error} />}
+            <RegisterForm setError={setError} />
           </div>
         </div>
       </div>

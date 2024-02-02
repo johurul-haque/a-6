@@ -1,21 +1,12 @@
 import { SERVER_DOMAIN } from '@/config';
-import { loginFormSchema, registerFormSchema } from '@/schema/form-schema';
-import { NextRouter } from 'next/router';
-import { Dispatch, SetStateAction } from 'react';
-
-type HandleRegister = {
-  values: registerFormSchema;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
-  setIsErr: Dispatch<SetStateAction<boolean>>;
-  router: NextRouter;
-};
+import { HandleLoginProps, HandleRegisterProps } from '@/types/handle-submit';
 
 export async function handleRegister({
   values,
   setIsLoading,
-  setIsErr,
+  setError,
   router,
-}: HandleRegister) {
+}: HandleRegisterProps) {
   setIsLoading(true);
 
   const { confirm_password, ...rest } = values;
@@ -33,16 +24,45 @@ export async function handleRegister({
     if (res.status === 201) {
       router.reload();
     } else {
-      setIsErr(true);
+      const result = await res.json();
+
+      setError(result.message);
+      setIsLoading(false);
     }
-  } catch (err) {
-    setIsErr(true);
+  } catch (err: any) {
+    setError(err.message);
+    setIsLoading(false);
   }
 }
 
-export async function handleLogin(
-  values: loginFormSchema,
-  setIsLoading: Dispatch<SetStateAction<boolean>>
-) {
+export async function handleLogin({
+  values,
+  setIsLoading,
+  router,
+  setError,
+}: HandleLoginProps) {
   setIsLoading(true);
+
+  try {
+    const res = await fetch(`${SERVER_DOMAIN}/login`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (res.status === 200) {
+      router.reload();
+    } else {
+      const result = await res.json();
+
+      setError(result.message);
+      setIsLoading(false);
+    }
+  } catch (err: any) {
+    setError(err.message);
+    setIsLoading(false);
+  }
 }

@@ -23,12 +23,12 @@ import { Input } from '../ui/input';
 const passwordFields = ['password', 'confirm_password'] as const;
 
 type RegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  setIsErr: React.Dispatch<SetStateAction<boolean>>;
+  setError: React.Dispatch<SetStateAction<string>>;
 };
 
 export function RegisterForm({
   className,
-  setIsErr,
+  setError,
   ...props
 }: RegisterFormProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +45,7 @@ export function RegisterForm({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit((values) =>
-            handleRegister({ values, setIsLoading, router, setIsErr })
+            handleRegister({ values, setIsLoading, router, setError })
           )}
           className="grid gap-3"
         >

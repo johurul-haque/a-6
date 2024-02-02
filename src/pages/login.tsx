@@ -3,10 +3,14 @@ import Link from 'next/link';
 import { LoginForm } from '@/components/layouts/login-form';
 import { Logo } from '@/components/logo';
 import { NextHead } from '@/components/next-head';
+import { AlertDestructive } from '@/components/ui/alert';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
 
 export default function AuthenticationPage() {
+  const [error, setError] = useState('');
+
   return (
     <>
       <NextHead title="Login" />
@@ -42,7 +46,8 @@ export default function AuthenticationPage() {
                 Enter your credentials to login
               </p>
             </div>
-            <LoginForm />
+            {error && <AlertDestructive message={error} />}
+            <LoginForm setError={setError} />
           </div>
         </div>
       </div>

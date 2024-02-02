@@ -57,13 +57,14 @@ const AlertDescription = React.forwardRef<
 ));
 AlertDescription.displayName = 'AlertDescription';
 
-export function AlertDestructive() {
+export function AlertDestructive({ message }: { message: string }) {
   return (
     <Alert variant="destructive">
       <ExclamationTriangleIcon className="h-4 w-4" />
       <AlertTitle>Oops!</AlertTitle>
       <AlertDescription>
-        Something went wrong with your provided credentials. Please try again.
+        {message ||
+          'Something went wrong with your provided credentials. Please try again.'}
       </AlertDescription>
     </Alert>
   );

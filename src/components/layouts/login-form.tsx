@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { SetStateAction, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -15,15 +15,20 @@ import {
 } from '@/components/ui/form';
 import { handleLogin } from '@/handler/handle-submit';
 import { loginFormSchema } from '@/schema/form-schema';
+import { useRouter } from 'next/router';
 import { Eye } from '../icons';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 
-type LoginFormProps = React.HTMLAttributes<HTMLDivElement>;
+type LoginFormProps = React.HTMLAttributes<HTMLDivElement> & {
+  setError: React.Dispatch<SetStateAction<string>>;
+};
 
-export function LoginForm({ className, ...props }: LoginFormProps) {
+export function LoginForm({ className, setError, ...props }: LoginFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const router = useRouter();
 
   const form = useForm<loginFormSchema>({
     resolver: zodResolver(loginFormSchema),
@@ -34,7 +39,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit((values) =>
-            handleLogin(values, setIsLoading)
+            handleLogin({ values, setIsLoading, setError, router })
           )}
           className="grid gap-3"
         >
