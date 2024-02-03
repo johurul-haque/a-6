@@ -23,7 +23,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <Header className="container pt-6" />
+      <Header />
 
       <main className="container py-10">
         <DataTable data={tasks} columns={columns} />

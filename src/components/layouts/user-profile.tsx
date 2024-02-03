@@ -5,8 +5,10 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { LogOut, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 
 type UserProfileProps = {
@@ -20,12 +22,16 @@ export function UserProfile({ user }: UserProfileProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <span className="relative flex shrink-0 overflow-hidden rounded-full h-9 w-9">
+        <Button
+          variant="ghost"
+          className="relative size-8 rounded-full focus-visible:ring-0 group"
+        >
+          <span className="relative flex shrink-0 overflow-hidden rounded-full size-9 group-focus-visible:ring-2 group-focus-visible:ring-slate-300">
             <Image
-              className="aspect-square h-full w-full"
-              alt={`Picture of ${user.name}`}
-              src="/gradient.png"
+              alt={`Picture for ${user.name}`}
+              role="presentation"
+              fill
+              src="/gradient.svg"
             />
           </span>
         </Button>
@@ -41,7 +47,20 @@ export function UserProfile({ user }: UserProfileProps) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <button>Log out</button>
+          <button className="w-full">
+            Log out
+            <DropdownMenuShortcut>
+              <LogOut className="size-4 stroke-current" />
+            </DropdownMenuShortcut>
+          </button>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <button className="w-full text-rose-600 focus:bg-rose-100 focus:text-rose-600">
+            Delete account
+            <DropdownMenuShortcut>
+              <Trash2 className="size-4 stroke-current" />
+            </DropdownMenuShortcut>
+          </button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

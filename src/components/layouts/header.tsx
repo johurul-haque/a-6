@@ -1,12 +1,19 @@
 import { Logo } from '../logo';
+import { UserProfile } from './user-profile';
 
-export function Header({ ...props }) {
+export function Header() {
   return (
-    <header className={props.className} {...props}>
+    <header className="container pt-6 flex items-center justify-between">
       <Logo
         className={{
           wrapper: 'text-lg font-semibold',
           logo: 'md:size-7',
+        }}
+      />
+      <UserProfile
+        user={{
+          name: 'Johurul',
+          email: 'johurul@nno.org',
         }}
       />
     </header>
