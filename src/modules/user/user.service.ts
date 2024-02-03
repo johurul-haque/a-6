@@ -42,3 +42,9 @@ export async function getUser(payload: TJwtPayload) {
 
   return user;
 }
+
+export async function logout(payload: TJwtPayload) {
+  const user = await UserModel.findByIdAndDelete(payload._id);
+
+  if (!user) throw new AppError(404, 'User does not exist.');
+}

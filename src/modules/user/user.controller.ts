@@ -35,3 +35,13 @@ export const getUserData = catchAsync(async (req, res) => {
     data,
   });
 });
+
+export const logoutUser = catchAsync(async (req, res) => {
+  await userServices.logout(req.jwtPayload);
+
+  res.clearCookie('token');
+
+  return sendResponse(res, {
+    message: 'Logout successful.',
+  });
+});

@@ -11,4 +11,6 @@ router.post('/login', validateRequest(loginPayload), loginUser);
 
 router.get('/profile', verifyToken, getUserData);
 
+router.get('/logout', verifyToken, loginUser);
+
 export const UserRoutes = router;
