@@ -37,11 +37,19 @@ export const getUserData = catchAsync(async (req, res) => {
 });
 
 export const logoutUser = catchAsync(async (req, res) => {
+  res.clearCookie('token');
+
+  return sendResponse(res, {
+    message: 'Logout successful.',
+  });
+});
+
+export const deleteUser = catchAsync(async (req, res) => {
   await userServices.logout(req.jwtPayload);
 
   res.clearCookie('token');
 
   return sendResponse(res, {
-    message: 'Logout successful.',
+    message: 'User deleted successfully.',
   });
 });
