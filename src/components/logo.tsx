@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { MacOptions } from './icons';
+import { MacOption } from './icons';
 
 type LogoProps = {
   className?: {
@@ -16,7 +16,7 @@ export function Logo({ className }: LogoProps) {
         className?.wrapper
       )}
     >
-      <MacOptions className={cn('mr-2 size-6', className?.logo)} />
+      <MacOption className={cn('mr-2 size-6', className?.logo)} />
       A-5
     </div>
   );

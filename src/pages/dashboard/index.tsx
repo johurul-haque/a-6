@@ -1,3 +1,7 @@
+import { Header } from '@/components/layouts/header';
+import { columns } from '@/components/layouts/table/columns';
+import { DataTable } from '@/components/layouts/table/data-table';
+import tasks from '@/components/layouts/table/data/tasks.json';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import {
   fetchProducts,
@@ -19,9 +23,11 @@ export default function Dashboard() {
 
   return (
     <>
-      {products.map((product) => (
-        <h2 key={product._id}>{product.name}</h2>
-      ))}
+      <Header className="container pt-6" />
+
+      <main className="container py-10">
+        <DataTable data={tasks} columns={columns} />
+      </main>
     </>
   );
 }

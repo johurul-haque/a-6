@@ -15,7 +15,7 @@ export default function AuthenticationPage() {
     <>
       <NextHead title="Login" />
 
-      <div className="container relative h-[100svh] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+      <main className="container relative h-[100svh] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <Link
           href="/register"
           className={cn(
@@ -50,7 +50,7 @@ export default function AuthenticationPage() {
             <LoginForm setError={setError} />
           </div>
         </div>
-      </div>
+      </main>
     </>
   );
 }

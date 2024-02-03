@@ -2,7 +2,7 @@ import { SVGAttributes } from 'react';
 
 type SvgProps = SVGAttributes<HTMLOrSVGElement>;
 
-export function MacOptions({ ...props }: SvgProps) {
+export function MacOption({ ...props }: SvgProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -13,9 +13,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <NextHead title="Dashboard" favicon="/favicon.png" />
 
       <Provider store={store}>
-        <main className={`${inter.className}`}>
+        <div className={`${inter.className}`}>
           <Component {...pageProps} />
-        </main>
+        </div>
       </Provider>
     </>
   );
