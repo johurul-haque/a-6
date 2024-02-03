@@ -8,14 +8,12 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { User } from '@/types/user';
 import { LogOut, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 
 type UserProfileProps = {
-  user: {
-    name: string;
-    email: string;
-  };
+  user: User;
 };
 
 export function UserProfile({ user }: UserProfileProps) {
