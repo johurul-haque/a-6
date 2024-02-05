@@ -7,10 +7,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 const initialState = {
   status: 'idle',
   error: null,
-  data: {},
+  data: {
+    name: 'Loading...',
+    email: 'loading...',
+  },
 } as InitialState<User>;
 
-export const fetchProfile = createAsyncThunk(
+export const fetchUserProfile = createAsyncThunk(
   'profile/fetchProfile',
   async () => {
     const res = await fetch(`${SERVER_DOMAIN}/profile`, {
@@ -27,14 +30,14 @@ const profileSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchProfile.pending, (state) => {
+      .addCase(fetchUserProfile.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchProfile.fulfilled, (state, action) => {
+      .addCase(fetchUserProfile.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.data = action.payload.data;
       })
-      .addCase(fetchProfile.rejected, (state, action) => {
+      .addCase(fetchUserProfile.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });

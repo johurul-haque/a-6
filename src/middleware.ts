@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { fetchProfile } from './lib/fetch-profile';
+import { SERVER_DOMAIN } from './config';
 
 export async function middleware(request: NextRequest) {
   const cookie = request.cookies.get('token');
@@ -9,7 +9,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  const res = await fetchProfile(cookie?.value as string);
+  const res = await fetch(`${SERVER_DOMAIN}/profile`, {
+    headers: {
+      Authorization: cookie?.value as string,
+    },
+  });
 
   if (res.status === 401 && path !== '/login' && path !== '/register') {
     const result = await res.json();

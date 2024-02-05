@@ -8,7 +8,7 @@ import {
   selectAllProducts,
 } from '@/redux/features/products/products-slice';
 import {
-  fetchProfile,
+  fetchUserProfile,
   selectProfile,
 } from '@/redux/features/user-profile/profile-slice';
 import { useEffect } from 'react';
@@ -26,7 +26,7 @@ export default function Dashboard() {
       dispatch(fetchProducts());
     }
     if (profileStateStatus === 'idle') {
-      dispatch(fetchProfile());
+      dispatch(fetchUserProfile());
     }
   }, [productsStateStatus, profileStateStatus, dispatch]);
 

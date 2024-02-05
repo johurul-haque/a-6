@@ -52,13 +52,11 @@ export function UserProfile({ user }: UserProfileProps) {
             </DropdownMenuShortcut>
           </button>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <button className="w-full text-rose-600 focus:bg-rose-100 focus:text-rose-600">
-            Delete account
-            <DropdownMenuShortcut>
-              <Trash2 className="size-4 stroke-current" />
-            </DropdownMenuShortcut>
-          </button>
+        <DropdownMenuItem className="w-full text-rose-600 focus:bg-rose-100 focus:text-rose-600">
+          Delete account
+          <DropdownMenuShortcut>
+            <Trash2 className="size-4 stroke-current" />
+          </DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

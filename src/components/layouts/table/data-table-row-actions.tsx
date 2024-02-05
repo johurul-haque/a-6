@@ -1,17 +1,19 @@
-import { DotsHorizontalIcon } from '@radix-ui/react-icons';
-import { Row } from '@tanstack/react-table';
-
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-
 import { handleRowDelete } from '@/handler/handle-row-delete';
+import { DotsHorizontalIcon } from '@radix-ui/react-icons';
+import { Row } from '@tanstack/react-table';
+import { useClickAway } from '@uidotdev/usehooks';
+import { Trash2 } from 'lucide-react';
+import { useState } from 'react';
 import { taskSchema } from './data/schema';
+import { EditTableRow } from './edit-table-row';
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -21,26 +23,34 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const task = taskSchema.parse(row.original);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const ref = useClickAway<HTMLDivElement>(() => setIsOpen(false));
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
           className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+          onClick={() => setIsOpen(true)}
         >
           <DotsHorizontalIcon className="h-4 w-4" />
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Make a copy</DropdownMenuItem>
-        <DropdownMenuItem>Favorite</DropdownMenuItem>
-
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <button onClick={() => handleRowDelete()}>Delete</button>
+      <DropdownMenuContent ref={ref} align="end" className="w-[160px]">
+        <DropdownMenuItem>
+          <EditTableRow />
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="w-full text-rose-600 hover:bg-rose-100 hover:text-rose-600 focus:bg-rose-100 focus:text-rose-600"
+          onClick={() => handleRowDelete()}
+        >
+          Delete
+          <DropdownMenuShortcut>
+            <Trash2 className="size-4 stroke-current" />
+          </DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -1,11 +1,15 @@
-'use client';
-
-import { Cross2Icon } from '@radix-ui/react-icons';
-import { Table } from '@tanstack/react-table';
-
-import { DataTableViewOptions } from './data-table-view-options';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Cross2Icon } from '@radix-ui/react-icons';
+import { Table } from '@tanstack/react-table';
+import { DataTableViewOptions } from './data-table-view-options';
 
 import { DataTableFacetedFilter } from './data-table-faceted-filter';
 import { priorities, statuses } from './data/data';
@@ -19,27 +23,43 @@ export function DataTableToolbar<TData>({
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
+  const columns = {
+    title: table.getColumn('title'),
+    status: table.getColumn('status'),
+    priority: table.getColumn('priority'),
+  };
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Filter tasks..."
-          value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
+          placeholder="Search products..."
           onChange={(event) =>
-            table.getColumn('title')?.setFilterValue(event.target.value)
+            columns.title?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {table.getColumn('status') && (
+        <Select onValueChange={(value) => console.log(value)}>
+          <SelectTrigger className="w-28 h-8 border-dashed font-medium">
+            <SelectValue placeholder="Search by" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="light">Light</SelectItem>
+            <SelectItem value="dark">Dark</SelectItem>
+            <SelectItem value="system">System</SelectItem>
+          </SelectContent>
+        </Select>
+
+        {columns.status && (
           <DataTableFacetedFilter
-            column={table.getColumn('status')}
+            column={columns.status}
             title="Status"
             options={statuses}
           />
         )}
-        {table.getColumn('priority') && (
+        {columns.priority && (
           <DataTableFacetedFilter
-            column={table.getColumn('priority')}
+            column={columns.priority}
             title="Priority"
             options={priorities}
           />
