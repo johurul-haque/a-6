@@ -4,6 +4,7 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 import { Table } from '@tanstack/react-table';
 import { DataTableViewOptions } from './data-table-view-options';
 
+
 import {
   Select,
   SelectContent,
@@ -12,10 +13,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useState } from 'react';
-import { DataTableFacetedFilter } from './data-table-faceted-filter';
-import { frameMaterials } from './data/data';
+import { FilterTable } from './data-table-filter';
 
-interface DataTableToolbarProps<TData> {
+
+export interface DataTableToolbarProps<TData> {
   table: Table<TData>;
 }
 
@@ -57,13 +58,7 @@ export function DataTableToolbar<TData>({
           </SelectContent>
         </Select>
 
-        {table.getColumn('frame_material') && (
-          <DataTableFacetedFilter
-            column={table.getColumn('frame_material')}
-            title="Frame material"
-            options={frameMaterials}
-          />
-        )}
+       <FilterTable table={table} />
 
         {isFiltered && (
           <Button
