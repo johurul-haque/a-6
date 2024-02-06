@@ -1,7 +1,6 @@
 import { Header } from '@/components/layouts/header';
 import { columns } from '@/components/layouts/table/columns';
 import { DataTable } from '@/components/layouts/table/data-table';
-import tasks from '@/components/layouts/table/data/tasks.json';
 import { useProductsQuery } from '@/redux/api';
 import { useState } from 'react';
 
@@ -16,7 +15,7 @@ export default function Dashboard() {
       <Header />
 
       <main className="container py-10">
-        {isSuccess && <DataTable data={tasks} columns={columns} />}
+        {isSuccess && <DataTable data={products} columns={columns} />}
       </main>
     </>
   );

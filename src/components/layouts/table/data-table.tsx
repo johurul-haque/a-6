@@ -76,7 +76,7 @@ export function DataTable<TData, TValue>({
             ))}
           </T.TableHeader>
           <T.TableBody>
-            {table.getRowModel().rows?.length ? (
+            {table?.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <T.TableRow
                   key={row.id}

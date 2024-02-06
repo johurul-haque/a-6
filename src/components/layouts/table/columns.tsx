@@ -1,93 +1,132 @@
 import { ColumnDef } from '@tanstack/react-table';
 
+import { Product } from '@/types/product';
+import { SellProduct } from '../sell-product';
 import { DataTableColumnHeader } from './data-table-column-header';
 import { DataTableRowActions } from './data-table-row-actions';
-import { labels, priorities, statuses } from './data/data';
-import { Task } from './data/schema';
+import { frameMaterials } from './data/data';
 
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<Product>[] = [
   {
-    accessorKey: 'id',
+    accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Task" />
+      <DataTableColumnHeader column={column} title="Name" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue('id')}</div>,
+    cell: ({ row }) => (
+      <div className="flex space-x-2">
+        <span className="max-w-[250px] truncate font-medium">
+          {row.getValue('name')}
+        </span>
+      </div>
+    ),
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: 'title',
+    accessorKey: 'price',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Title" />
+      <DataTableColumnHeader column={column} title="Price" />
     ),
     cell: ({ row }) => {
-      const label = labels.find((label) => label.value === row.original.label);
-
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
-            {row.getValue('title')}
-          </span>
-        </div>
-      );
+      return <>{'$ ' + row.getValue('price')}</>;
+    },
+    filterFn: (row, id, value) => {
+      return Number(row.getValue(id)) >= Number(value);
     },
   },
   {
-    accessorKey: 'status',
+    accessorKey: 'quantity',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
+      <DataTableColumnHeader column={column} title="Quantity" />
     ),
     cell: ({ row }) => {
-      const status = statuses.find(
-        (status) => status.value === row.getValue('status')
+      return <>{row.getValue('quantity')}</>;
+    },
+    filterFn: (row, id, value) => {
+      return Number(row.getValue(id)) >= Number(value);
+    },
+  },
+  {
+    accessorKey: 'brand',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Brand" />
+    ),
+    cell: ({ row }) => {
+      return <>{row.getValue('brand')}</>;
+    },
+  },
+  {
+    accessorKey: 'frame.material',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Frame Material" />
+    ),
+    cell: (row) => {
+      const frameMaterial = frameMaterials.find(
+        (material) => material === row.getValue()
       );
 
-      if (!status) {
+      if (!frameMaterial) {
         return null;
       }
 
-      return (
-        <div className="flex w-[100px] items-center">
-          {status.icon && (
-            <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-          )}
-          <span>{status.label}</span>
-        </div>
-      );
+      return <>{row.getValue()}</>;
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
     },
   },
   {
-    accessorKey: 'priority',
+    accessorKey: 'frame.shape',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Priority" />
+      <DataTableColumnHeader column={column} title="Frame Shape" />
     ),
-    cell: ({ row }) => {
-      const priority = priorities.find(
-        (priority) => priority.value === row.getValue('priority')
-      );
-
-      if (!priority) {
-        return null;
-      }
-
-      return (
-        <div className="flex items-center">
-          {priority.icon && (
-            <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-          )}
-          <span>{priority.label}</span>
-        </div>
-      );
+    cell: (row) => {
+      return <>{row.getValue()}</>;
     },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
+  },
+  {
+    accessorKey: 'lens_type',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Lens Type" />
+    ),
+    cell: (row) => {
+      return <>{row.getValue()}</>;
+    },
+  },
+  {
+    accessorKey: 'gender',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Gender" />
+    ),
+    cell: (row) => {
+      return <>{row.getValue()}</>;
+    },
+  },
+  {
+    accessorKey: 'color',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Color" />
+    ),
+    cell: (row) => {
+      return <>{row.getValue()}</>;
     },
   },
   {
     id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center"
+        column={column}
+        title="Actions"
+      />
+    ),
+    cell: ({ row }) => (
+      <div className="flex justify-center items-center gap-3">
+        <SellProduct />
+        <DataTableRowActions row={row} />
+      </div>
+    ),
+    enableSorting: false,
+    enableHiding: false,
   },
 ];

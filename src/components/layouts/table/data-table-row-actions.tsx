@@ -12,7 +12,6 @@ import { Row } from '@tanstack/react-table';
 import { useClickAway } from '@uidotdev/usehooks';
 import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { taskSchema } from './data/schema';
 import { EditTableRow } from './edit-table-row';
 
 interface DataTableRowActionsProps<TData> {
@@ -22,7 +21,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const task = taskSchema.parse(row.original);
+  const task = row.original;
   const [isOpen, setIsOpen] = useState(false);
 
   const ref = useClickAway<HTMLDivElement>(() => setIsOpen(false));

@@ -1,5 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Cross2Icon } from '@radix-ui/react-icons';
+import { Table } from '@tanstack/react-table';
+import { DataTableViewOptions } from './data-table-view-options';
+
 import {
   Select,
   SelectContent,
@@ -7,12 +11,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Cross2Icon } from '@radix-ui/react-icons';
-import { Table } from '@tanstack/react-table';
-import { DataTableViewOptions } from './data-table-view-options';
-
+import { useState } from 'react';
 import { DataTableFacetedFilter } from './data-table-faceted-filter';
-import { priorities, statuses } from './data/data';
+import { frameMaterials } from './data/data';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -23,48 +24,47 @@ export function DataTableToolbar<TData>({
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
-  const columns = {
-    title: table.getColumn('title'),
-    status: table.getColumn('status'),
-    priority: table.getColumn('priority'),
-  };
+  const [columnId, setColumnId] = useState('name');
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Search products..."
+          placeholder={`Search products by ${columnId}...`}
           onChange={(event) =>
-            columns.title?.setFilterValue(event.target.value)
+            table.getColumn(columnId)?.setFilterValue(event.target.value)
           }
-          className="h-8 w-[150px] lg:w-[250px]"
+          className="h-8 w-[150px] lg:w-[280px]"
         />
-        <Select onValueChange={(value) => console.log(value)}>
-          <SelectTrigger className="w-28 h-8 border-dashed font-medium">
+
+        <Select onValueChange={(value) => setColumnId(value)}>
+          <SelectTrigger className="w-32 h-8 border-dashed font-medium">
             <SelectValue placeholder="Search by" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="light">Light</SelectItem>
-            <SelectItem value="dark">Dark</SelectItem>
-            <SelectItem value="system">System</SelectItem>
+            {table
+              .getVisibleFlatColumns()
+              .filter((column) => typeof column.accessorFn !== 'undefined')
+              .map((column) => (
+                <SelectItem
+                  key={column.id}
+                  value={column.id}
+                  className="capitalize"
+                >
+                  {column.id.split('_').join(' ')}
+                </SelectItem>
+              ))}
           </SelectContent>
         </Select>
 
-        {columns.status && (
+        {table.getColumn('frame_material') && (
           <DataTableFacetedFilter
-            column={columns.status}
-            title="Status"
-            options={statuses}
+            column={table.getColumn('frame_material')}
+            title="Frame material"
+            options={frameMaterials}
           />
         )}
-        
-        {columns.priority && (
-          <DataTableFacetedFilter
-            column={columns.priority}
-            title="Priority"
-            options={priorities}
-          />
-        )}
+
         {isFiltered && (
           <Button
             variant="ghost"
