@@ -2,40 +2,17 @@ import { Header } from '@/components/layouts/header';
 import { columns } from '@/components/layouts/table/columns';
 import { DataTable } from '@/components/layouts/table/data-table';
 import tasks from '@/components/layouts/table/data/tasks.json';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import {
-  fetchProducts,
-  selectAllProducts,
-} from '@/redux/features/products/products-slice';
-import {
-  fetchUserProfile,
-  selectProfile,
-} from '@/redux/features/user-profile/profile-slice';
-import { useEffect } from 'react';
+import { useProductsQuery } from '@/redux/api';
 
 export default function Dashboard() {
-  const dispatch = useAppDispatch();
-  const products = useAppSelector(selectAllProducts);
-  const profile = useAppSelector(selectProfile);
-
-  const productsStateStatus = useAppSelector((state) => state.products.status);
-  const profileStateStatus = useAppSelector((state) => state.profile.status);
-
-  useEffect(() => {
-    if (productsStateStatus === 'idle') {
-      dispatch(fetchProducts());
-    }
-    if (profileStateStatus === 'idle') {
-      dispatch(fetchUserProfile());
-    }
-  }, [productsStateStatus, profileStateStatus, dispatch]);
+  const { data: products } = useProductsQuery(undefined);
 
   return (
     <>
-      <Header user={profile} />
+      <Header />
 
       <main className="container py-10">
-        <DataTable data={tasks} columns={columns} />
+        {products?.data.length && <DataTable data={tasks} columns={columns} />}
       </main>
     </>
   );

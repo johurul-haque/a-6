@@ -8,15 +8,13 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { User } from '@/types/user';
+import { useProfileQuery } from '@/redux/api';
 import { LogOut, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 
-type UserProfileProps = {
-  user: User;
-};
+export function UserProfile() {
+  const { data: user } = useProfileQuery(undefined);
 
-export function UserProfile({ user }: UserProfileProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -26,7 +24,7 @@ export function UserProfile({ user }: UserProfileProps) {
         >
           <span className="relative flex shrink-0 overflow-hidden rounded-full size-9 group-focus-visible:ring-2 group-focus-visible:ring-slate-300">
             <Image
-              alt={`Picture for ${user.name}`}
+              alt={`Picture for ${user?.data.name}`}
               role="presentation"
               fill
               src="/gradient.svg"
@@ -37,9 +35,11 @@ export function UserProfile({ user }: UserProfileProps) {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{user.name}</p>
+            <p className="text-sm font-medium leading-none">
+              {user?.data?.name || 'Loading...'}
+            </p>
             <p className="text-xs leading-none text-muted-foreground">
-              {user.email}
+              {user?.data?.email}
             </p>
           </div>
         </DropdownMenuLabel>

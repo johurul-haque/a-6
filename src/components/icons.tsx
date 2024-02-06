@@ -51,3 +51,7 @@ export function ExclamationTriangleIcon({ ...props }: SvgProps) {
     </svg>
   );
 }
+
+export const hello = () => {
+  return <div></div>;
+};

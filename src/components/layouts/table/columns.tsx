@@ -7,11 +7,6 @@ import { Task } from './data/schema';
 
 export const columns: ColumnDef<Task>[] = [
   {
-    id: 'select',
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
     accessorKey: 'id',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Task" />

@@ -1,12 +1,7 @@
-import { User } from '@/types/user';
 import { Logo } from '../logo';
 import { UserProfile } from './user-profile';
 
-type HeaderProps = {
-  user: User;
-};
-
-export function Header({ user }: HeaderProps) {
+export function Header() {
   return (
     <header className="container pt-6 flex items-center justify-between">
       <Logo
@@ -15,7 +10,7 @@ export function Header({ user }: HeaderProps) {
           logo: 'md:size-7',
         }}
       />
-      <UserProfile user={user} />
+      <UserProfile />
     </header>
   );
 }

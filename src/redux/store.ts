@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import productReducer from './features/products/products-slice';
-import profileReducer from './features/user-profile/profile-slice';
+import { baseApi } from './api';
 
 export const store = configureStore({
   reducer: {
-    products: productReducer,
-    profile: profileReducer,
+    [baseApi.reducerPath]: baseApi.reducer,
   },
+  middleware: (defaultMiddleware) =>
+    defaultMiddleware().concat(baseApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
