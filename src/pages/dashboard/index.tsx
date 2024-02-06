@@ -3,16 +3,20 @@ import { columns } from '@/components/layouts/table/columns';
 import { DataTable } from '@/components/layouts/table/data-table';
 import tasks from '@/components/layouts/table/data/tasks.json';
 import { useProductsQuery } from '@/redux/api';
+import { useState } from 'react';
+
+type ParamsType = Record<string, string> | undefined;
 
 export default function Dashboard() {
-  const { data: products } = useProductsQuery(undefined);
+  const [params, setParams] = useState<ParamsType>(undefined);
+  const { data: products, isSuccess } = useProductsQuery(params);
 
   return (
     <>
       <Header />
 
       <main className="container py-10">
-        {products?.data.length && <DataTable data={tasks} columns={columns} />}
+        {isSuccess && <DataTable data={tasks} columns={columns} />}
       </main>
     </>
   );

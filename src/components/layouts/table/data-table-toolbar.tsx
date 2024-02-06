@@ -57,6 +57,7 @@ export function DataTableToolbar<TData>({
             options={statuses}
           />
         )}
+        
         {columns.priority && (
           <DataTableFacetedFilter
             column={columns.priority}

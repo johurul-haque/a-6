@@ -24,7 +24,7 @@ export function UserProfile() {
         >
           <span className="relative flex shrink-0 overflow-hidden rounded-full size-9 group-focus-visible:ring-2 group-focus-visible:ring-slate-300">
             <Image
-              alt={`Picture for ${user?.data.name}`}
+              alt={`Picture for ${user?.name}`}
               role="presentation"
               fill
               src="/gradient.svg"
@@ -36,10 +36,10 @@ export function UserProfile() {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              {user?.data?.name || 'Loading...'}
+              {user?.name || 'Loading...'}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
-              {user?.data?.email}
+              {user?.email}
             </p>
           </div>
         </DropdownMenuLabel>
