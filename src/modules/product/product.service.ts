@@ -8,7 +8,7 @@ export function add(payload: Product, userId: Types.ObjectId) {
 }
 
 export function get(query: Query, userId: Types.ObjectId) {
-  const { limit, skip, pipelines } = queryBuilder(query);
+  const { pipelines } = queryBuilder(query);
 
   return ProductModel.aggregate([
     {
@@ -17,8 +17,6 @@ export function get(query: Query, userId: Types.ObjectId) {
       },
     },
     ...pipelines,
-    { $skip: skip },
-    { $limit: limit },
   ]).project({ __v: 0, userId: 0 });
 }
 
