@@ -31,7 +31,7 @@ export function FilterTable<TData>({ table }: DataTableToolbarProps<TData>) {
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0" align="center" sideOffset={6}>
         <Command>
-          <CommandInput placeholder={'Search Filterable'} />
+          <CommandInput placeholder={'Filter by'} />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
@@ -43,12 +43,14 @@ export function FilterTable<TData>({ table }: DataTableToolbarProps<TData>) {
                     column.getCanHide()
                 )
                 .map((column) => {
+                  const row = table.getColumn(column.id);
                   const facets = column?.getFacetedUniqueValues();
+
                   return (
                     <CommandItem key={column.id} className="capitalize">
-                      {table.getColumn(column.id) && (
+                      {row && (
                         <DataTableFacetedFilter
-                          column={table.getColumn(column.id)}
+                          column={row}
                           title={column.id.split('_').join(' ')}
                           options={Array.from(facets.keys())}
                         />

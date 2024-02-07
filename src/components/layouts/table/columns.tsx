@@ -10,7 +10,7 @@ export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <DataTableColumnHeader column={column} title="Product Name" />
     ),
     cell: ({ row }) => (
       <div className="flex space-x-2">
@@ -22,34 +22,15 @@ export const columns: ColumnDef<Product>[] = [
     enableSorting: false,
     enableHiding: false,
   },
-  {
-    accessorKey: 'price',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Price" />
-    ),
-    cell: ({ row }) => {
-      return <>{'$ ' + row.getValue('price')}</>;
-    },
-    filterFn: (row, id, value) => {
-      return Number(row.getValue(id)) >= Number(value);
-    },
-  },
-  {
-    accessorKey: 'quantity',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Quantity" />
-    ),
-    cell: ({ row }) => {
-      return <>{row.getValue('quantity')}</>;
-    },
-    filterFn: (row, id, value) => {
-      return Number(row.getValue(id)) >= Number(value);
-    },
-  },
+
   {
     accessorKey: 'brand',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Brand" />
+      <DataTableColumnHeader
+        className="min-w-28"
+        column={column}
+        title="Brand"
+      />
     ),
     cell: ({ row }) => {
       return <>{row.getValue('brand')}</>;
@@ -57,6 +38,7 @@ export const columns: ColumnDef<Product>[] = [
   },
   {
     accessorKey: 'frame.material',
+    enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Frame Material" />
     ),
@@ -77,38 +59,134 @@ export const columns: ColumnDef<Product>[] = [
   },
   {
     accessorKey: 'frame.shape',
+    enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Frame Shape" />
     ),
     cell: (row) => {
       return <>{row.getValue()}</>;
     },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
   {
     accessorKey: 'lens_type',
+    enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Lens Type" />
     ),
-    cell: (row) => {
-      return <>{row.getValue()}</>;
+    cell: ({ row }) => {
+      return <div className="min-w-24">{row.getValue('lens_type')}</div>;
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
     },
   },
   {
     accessorKey: 'gender',
+    enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Gender" />
     ),
     cell: (row) => {
       return <>{row.getValue()}</>;
     },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
   {
     accessorKey: 'color',
+    enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Color" />
     ),
     cell: (row) => {
       return <>{row.getValue()}</>;
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
+    accessorKey: 'temple_length',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="max-w-fit mx-auto"
+        column={column}
+        title="Temple Length"
+      />
+    ),
+    cell: (row) => {
+      return <>{row.getValue() + ' mm'}</>;
+    },
+    filterFn: (row, id, value) => {
+      return Number(row.getValue(id)) >= Number(value);
+    },
+  },
+  {
+    accessorKey: 'bridge_size',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="max-w-fit mx-auto"
+        column={column}
+        title="Bridge Size"
+      />
+    ),
+    cell: (row) => {
+      return <>{row.getValue() + ' mm'}</>;
+    },
+    filterFn: (row, id, value) => {
+      return Number(row.getValue(id)) >= Number(value);
+    },
+  },
+  {
+    accessorKey: 'hinge_type',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="max-w-fit mx-auto"
+        column={column}
+        title="Hinge Type"
+      />
+    ),
+    cell: (row) => {
+      return <>{row.getValue()}</>;
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
+    accessorKey: 'price',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Price" />
+    ),
+    cell: ({ row }) => {
+      return <>{'$ ' + row.getValue('price')}</>;
+    },
+    filterFn: (row, id, value) => {
+      return Number(row.getValue(id)) >= Number(value);
+    },
+  },
+  {
+    accessorKey: 'quantity',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="max-w-fit mx-auto"
+        column={column}
+        title="Quantity"
+      />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="text-center max-w-fit mx-auto">
+          {row.getValue('quantity')}
+        </div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return Number(row.getValue(id)) >= Number(value);
     },
   },
   {
