@@ -1,5 +1,5 @@
 import { SERVER_DOMAIN } from '@/config';
-import { LoginHandlerProps, RegisterHandlerProps } from '@/types/submit-handler';
+import { LoginHandlerProps, RegisterHandlerProps } from '@/types/submit-handler-props';
 
 export async function handleRegister({
   values,

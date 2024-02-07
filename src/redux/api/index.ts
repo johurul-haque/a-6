@@ -9,22 +9,24 @@ export const baseApi = createApi({
   endpoints: (build) => ({
     profile: build.query({
       query: () => '/profile',
-      transformResponse: ({ data }: { data: User }) => data,
+      transformResponse: (res: { data: User }) => res.data,
     }),
-    products: build.query({
-      query: (params) => ({ url: '/products', method: 'GET', params }),
-      transformResponse: ({ data }: { data: Product[] }) => data,
+    products: build.query<Product[], void>({
+      query: () => ({ url: '/products', method: 'GET' }),
+      transformResponse: (res: { data: Product[] }) => res.data,
+      providesTags: ['Products'],
     }),
     addProduct: build.mutation({
       query: (body) => ({
-        url: '/products',
+        url: '/products/add',
         method: 'POST',
         body,
       }),
-      transformResponse: ({ data }: { data: Product[] }) => data,
+      transformResponse: (res: { data: Product[] }) => res.data,
       invalidatesTags: ['Products'],
     }),
   }),
 });
 
-export const { useProductsQuery, useProfileQuery } = baseApi;
+export const { useProductsQuery, useProfileQuery, useAddProductMutation } =
+  baseApi;

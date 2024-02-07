@@ -135,6 +135,19 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
+    accessorKey: 'gender',
+    enableSorting: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Gender" />
+    ),
+    cell: (row) => {
+      return <>{row.getValue()}</>;
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
     accessorKey: 'temple_length',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -144,10 +157,10 @@ export const columns: ColumnDef<Product>[] = [
       />
     ),
     cell: (row) => {
-      return <>{row.getValue() + ' mm'}</>;
+      return <div className="text-center">{row.getValue() + ' mm'}</div>;
     },
     filterFn: (row, id, value) => {
-      return row.getValue<number>(id) >= Number(value);
+      return row.getValue<number>(id) === Number(value);
     },
   },
   {
@@ -163,7 +176,7 @@ export const columns: ColumnDef<Product>[] = [
       return <>{row.getValue() + ' mm'}</>;
     },
     filterFn: (row, id, value) => {
-      return row.getValue<number>(id) >= Number(value);
+      return row.getValue<number>(id) === Number(value);
     },
   },
   {
@@ -174,19 +187,6 @@ export const columns: ColumnDef<Product>[] = [
         column={column}
         title="Hinge Type"
       />
-    ),
-    cell: (row) => {
-      return <>{row.getValue()}</>;
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
-  },
-  {
-    accessorKey: 'gender',
-    enableSorting: false,
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Gender" />
     ),
     cell: (row) => {
       return <>{row.getValue()}</>;

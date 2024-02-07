@@ -12,7 +12,7 @@ import { Row } from '@tanstack/react-table';
 import { useClickAway } from '@uidotdev/usehooks';
 import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { EditTableRow } from './actions/edit-table-row';
+import { EditProduct } from './actions/edit-product';
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -39,7 +39,7 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent ref={ref} align="start" className="w-[160px]">
         <DropdownMenuItem>
-          <EditTableRow />
+          <EditProduct />
         </DropdownMenuItem>
         <DropdownMenuItem
           className="w-full text-rose-600 hover:bg-rose-100 hover:text-rose-600 focus:bg-rose-100 focus:text-rose-600"
