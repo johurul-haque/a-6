@@ -1,7 +1,6 @@
 import { CheckIcon } from '@radix-ui/react-icons';
 import { Column } from '@tanstack/react-table';
 
-import { Badge } from '@/components/ui/badge';
 import {
   Command,
   CommandEmpty,
@@ -16,7 +15,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 
 interface DataTableFacetedFilterProps<TData, TValue> {
@@ -37,39 +35,6 @@ export function DataTableFacetedFilter<TData, TValue>({
     <Popover>
       <PopoverTrigger className="capitalize w-full text-start">
         {title}
-        {selectedValues?.size > 0 && (
-          <>
-            <Separator orientation="vertical" className="mx-2 h-4" />
-            <Badge
-              variant="secondary"
-              className="rounded-sm px-1 font-normal lg:hidden"
-            >
-              {selectedValues.size}
-            </Badge>
-            <div className="hidden space-x-1 lg:flex">
-              {selectedValues.size > 1 ? (
-                <Badge
-                  variant="secondary"
-                  className="rounded-sm px-1 font-normal"
-                >
-                  {selectedValues.size} selected
-                </Badge>
-              ) : (
-                options
-                  .filter((value) => selectedValues.has(value))
-                  .map((value) => (
-                    <Badge
-                      variant="secondary"
-                      key={value}
-                      className="rounded-sm px-1 font-normal"
-                    >
-                      {value}
-                    </Badge>
-                  ))
-              )}
-            </div>
-          </>
-        )}
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0" align="start" sideOffset={8}>
         <Command>

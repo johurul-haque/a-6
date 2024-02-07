@@ -1,10 +1,8 @@
-import { ColumnDef } from '@tanstack/react-table';
-
 import { Product } from '@/types/product';
+import { ColumnDef } from '@tanstack/react-table';
 import { SellProduct } from '../sell-product';
 import { DataTableColumnHeader } from './data-table-column-header';
 import { DataTableRowActions } from './data-table-row-actions';
-import { frameMaterials } from './data/data';
 
 export const columns: ColumnDef<Product>[] = [
   {
@@ -22,7 +20,6 @@ export const columns: ColumnDef<Product>[] = [
     enableSorting: false,
     enableHiding: false,
   },
-
   {
     accessorKey: 'brand',
     header: ({ column }) => (
@@ -35,6 +32,9 @@ export const columns: ColumnDef<Product>[] = [
     cell: ({ row }) => {
       return <>{row.getValue('brand')}</>;
     },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
   {
     accessorKey: 'frame.material',
@@ -43,14 +43,6 @@ export const columns: ColumnDef<Product>[] = [
       <DataTableColumnHeader column={column} title="Frame Material" />
     ),
     cell: (row) => {
-      const frameMaterial = frameMaterials.find(
-        (material) => material === row.getValue()
-      );
-
-      if (!frameMaterial) {
-        return null;
-      }
-
       return <>{row.getValue()}</>;
     },
     filterFn: (row, id, value) => {
