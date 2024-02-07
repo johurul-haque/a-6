@@ -29,7 +29,7 @@ export function FilterTable<TData>({ table }: DataTableToolbarProps<TData>) {
           Filter
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0" align="center" sideOffset={6}>
+      <PopoverContent className="w-[200px] p-0" align="start" sideOffset={6}>
         <Command>
           <CommandInput placeholder={'Filter by'} />
           <CommandList>
@@ -40,7 +40,8 @@ export function FilterTable<TData>({ table }: DataTableToolbarProps<TData>) {
                 .filter(
                   (column) =>
                     typeof column.accessorFn !== 'undefined' &&
-                    column.getCanHide()
+                    column.getCanHide() &&
+                    column.getIsVisible()
                 )
                 .map((column) => {
                   const row = table.getColumn(column.id);

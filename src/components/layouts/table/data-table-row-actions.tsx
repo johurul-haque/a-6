@@ -21,7 +21,6 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const task = row.original;
   const [isOpen, setIsOpen] = useState(false);
 
   const ref = useClickAway<HTMLDivElement>(() => setIsOpen(false));
@@ -38,7 +37,7 @@ export function DataTableRowActions<TData>({
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent ref={ref} align="end" className="w-[160px]">
+      <DropdownMenuContent ref={ref} align="start" className="w-[160px]">
         <DropdownMenuItem>
           <EditTableRow />
         </DropdownMenuItem>

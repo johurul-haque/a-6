@@ -1,3 +1,4 @@
+import { regexSearch } from '@/lib/regex-search';
 import { Product } from '@/types/product';
 import { ColumnDef } from '@tanstack/react-table';
 import { SellProduct } from '../sell-product';
@@ -5,6 +6,22 @@ import { DataTableColumnHeader } from './data-table-column-header';
 import { DataTableRowActions } from './data-table-row-actions';
 
 export const columns: ColumnDef<Product>[] = [
+  {
+    id: 'actions',
+    header: () => (
+      <div className="whitespace-nowrap flex items-center justify-center gap-3">
+        Actions
+      </div>
+    ),
+    cell: ({ row }) => (
+      <div className="flex justify-center items-center gap-3">
+        <DataTableRowActions row={row} />
+        <SellProduct />
+      </div>
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: 'name',
     header: ({ column }) => (
@@ -35,6 +52,39 @@ export const columns: ColumnDef<Product>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
     },
+    enableSorting: false,
+  },
+  {
+    accessorKey: 'price',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Price" />
+    ),
+    cell: ({ row }) => {
+      return <>{'$ ' + row.getValue('price')}</>;
+    },
+    filterFn: (row, id, value) => {
+      return Number(row.getValue(id)) >= Number(value);
+    },
+  },
+  {
+    accessorKey: 'quantity',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="max-w-fit mx-auto"
+        column={column}
+        title="Quantity"
+      />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="text-center max-w-fit mx-auto">
+          {row.getValue('quantity')}
+        </div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return Number(row.getValue(id)) >= Number(value);
+    },
   },
   {
     accessorKey: 'frame.material',
@@ -58,9 +108,7 @@ export const columns: ColumnDef<Product>[] = [
     cell: (row) => {
       return <>{row.getValue()}</>;
     },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
+    filterFn: regexSearch,
   },
   {
     accessorKey: 'lens_type',
@@ -71,22 +119,7 @@ export const columns: ColumnDef<Product>[] = [
     cell: ({ row }) => {
       return <div className="min-w-24">{row.getValue('lens_type')}</div>;
     },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
-  },
-  {
-    accessorKey: 'gender',
-    enableSorting: false,
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Gender" />
-    ),
-    cell: (row) => {
-      return <>{row.getValue()}</>;
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
+    filterFn: regexSearch,
   },
   {
     accessorKey: 'color',
@@ -150,53 +183,16 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    accessorKey: 'price',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Price" />
-    ),
-    cell: ({ row }) => {
-      return <>{'$ ' + row.getValue('price')}</>;
-    },
-    filterFn: (row, id, value) => {
-      return Number(row.getValue(id)) >= Number(value);
-    },
-  },
-  {
-    accessorKey: 'quantity',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className="max-w-fit mx-auto"
-        column={column}
-        title="Quantity"
-      />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="text-center max-w-fit mx-auto">
-          {row.getValue('quantity')}
-        </div>
-      );
-    },
-    filterFn: (row, id, value) => {
-      return Number(row.getValue(id)) >= Number(value);
-    },
-  },
-  {
-    id: 'actions',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className="text-center"
-        column={column}
-        title="Actions"
-      />
-    ),
-    cell: ({ row }) => (
-      <div className="flex justify-center items-center gap-3">
-        <SellProduct />
-        <DataTableRowActions row={row} />
-      </div>
-    ),
+    accessorKey: 'gender',
     enableSorting: false,
-    enableHiding: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Gender" />
+    ),
+    cell: (row) => {
+      return <>{row.getValue()}</>;
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
 ];

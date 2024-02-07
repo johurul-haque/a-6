@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
+import { SearchTable } from './data-table-search';
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -23,13 +24,26 @@ interface DataTableColumnHeaderProps<TData, TValue>
   titleClassName?: string;
 }
 
+function isSearchableColumn(columnId: string) {
+  return ['frame_shape', 'lens_type'].some((value) => value === columnId);
+}
+
 export function DataTableColumnHeader<TData, TValue>({
   column,
   title,
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
   if (!column.getCanSort()) {
-    return <div className={cn('whitespace-nowrap', className)}>{title}</div>;
+    return (
+      <div
+        className={cn('whitespace-nowrap flex items-center gap-3', className)}
+      >
+        {title}
+        {isSearchableColumn(column.id) && (
+          <SearchTable column={column} title={title} />
+        )}
+      </div>
+    );
   }
 
   return (
