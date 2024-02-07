@@ -1,10 +1,6 @@
 import { z } from 'zod';
 import { hinge } from './product.interface';
 
-const materials = ['acetate', 'plastic', 'titanium', 'tr-90', 'wood'] as const;
-const shapes = ['aviator', 'cat-eye', 'oval', 'rectangular', 'round'] as const;
-const genders = ['male', 'female', 'unisex'] as const;
-
 export const productSchema = z.object({
   name: z.string(),
   brand: z.string(),
