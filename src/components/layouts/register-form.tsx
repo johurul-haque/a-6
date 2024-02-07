@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { handleRegister } from '@/handler/handle-submit';
-import { registerFormSchema } from '@/schema/form-schema';
+import { registerFormSchema } from '@/schema/auth-form-schema';
 import { useRouter } from 'next/router';
 import { Eye } from '../icons';
 import { Button } from '../ui/button';

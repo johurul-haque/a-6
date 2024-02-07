@@ -3,6 +3,7 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 import { Table } from '@tanstack/react-table';
 import { DataTableViewOptions } from './data-table-view-options';
 
+import { AddProduct } from './actions/add-product';
 import { FilterTable } from './data-table-filter';
 
 export interface DataTableToolbarProps<TData> {
@@ -32,6 +33,7 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
+      <AddProduct />
     </div>
   );
 }

@@ -1,10 +1,3 @@
-import React, { SetStateAction, useState } from 'react';
-
-import { cn } from '@/lib/utils';
-
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-
 import {
   Form,
   FormControl,
@@ -14,8 +7,12 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { handleLogin } from '@/handler/handle-submit';
-import { loginFormSchema } from '@/schema/form-schema';
+import { cn } from '@/lib/utils';
+import { loginFormSchema } from '@/schema/auth-form-schema';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
+import React, { SetStateAction, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Eye } from '../icons';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';

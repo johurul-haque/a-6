@@ -63,7 +63,7 @@ export const columns: ColumnDef<Product>[] = [
       return <>{'$ ' + row.getValue('price')}</>;
     },
     filterFn: (row, id, value) => {
-      return Number(row.getValue(id)) >= Number(value);
+      return row.getValue<number>(id) >= Number(value);
     },
   },
   {
@@ -83,7 +83,7 @@ export const columns: ColumnDef<Product>[] = [
       );
     },
     filterFn: (row, id, value) => {
-      return Number(row.getValue(id)) >= Number(value);
+      return row.getValue<number>(id) >= Number(value);
     },
   },
   {
@@ -147,7 +147,7 @@ export const columns: ColumnDef<Product>[] = [
       return <>{row.getValue() + ' mm'}</>;
     },
     filterFn: (row, id, value) => {
-      return Number(row.getValue(id)) >= Number(value);
+      return row.getValue<number>(id) >= Number(value);
     },
   },
   {
@@ -163,7 +163,7 @@ export const columns: ColumnDef<Product>[] = [
       return <>{row.getValue() + ' mm'}</>;
     },
     filterFn: (row, id, value) => {
-      return Number(row.getValue(id)) >= Number(value);
+      return row.getValue<number>(id) >= Number(value);
     },
   },
   {

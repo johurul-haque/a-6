@@ -1,12 +1,12 @@
 import { SERVER_DOMAIN } from '@/config';
-import { HandleLoginProps, HandleRegisterProps } from '@/types/handle-submit';
+import { LoginHandlerProps, RegisterHandlerProps } from '@/types/submit-handler';
 
 export async function handleRegister({
   values,
   setIsLoading,
   setError,
   router,
-}: HandleRegisterProps) {
+}: RegisterHandlerProps) {
   setIsLoading(true);
 
   const { confirm_password, ...rest } = values;
@@ -40,7 +40,7 @@ export async function handleLogin({
   setIsLoading,
   router,
   setError,
-}: HandleLoginProps) {
+}: LoginHandlerProps) {
   setIsLoading(true);
 
   try {

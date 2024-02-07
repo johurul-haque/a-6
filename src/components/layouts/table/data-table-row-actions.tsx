@@ -12,7 +12,7 @@ import { Row } from '@tanstack/react-table';
 import { useClickAway } from '@uidotdev/usehooks';
 import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { EditTableRow } from './edit-table-row';
+import { EditTableRow } from './actions/edit-table-row';
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
