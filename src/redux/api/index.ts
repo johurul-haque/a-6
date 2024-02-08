@@ -1,5 +1,5 @@
 import { SERVER_DOMAIN } from '@/config';
-import { Product } from '@/types/product';
+import { ProductSchema } from '@/types/product';
 import { User } from '@/types/user';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
@@ -11,9 +11,9 @@ export const baseApi = createApi({
       query: () => '/profile',
       transformResponse: (res: { data: User }) => res.data,
     }),
-    products: build.query<Product[], void>({
+    products: build.query<ProductSchema[], void>({
       query: () => ({ url: '/products', method: 'GET' }),
-      transformResponse: (res: { data: Product[] }) => res.data,
+      transformResponse: (res: { data: ProductSchema[] }) => res.data,
       providesTags: ['Products'],
     }),
     addProduct: build.mutation({
@@ -22,11 +22,22 @@ export const baseApi = createApi({
         method: 'POST',
         body,
       }),
-      transformResponse: (res: { data: Product[] }) => res.data,
+      transformResponse: (res: { data: ProductSchema[] }) => res.data,
+      invalidatesTags: ['Products'],
+    }),
+    deleteProduct: build.mutation({
+      query: (id) => ({
+        url: `/products/${id}`,
+        method: 'DELETE',
+      }),
       invalidatesTags: ['Products'],
     }),
   }),
 });
 
-export const { useProductsQuery, useProfileQuery, useAddProductMutation } =
-  baseApi;
+export const {
+  useProductsQuery,
+  useProfileQuery,
+  useAddProductMutation,
+  useDeleteProductMutation,
+} = baseApi;

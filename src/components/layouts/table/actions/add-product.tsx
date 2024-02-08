@@ -24,7 +24,7 @@ import {
 } from '@/constants/product-constants';
 import { useAddProductMutation } from '@/redux/api';
 import { productSchema } from '@/schema/add-products-form-schema';
-import { Product } from '@/types/product';
+import { ProductSchema } from '@/types/product';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { BadgePlus } from 'lucide-react';
 import { useState } from 'react';
@@ -34,7 +34,7 @@ export function AddProduct() {
   const [isOpen, setIsOpen] = useState(false);
   const [addProduct, { isLoading }] = useAddProductMutation();
 
-  const form = useForm<Product>({
+  const form = useForm<ProductSchema>({
     resolver: zodResolver(productSchema),
   });
 

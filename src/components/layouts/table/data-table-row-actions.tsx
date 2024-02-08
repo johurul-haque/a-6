@@ -6,7 +6,8 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { handleRowDelete } from '@/handler/handle-row-delete';
+import { useDeleteProductMutation } from '@/redux/api';
+import { Product } from '@/types/product';
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
 import { useClickAway } from '@uidotdev/usehooks';
@@ -14,16 +15,15 @@ import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { EditProduct } from './actions/edit-product';
 
-interface DataTableRowActionsProps<TData> {
-  row: Row<TData>;
+interface DataTableRowActionsProps {
+  row: Row<Product>;
 }
 
-export function DataTableRowActions<TData>({
-  row,
-}: DataTableRowActionsProps<TData>) {
+export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   const [isOpen, setIsOpen] = useState(false);
-
   const ref = useClickAway<HTMLDivElement>(() => setIsOpen(false));
+
+  const [deleteProduct, { isLoading }] = useDeleteProductMutation();
 
   return (
     <DropdownMenu open={isOpen}>
@@ -43,7 +43,11 @@ export function DataTableRowActions<TData>({
         </DropdownMenuItem>
         <DropdownMenuItem
           className="w-full text-rose-600 hover:bg-rose-100 hover:text-rose-600 focus:bg-rose-100 focus:text-rose-600"
-          onClick={() => handleRowDelete()}
+          onClick={() => {
+            deleteProduct(row.original._id);
+            setIsOpen(false);
+          }}
+          disabled={isLoading}
         >
           Delete
           <DropdownMenuShortcut>
