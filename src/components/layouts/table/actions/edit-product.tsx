@@ -1,44 +1,79 @@
 import { Button } from '@/components/ui/button';
 import * as D from '@/components/ui/dialog';
 import { DropdownMenuShortcut } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Form } from '@/components/ui/form';
+import { useUpdateProductMutation } from '@/redux/api';
+import { productSchema } from '@/schema/add-products-form-schema';
+import { Product, ProductSchema } from '@/types/product';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Edit } from 'lucide-react';
+import { SetStateAction, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { ProductFormFields } from '../../product-form-fields';
 
-export function EditProduct() {
+type EditProductProps = {
+  setIsFormVisible: React.Dispatch<SetStateAction<boolean>>;
+  openDropdown: React.Dispatch<SetStateAction<boolean>>;
+  row: Product;
+};
+
+export function EditProduct({
+  row,
+  setIsFormVisible,
+  openDropdown: closeDropdown,
+}: EditProductProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [updateProduct, { isLoading }] = useUpdateProductMutation();
+
+  const form = useForm<ProductSchema>({
+    resolver: zodResolver(productSchema),
+    defaultValues: row,
+  });
+
   return (
     <>
-      <D.Dialog>
+      <D.Dialog
+        open={isOpen}
+        onOpenChange={(open) => {
+          setIsOpen(open);
+          setIsFormVisible(open);
+        }}
+      >
         <D.DialogTrigger className="flex items-center justify-between w-full">
           Edit
           <DropdownMenuShortcut>
             <Edit className="size-4 stroke-current" />
           </DropdownMenuShortcut>
         </D.DialogTrigger>
-        <D.DialogContent className="sm:max-w-[425px]">
-          <D.DialogHeader>
-            <D.DialogTitle>Edit profile</D.DialogTitle>
+        <D.DialogContent className="sm:max-w-[550px]">
+          <D.DialogHeader className="mt-2">
+            <D.DialogTitle>Edit product</D.DialogTitle>
             <D.DialogDescription>
-              Make changes to your profile here. Click save when you are done.
+              Modify details of the product here. Click save when you are done.
             </D.DialogDescription>
           </D.DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input id="name" value="Pedro Duarte" className="col-span-3" />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                Username
-              </Label>
-              <Input id="username" value="@peduarte" className="col-span-3" />
-            </div>
-          </div>
-          <D.DialogFooter>
-            <Button type="submit">Save changes</Button>
-          </D.DialogFooter>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit((values) => {
+                updateProduct({ body: values, id: row._id });
+                setIsOpen(false);
+                setIsFormVisible(false);
+                closeDropdown(false);
+                form.reset();
+              })}
+              className="grid gap-3"
+            >
+              <ProductFormFields form={form} isLoading={isLoading} />
+
+              <Button
+                disabled={isLoading}
+                type="submit"
+                className="w-full mt-3"
+              >
+                Save
+              </Button>
+            </form>
+          </Form>
         </D.DialogContent>
       </D.Dialog>
     </>

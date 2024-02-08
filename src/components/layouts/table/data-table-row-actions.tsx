@@ -21,12 +21,18 @@ interface DataTableRowActionsProps {
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const ref = useClickAway<HTMLDivElement>(() => setIsOpen(false));
+  const [isFormVisible, setIsFormVisible] = useState(false);
+
+  const ref = useClickAway<HTMLDivElement>(() => {
+    if (!isFormVisible) {
+      setIsOpen(false);
+    }
+  });
 
   const [deleteProduct, { isLoading }] = useDeleteProductMutation();
 
   return (
-    <DropdownMenu open={isOpen}>
+    <DropdownMenu open={isOpen} modal={false}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
@@ -39,7 +45,11 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent ref={ref} align="start" className="w-[160px]">
         <DropdownMenuItem>
-          <EditProduct />
+          <EditProduct
+            row={row.original}
+            setIsFormVisible={setIsFormVisible}
+            openDropdown={setIsOpen}
+          />
         </DropdownMenuItem>
         <DropdownMenuItem
           className="w-full text-rose-600 hover:bg-rose-100 hover:text-rose-600 focus:bg-rose-100 focus:text-rose-600"
