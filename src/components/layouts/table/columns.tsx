@@ -34,6 +34,7 @@ export const columns: ColumnDef<Product>[] = [
         </span>
       </div>
     ),
+    filterFn: regexSearch,
     enableSorting: false,
     enableHiding: false,
   },
@@ -148,6 +149,25 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
+    accessorKey: 'hinge_type',
+    enableSorting: false,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="max-w-fit mx-auto"
+        column={column}
+        title="Hinge Type"
+      />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="whitespace-nowrap">{row.getValue('hinge_type')}</div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
     accessorKey: 'temple_length',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -177,22 +197,6 @@ export const columns: ColumnDef<Product>[] = [
     },
     filterFn: (row, id, value) => {
       return row.getValue<number>(id) === Number(value);
-    },
-  },
-  {
-    accessorKey: 'hinge_type',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className="max-w-fit mx-auto"
-        column={column}
-        title="Hinge Type"
-      />
-    ),
-    cell: (row) => {
-      return <>{row.getValue()}</>;
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
     },
   },
 ];

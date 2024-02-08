@@ -25,7 +25,9 @@ interface DataTableColumnHeaderProps<TData, TValue>
 }
 
 function isSearchableColumn(columnId: string) {
-  return ['frame_shape', 'lens_type'].some((value) => value === columnId);
+  return ['name', 'frame_shape', 'lens_type'].some(
+    (value) => value === columnId
+  );
 }
 
 export function DataTableColumnHeader<TData, TValue>({
