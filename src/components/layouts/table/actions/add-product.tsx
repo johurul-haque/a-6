@@ -1,27 +1,6 @@
 import { Button } from '@/components/ui/button';
 import * as D from '@/components/ui/dialog';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  GENDERS,
-  HINGES,
-  MATERIALS,
-  SHAPES,
-} from '@/constants/product-constants';
+import { Form } from '@/components/ui/form';
 import { useAddProductMutation } from '@/redux/api';
 import { productSchema } from '@/schema/add-products-form-schema';
 import { ProductSchema } from '@/types/product';
