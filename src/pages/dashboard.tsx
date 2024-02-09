@@ -1,7 +1,7 @@
 import { Header } from '@/components/layouts/header';
 import { columns } from '@/components/layouts/table/columns';
 import { DataTable } from '@/components/layouts/table/data-table';
-import { useProductsQuery } from '@/redux/api';
+import { useProductsQuery } from '@/redux/api/products';
 import { Params } from '@/types/query-params';
 import { SetStateActionType } from '@/types/set-state-action';
 import { createContext, useState } from 'react';
@@ -15,7 +15,7 @@ export const ProductsContext = createContext<ContextType | null>(null);
 
 export default function Dashboard() {
   const [params, setParams] = useState<Params | undefined>(undefined);
-  const { data: products, isSuccess, refetch } = useProductsQuery(params);
+  const { data: products, isSuccess } = useProductsQuery(params);
 
   return (
     <>

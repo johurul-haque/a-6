@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import * as D from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
-import { useAddProductMutation } from '@/redux/api';
 import { productSchema } from '@/schema/products-form-schema';
 import { ProductSchema } from '@/types/product';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,6 +8,7 @@ import { BadgePlus } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProductFormFields } from '../../product-form-fields';
+import { useAddProductMutation } from '@/redux/api/products';
 
 export function AddProduct() {
   const [isOpen, setIsOpen] = useState(false);

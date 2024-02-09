@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import * as D from '@/components/ui/dialog';
 import { DropdownMenuShortcut } from '@/components/ui/dropdown-menu';
 import { Form } from '@/components/ui/form';
-import { useUpdateProductMutation } from '@/redux/api';
+import { useUpdateProductMutation } from '@/redux/api/products';
 import { productSchema } from '@/schema/products-form-schema';
 import { Product, ProductSchema } from '@/types/product';
 import { zodResolver } from '@hookform/resolvers/zod';

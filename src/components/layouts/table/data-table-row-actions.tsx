@@ -6,7 +6,6 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useDeleteProductMutation } from '@/redux/api';
 import { Product } from '@/types/product';
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
@@ -14,6 +13,7 @@ import { useClickAway } from '@uidotdev/usehooks';
 import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { EditProduct } from './actions/edit-product';
+import { useDeleteProductMutation } from '@/redux/api/products';
 
 interface DataTableRowActionsProps {
   row: Row<Product>;
