@@ -22,7 +22,7 @@ function isNumberField(id: string) {
   return NUMBER_FIELDS.some((val) => val === id);
 }
 
-export function FilterTable<TData>({ table, refetch }: DataTableToolbarProps<TData>) {
+export function FilterTable<TData>({ table }: DataTableToolbarProps<TData>) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -58,8 +58,6 @@ export function FilterTable<TData>({ table, refetch }: DataTableToolbarProps<TDa
                       <CommandItem key={column.id} className="capitalize">
                         {row && (
                           <DataTableRangeFilter
-                          refetch={refetch}
-                            column={row}
                             title={column.id.split('_').join(' ')}
                           />
                         )}

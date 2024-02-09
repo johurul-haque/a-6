@@ -1,34 +1,38 @@
 import { Button } from '@/components/ui/button';
+import { ProductsContext } from '@/pages/dashboard';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { Table } from '@tanstack/react-table';
-import { DataTableViewOptions } from './data-table-view-options';
-
+import { useContext } from 'react';
 import { AddProduct } from './actions/add-product';
 import { FilterTable } from './data-table-filter';
-import { Refetch } from '@/types/refetch';
+import { DataTableViewOptions } from './data-table-view-options';
 
 export interface DataTableToolbarProps<TData> {
   table: Table<TData>;
-  refetch: Refetch;
 }
 
 export function DataTableToolbar<TData>({
   table,
-  refetch
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
+  const context = useContext(ProductsContext);
+
+  if (!context) return;
 
   return (
     <div className="flex justify-between items-center gap-3">
       <DataTableViewOptions table={table} />
 
       <div className="flex items-center space-x-2 mr-auto">
-        <FilterTable refetch={refetch} table={table} />
+        <FilterTable table={table} />
 
-        {isFiltered && (
+        {(isFiltered || context.params) && (
           <Button
             variant="ghost"
-            onClick={() => table.resetColumnFilters()}
+            onClick={() => {
+              table.resetColumnFilters();
+              context.setParams(undefined);
+            }}
             className="h-8 px-2 lg:px-3"
           >
             Reset
