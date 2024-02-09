@@ -1,5 +1,6 @@
 import { SERVER_DOMAIN } from '@/config';
 import { Product } from '@/types/product';
+import { Params } from '@/types/query-params';
 import { User } from '@/types/user';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
@@ -11,8 +12,8 @@ export const baseApi = createApi({
       query: () => '/profile',
       transformResponse: (res: { data: User }) => res.data,
     }),
-    products: build.query<Product[], void>({
-      query: () => ({ url: '/products', method: 'GET' }),
+    products: build.query<Product[], Params | undefined>({
+      query: (params) => ({ url: '/products', method: 'GET', params }),
       transformResponse: (res: { data: Product[] }) => res.data,
       providesTags: ['Products'],
     }),

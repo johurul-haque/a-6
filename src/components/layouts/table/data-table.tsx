@@ -16,17 +16,20 @@ import { useState } from 'react';
 
 import * as T from '@/components/ui/table';
 
+import { Refetch } from '@/types/refetch';
 import { DataTablePagination } from './data-table-pagination';
 import { DataTableToolbar } from './data-table-toolbar';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  refetch: Refetch;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  refetch
 }: DataTableProps<TData, TValue>) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -54,7 +57,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} />
+      <DataTableToolbar table={table} refetch={refetch} />
       <div className="rounded-md border">
         <T.Table>
           <T.TableHeader>

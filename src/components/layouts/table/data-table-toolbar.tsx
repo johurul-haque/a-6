@@ -5,13 +5,16 @@ import { DataTableViewOptions } from './data-table-view-options';
 
 import { AddProduct } from './actions/add-product';
 import { FilterTable } from './data-table-filter';
+import { Refetch } from '@/types/refetch';
 
 export interface DataTableToolbarProps<TData> {
   table: Table<TData>;
+  refetch: Refetch;
 }
 
 export function DataTableToolbar<TData>({
   table,
+  refetch
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
@@ -20,7 +23,7 @@ export function DataTableToolbar<TData>({
       <DataTableViewOptions table={table} />
 
       <div className="flex items-center space-x-2 mr-auto">
-        <FilterTable table={table} />
+        <FilterTable refetch={refetch} table={table} />
 
         {isFiltered && (
           <Button

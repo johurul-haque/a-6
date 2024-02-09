@@ -12,11 +12,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { NUMBER_FIELDS } from '@/constants/number-column-fields';
 import { Filter } from 'lucide-react';
 import { DataTableFacetedFilter } from './data-table-faceted-filter';
+import { DataTableRangeFilter } from './data-table-range-filter';
 import { DataTableToolbarProps } from './data-table-toolbar';
 
-export function FilterTable<TData>({ table }: DataTableToolbarProps<TData>) {
+function isNumberField(id: string) {
+  return NUMBER_FIELDS.some((val) => val === id);
+}
+
+export function FilterTable<TData>({ table, refetch }: DataTableToolbarProps<TData>) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -46,6 +52,20 @@ export function FilterTable<TData>({ table }: DataTableToolbarProps<TData>) {
                 .map((column) => {
                   const row = table.getColumn(column.id);
                   const facets = column?.getFacetedUniqueValues();
+
+                  if (isNumberField(column.id)) {
+                    return (
+                      <CommandItem key={column.id} className="capitalize">
+                        {row && (
+                          <DataTableRangeFilter
+                          refetch={refetch}
+                            column={row}
+                            title={column.id.split('_').join(' ')}
+                          />
+                        )}
+                      </CommandItem>
+                    );
+                  }
 
                   return (
                     <CommandItem key={column.id} className="capitalize">

@@ -4,14 +4,14 @@ import { DataTable } from '@/components/layouts/table/data-table';
 import { useProductsQuery } from '@/redux/api';
 
 export default function Dashboard() {
-  const { data: products, isSuccess } = useProductsQuery();
+  const { data: products, isSuccess, refetch } = useProductsQuery(undefined);
 
   return (
     <>
       <Header />
 
       <main className="container py-10">
-        {isSuccess && <DataTable data={products} columns={columns} />}
+        {isSuccess && <DataTable data={products} columns={columns} refetch={refetch} />}
       </main>
     </>
   );
