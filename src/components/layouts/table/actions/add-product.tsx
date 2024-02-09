@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import * as D from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
 import { useAddProductMutation } from '@/redux/api';
-import { productSchema } from '@/schema/add-products-form-schema';
+import { productSchema } from '@/schema/products-form-schema';
 import { ProductSchema } from '@/types/product';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { BadgePlus } from 'lucide-react';

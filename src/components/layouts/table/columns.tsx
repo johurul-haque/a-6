@@ -1,7 +1,7 @@
 import { regexSearch } from '@/lib/regex-search';
 import { Product } from '@/types/product';
 import { ColumnDef } from '@tanstack/react-table';
-import { SellProduct } from '../sell-product';
+import { SellProduct } from './actions/sell-product';
 import { DataTableColumnHeader } from './data-table-column-header';
 import { DataTableRowActions } from './data-table-row-actions';
 
@@ -16,7 +16,7 @@ export const columns: ColumnDef<Product>[] = [
     cell: ({ row }) => (
       <div className="flex justify-center items-center gap-3">
         <DataTableRowActions row={row} />
-        <SellProduct />
+        <SellProduct row={row} />
       </div>
     ),
     enableSorting: false,

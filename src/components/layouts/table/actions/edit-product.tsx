@@ -3,7 +3,7 @@ import * as D from '@/components/ui/dialog';
 import { DropdownMenuShortcut } from '@/components/ui/dropdown-menu';
 import { Form } from '@/components/ui/form';
 import { useUpdateProductMutation } from '@/redux/api';
-import { productSchema } from '@/schema/add-products-form-schema';
+import { productSchema } from '@/schema/products-form-schema';
 import { Product, ProductSchema } from '@/types/product';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Edit } from 'lucide-react';

@@ -1,4 +1,4 @@
-import { productSchema } from '@/schema/add-products-form-schema';
+import { productSchema } from '@/schema/products-form-schema';
 import { z } from 'zod';
 
 export type ProductSchema = z.infer<typeof productSchema>;

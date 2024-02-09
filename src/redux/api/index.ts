@@ -1,8 +1,10 @@
 import { SERVER_DOMAIN } from '@/config';
+import { sellingFormSchema } from '@/schema/selling-form-schema';
 import { Product } from '@/types/product';
 import { Params } from '@/types/query-params';
 import { User } from '@/types/user';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { z } from 'zod';
 
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_DOMAIN, credentials: 'include' }),
@@ -45,6 +47,17 @@ export const baseApi = createApi({
       }),
       invalidatesTags: ['Products'],
     }),
+    sellProduct: build.mutation<
+      any,
+      { productId: string; body: z.infer<typeof sellingFormSchema> }
+    >({
+      query: ({ productId, body }) => ({
+        url: `/sell/${productId}`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Products'],
+    }),
   }),
 });
 
@@ -54,4 +67,5 @@ export const {
   useAddProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
+  useSellProductMutation,
 } = baseApi;
