@@ -14,6 +14,9 @@ export function get(query: Query, userId: Types.ObjectId) {
     {
       $match: {
         userId: new Types.ObjectId(userId),
+        quantity: {
+          $gt: 0,
+        },
       },
     },
     ...pipelines,

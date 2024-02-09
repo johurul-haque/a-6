@@ -25,7 +25,7 @@ const productModelSchema = new Schema<TProductModel>(
   },
   {
     toJSON: {
-      transform: (doc, { __v, userId, ...rest }) => rest,
+      transform: (doc, { __v, userId, quantity, ...rest }) => rest,
     },
   }
 );
@@ -35,7 +35,7 @@ productModelSchema.pre('updateOne', async function (next) {
 
   const product = await ProductModel.findOne(query);
 
-  if (product && product.quantity === 0) {
+  if (product && product.quantity <= 0) {
     await ProductModel.deleteOne(query);
   }
 

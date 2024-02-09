@@ -8,17 +8,18 @@ export async function sell(productId: string, payload: ProductSellPayload) {
   const product = await ProductModel.findById(productId);
 
   if (!product) throw new AppError(404, 'Product not found');
+  
+  const remainingQuantity = product.quantity - payload.quantity_sold;
+  let data;
 
   const session = await startSession();
-
-  let data;
 
   try {
     session.startTransaction();
 
     await ProductModel.updateOne(
       { _id: productId },
-      { quantity: product.quantity - payload.quantity_sold }
+      { quantity: remainingQuantity < 0 ? 0 : remainingQuantity }
     );
 
     data = await ProductSellModel.create({ productId, ...payload });
