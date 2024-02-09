@@ -29,7 +29,10 @@ export function AddProduct() {
         </D.DialogTrigger>
         <D.DialogContent className="sm:max-w-[550px] overflow-y-auto max-h-[94svh]">
           <D.DialogHeader className="mt-2">
-            <D.DialogTitle>Add new product</D.DialogTitle>
+            <D.DialogTitle className="flex gap-2">
+              <BadgePlus className="size-5" />
+              Add new product
+            </D.DialogTitle>
             <D.DialogDescription>
               Provide details of the new product here. Click save when you are
               done.

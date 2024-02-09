@@ -47,7 +47,11 @@ export function EditProduct({
         </D.DialogTrigger>
         <D.DialogContent className="sm:max-w-[550px]">
           <D.DialogHeader className="mt-2">
-            <D.DialogTitle>Edit product</D.DialogTitle>
+            <D.DialogTitle className="flex gap-2">
+              <Edit className="size-5" />
+              Edit product
+            </D.DialogTitle>
+
             <D.DialogDescription>
               Modify details of the product here. Click save when you are done.
             </D.DialogDescription>
