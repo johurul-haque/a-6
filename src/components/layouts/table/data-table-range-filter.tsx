@@ -14,13 +14,11 @@ const defaultValues = {
   value: '',
 };
 
-interface DataTableRangeFilterProps<TData, TValue> {
+interface DataTableRangeFilterProps {
   title: string;
 }
 
-export function DataTableRangeFilter<TData, TValue>({
-  title,
-}: DataTableRangeFilterProps<TData, TValue>) {
+export function DataTableRangeFilter({ title }: DataTableRangeFilterProps) {
   const [inputValues, setInputValues] = useState(defaultValues);
   const context = useContext(ProductsContext);
 
@@ -116,16 +114,16 @@ function handleSave(
   if (title === 'price') {
     if (inputValues.min_price && inputValues.max_price) {
       context.setParams({
-        ['min_price']: inputValues.min_price,
-        ['max_price']: inputValues.max_price,
+        min_price: inputValues.min_price,
+        max_price: inputValues.max_price,
       });
     } else if (inputValues.min_price) {
       context.setParams({
-        ['min_price']: inputValues.min_price,
+        min_price: inputValues.min_price,
       });
     } else if (inputValues.max_price) {
       context.setParams({
-        ['max_price']: inputValues.max_price,
+        max_price: inputValues.max_price,
       });
     }
   } else {
