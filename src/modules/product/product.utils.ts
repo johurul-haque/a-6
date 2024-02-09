@@ -14,6 +14,14 @@ export function queryBuilder(query: Query) {
     pagination.skip = (pagination.page - 1) * pagination.limit;
   }
 
+  if (query.quantity) {
+    pipelines.push({
+      $match: {
+        quantity: { $gte: Number(query.quantity) },
+      },
+    });
+  }
+
   if (query.frame_material) {
     pipelines.push({
       $match: {
@@ -85,7 +93,7 @@ export function queryBuilder(query: Query) {
   if (query.temple_length) {
     pipelines.push({
       $match: {
-        temple_length: query.temple_length,
+        temple_length: Number(query.temple_length),
       },
     });
   }
@@ -93,7 +101,7 @@ export function queryBuilder(query: Query) {
   if (query.bridge_size) {
     pipelines.push({
       $match: {
-        bridge_size: query.bridge_size,
+        bridge_size: Number(query.bridge_size),
       },
     });
   }
