@@ -1,5 +1,9 @@
 import { Button } from '@/components/ui/button';
 import * as D from '@/components/ui/dialog';
+import { format } from 'date-fns';
+import { Calendar as CalendarIcon } from 'lucide-react';
+
+import { Calendar } from '@/components/ui/calendar';
 import {
   Form,
   FormControl,
@@ -9,6 +13,12 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
 import { useSellProductMutation } from '@/redux/api';
 import { Product } from '@/types/product';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,11 +34,10 @@ export function SellProduct({ row }: { row: Row<Product> }) {
 
   const productId = row.original._id;
   const quantity = row.original.quantity;
-  const today = new Date().toISOString().split('T')[0];
 
   const sellingFormSchema = z.object({
     buyer_name: z.string(),
-    sold_on: z.string(),
+    sold_on: z.date(),
     quantity_sold: z.coerce.number().max(quantity, `Only ${quantity} left`),
   });
 
@@ -54,8 +63,8 @@ export function SellProduct({ row }: { row: Row<Product> }) {
             Sell product
           </D.DialogTitle>
           <D.DialogDescription>
-            Provide selling details of the products here. Click save when you
-            are done.
+            Provide selling details of the product. Click save when you are
+            done.
           </D.DialogDescription>
         </D.DialogHeader>
         <Form {...form}>
@@ -113,16 +122,37 @@ export function SellProduct({ row }: { row: Row<Product> }) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Sold on</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="date"
-                      className="transition-all"
-                      placeholder="Enter selling date"
-                      max={today}
-                      disabled={isLoading}
-                      {...field}
-                    />
-                  </FormControl>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={'outline'}
+                          className={cn(
+                            'pl-3 text-left font-normal flex items-center w-full',
+                            !field.value && 'text-muted-foreground'
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, 'PPP')
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="center">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date('1900-01-01')
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage />
                 </FormItem>
               )}
