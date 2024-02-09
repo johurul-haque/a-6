@@ -30,4 +30,16 @@ const productModelSchema = new Schema<TProductModel>(
   }
 );
 
+productModelSchema.pre('updateOne', async function (next) {
+  const query = this.getQuery();
+
+  const product = await ProductModel.findOne(query);
+
+  if (product && product.quantity === 0) {
+    await ProductModel.deleteOne(query);
+  }
+
+  next();
+});
+
 export const ProductModel = model('product', productModelSchema);
