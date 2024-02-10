@@ -17,5 +17,5 @@ export const loginFormSchema = z.object({
   password: z.string().trim().min(4),
 });
 
-export type registerFormSchema = z.infer<typeof registerFormSchema>;
+export type RegisterPayload = z.infer<typeof registerFormSchema>;
 export type LoginPayload = z.infer<typeof loginFormSchema>;

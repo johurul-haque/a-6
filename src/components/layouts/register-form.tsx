@@ -1,10 +1,3 @@
-import { SetStateAction, useState } from 'react';
-
-import { cn } from '@/lib/utils';
-
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-
 import {
   Form,
   FormControl,
@@ -13,9 +6,14 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { handleRegister } from '@/handler/handle-submit';
-import { registerFormSchema } from '@/schema/auth-form-schema';
+import { cn } from '@/lib/utils';
+import { useRegisterMutation } from '@/redux/api';
+import { RegisterPayload, registerFormSchema } from '@/schema/auth-form-schema';
+import { SetStateActionType } from '@/types/set-state-action';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Eye } from '../icons';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -23,7 +21,7 @@ import { Input } from '../ui/input';
 const passwordFields = ['password', 'confirm_password'] as const;
 
 type RegisterFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  setError: React.Dispatch<SetStateAction<string>>;
+  setError: SetStateActionType<string | undefined>;
 };
 
 export function RegisterForm({
@@ -31,24 +29,25 @@ export function RegisterForm({
   setError,
   ...props
 }: RegisterFormProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [register, { isLoading, data, error }] = useRegisterMutation();
 
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
-  const form = useForm<registerFormSchema>({
+  const form = useForm<RegisterPayload>({
     resolver: zodResolver(registerFormSchema),
   });
+
+  if (data) router.reload();
+
+  if (error && 'message' in error) {
+    setError(error.message);
+  }
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit((values) =>
-            handleRegister({ values, setIsLoading, router, setError })
-          )}
-          className="grid gap-3"
-        >
+        <form onSubmit={form.handleSubmit(register)} className="grid gap-3">
           <FormField
             control={form.control}
             name="name"

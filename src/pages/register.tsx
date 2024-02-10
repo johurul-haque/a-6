@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
 export default function Register() {
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | undefined>('');
 
   return (
     <>
