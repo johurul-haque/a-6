@@ -1,17 +1,21 @@
 import { AppError } from '@/utils';
-import { startSession } from 'mongoose';
+import { Types, startSession } from 'mongoose';
 import { ProductModel } from '../product/product.model';
 import { ProductSellPayload } from './sell.interface';
 import { ProductSellModel } from './sell.model';
 
-export async function sell(productId: string, payload: ProductSellPayload) {
+export async function sell(
+  userId: Types.ObjectId,
+  productId: Types.ObjectId,
+  payload: ProductSellPayload
+) {
   const product = await ProductModel.findById(productId);
 
   if (!product) throw new AppError(404, 'Product not found');
-  
-  const remainingQuantity = product.quantity - payload.quantity_sold;
-  let data;
 
+  const remainingQuantity = product.quantity - payload.quantity_sold;
+
+  let data;
   const session = await startSession();
 
   try {
@@ -22,7 +26,7 @@ export async function sell(productId: string, payload: ProductSellPayload) {
       { quantity: remainingQuantity < 0 ? 0 : remainingQuantity }
     );
 
-    data = await ProductSellModel.create({ productId, ...payload });
+    data = await ProductSellModel.create({ userId, productId, ...payload });
 
     await session.commitTransaction();
     await session.endSession();

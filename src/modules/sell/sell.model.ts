@@ -3,6 +3,11 @@ import { ProductSell } from './sell.interface';
 
 const productSellModelSchema = new Schema<ProductSell>(
   {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
     buyer_name: {
       type: String,
       required: true,
@@ -23,8 +28,9 @@ const productSellModelSchema = new Schema<ProductSell>(
   },
   {
     toJSON: {
-      transform: (doc, { __v, ...rest }) => rest,
+      transform: (doc, { __v, createdAt, updatedAt, ...rest }) => rest,
     },
+    timestamps: true,
   }
 );
 

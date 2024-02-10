@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { z } from 'zod';
 
 export const productSellSchema = z.object({
@@ -8,3 +9,5 @@ export const productSellSchema = z.object({
   }),
   quantity_sold: z.number(),
 });
+
+export const objectId = z.custom<Types.ObjectId>()
