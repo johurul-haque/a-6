@@ -7,7 +7,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { cn } from '@/lib/utils';
-import { useRegisterMutation } from '@/redux/api';
+import { useRegisterMutation } from '@/redux/api/auth';
 import { RegisterPayload, registerFormSchema } from '@/schema/auth-form-schema';
 import { SetStateActionType } from '@/types/set-state-action';
 import { zodResolver } from '@hookform/resolvers/zod';

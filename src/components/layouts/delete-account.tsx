@@ -1,5 +1,5 @@
 import * as D from '@/components/ui/dialog';
-import { useDeleteAccountMutation } from '@/redux/api';
+import { useDeleteAccountMutation } from '@/redux/api/auth';
 import { SetStateActionType } from '@/types/set-state-action';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
@@ -23,7 +23,6 @@ export function DeleteAccount({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     deleteAccount({ password: inputValue });
   };
 

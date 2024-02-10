@@ -9,7 +9,8 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useLogoutMutation, useProfileQuery } from '@/redux/api';
+import { useProfileQuery } from '@/redux/api';
+import { useLogoutMutation } from '@/redux/api/auth';
 import { LogOut, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
