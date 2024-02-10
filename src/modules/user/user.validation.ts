@@ -20,4 +20,6 @@ export const logoutPayload = z.object({
   email: z.string().email(),
 });
 
-export const deleteAccountPayload = logoutPayload;
+export const deleteAccountPayload = z.object({
+  password: z.string(),
+});

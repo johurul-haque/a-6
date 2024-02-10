@@ -8,7 +8,12 @@ import {
   logoutUser,
   registerUser,
 } from './user.controller';
-import { loginPayload, logoutPayload, userSchema } from './user.validation';
+import {
+  deleteAccountPayload,
+  loginPayload,
+  logoutPayload,
+  userSchema,
+} from './user.validation';
 
 const router = Router();
 
@@ -22,6 +27,10 @@ router.post(
   [verifyToken, validateRequest(logoutPayload)],
   logoutUser
 );
-router.get('/profile/delete', verifyToken, deleteUser);
+router.post(
+  '/profile/delete',
+  [verifyToken, validateRequest(deleteAccountPayload)],
+  deleteUser
+);
 
 export const UserRoutes = router;

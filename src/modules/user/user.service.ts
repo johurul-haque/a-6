@@ -2,6 +2,8 @@ import { env } from '@/config';
 import { AppError } from '@/utils';
 import { compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { Types } from 'mongoose';
+import { ProductModel } from '../product/product.model';
 import {
   DeleteAccountPayload,
   LoginPayload,
@@ -56,10 +58,20 @@ export async function logout(payload: LogoutPayload) {
   return user;
 }
 
-export async function deleteAccount(payload: DeleteAccountPayload) {
-  const user = await UserModel.findOneAndDelete({ email: payload.email });
+export async function deleteAccount(
+  payload: DeleteAccountPayload,
+  userId: Types.ObjectId
+) {
+  const user = await UserModel.findById(userId);
 
   if (!user) throw new AppError(404, 'User does not exist.');
+
+  const isMatched = await compare(payload.password, user.password);
+
+  if (!isMatched) throw new AppError(401, 'Password does not match.');
+
+  await UserModel.findByIdAndDelete(user._id);
+  await ProductModel.deleteMany({ userId: user._id });
 
   return user;
 }
