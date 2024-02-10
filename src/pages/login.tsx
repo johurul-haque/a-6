@@ -1,15 +1,14 @@
-import Link from 'next/link';
-
 import { LoginForm } from '@/components/layouts/login-form';
 import { Logo } from '@/components/logo';
 import { NextHead } from '@/components/next-head';
 import { AlertDestructive } from '@/components/ui/alert';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 import { useState } from 'react';
 
-export default function AuthenticationPage() {
-  const [error, setError] = useState('');
+export default function LoginPage() {
+  const [error, setError] = useState<string | undefined>('');
 
   return (
     <>

@@ -13,14 +13,14 @@ import { useLogoutMutation, useProfileQuery } from '@/redux/api';
 import { LogOut, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { DeleteAccount } from './delete-account';
 import { useState } from 'react';
+import { DeleteAccount } from './delete-account';
 
 export function UserProfile() {
   const { data: user } = useProfileQuery(undefined);
   const [logout, { isLoading, data }] = useLogoutMutation();
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const router = useRouter();
 

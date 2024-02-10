@@ -18,4 +18,4 @@ export const loginFormSchema = z.object({
 });
 
 export type registerFormSchema = z.infer<typeof registerFormSchema>;
-export type loginFormSchema = z.infer<typeof loginFormSchema>;
+export type LoginPayload = z.infer<typeof loginFormSchema>;

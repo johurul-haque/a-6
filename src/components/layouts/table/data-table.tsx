@@ -16,7 +16,6 @@ import { useState } from 'react';
 
 import * as T from '@/components/ui/table';
 
-import { Refetch } from '@/types/refetch';
 import { DataTablePagination } from './data-table-pagination';
 import { DataTableToolbar } from './data-table-toolbar';
 

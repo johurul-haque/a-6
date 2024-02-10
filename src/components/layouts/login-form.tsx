@@ -6,40 +6,42 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { handleLogin } from '@/handler/handle-submit';
 import { cn } from '@/lib/utils';
-import { loginFormSchema } from '@/schema/auth-form-schema';
+import { useLoginMutation } from '@/redux/api';
+import { LoginPayload, loginFormSchema } from '@/schema/auth-form-schema';
+import { SetStateActionType } from '@/types/set-state-action';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
-import React, { SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Eye } from '../icons';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 
 type LoginFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  setError: React.Dispatch<SetStateAction<string>>;
+  setError: SetStateActionType<string | undefined>;
 };
 
-export function LoginForm({ className, setError, ...props }: LoginFormProps) {
-  const [isLoading, setIsLoading] = useState(false);
+export function LoginForm({ className, setError }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
-
   const router = useRouter();
 
-  const form = useForm<loginFormSchema>({
+  const [login, { data, isLoading, error }] = useLoginMutation();
+
+  const form = useForm<LoginPayload>({
     resolver: zodResolver(loginFormSchema),
   });
 
+  if (error && 'message' in error) {
+    setError(error.message);
+  }
+
+  if (data) router.reload();
+
   return (
-    <div className={cn('grid gap-6', className)} {...props}>
+    <div className={cn('grid gap-6', className)}>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit((values) =>
-            handleLogin({ values, setIsLoading, setError, router })
-          )}
-          className="grid gap-3"
-        >
+        <form onSubmit={form.handleSubmit(login)} className="grid gap-3">
           <FormField
             control={form.control}
             name="email"

@@ -1,4 +1,4 @@
-import { loginFormSchema, registerFormSchema } from '@/schema/auth-form-schema';
+import { LoginPayload, registerFormSchema } from '@/schema/auth-form-schema';
 import { NextRouter } from 'next/router';
 import { SetStateAction } from 'react';
 
@@ -10,8 +10,4 @@ type HandlerProps = {
 
 export type RegisterHandlerProps = HandlerProps & {
   values: registerFormSchema;
-};
-
-export type LoginHandlerProps = HandlerProps & {
-  values: loginFormSchema;
 };
