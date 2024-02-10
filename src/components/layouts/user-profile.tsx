@@ -8,12 +8,18 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useProfileQuery } from '@/redux/api';
+import { useLogoutMutation, useProfileQuery } from '@/redux/api';
 import { LogOut, Trash2 } from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 export function UserProfile() {
   const { data: user } = useProfileQuery(undefined);
+  const [logout, { isLoading, data }] = useLogoutMutation();
+
+  const router = useRouter();
+
+  if (data) router.reload();
 
   return (
     <DropdownMenu>
@@ -45,7 +51,13 @@ export function UserProfile() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <button className="w-full">
+          <button
+            className="w-full"
+            onClick={() => {
+              logout({ email: user?.email });
+            }}
+            disabled={isLoading}
+          >
             Log out
             <DropdownMenuShortcut>
               <LogOut className="size-4 stroke-current" />
