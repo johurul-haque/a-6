@@ -2,7 +2,13 @@ import { env } from '@/config';
 import { AppError } from '@/utils';
 import { compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { LoginPayload, TJwtPayload, User } from './user.interface';
+import {
+  DeleteAccountPayload,
+  LoginPayload,
+  LogoutPayload,
+  TJwtPayload,
+  User,
+} from './user.interface';
 import { UserModel } from './user.model';
 
 export async function create(payload: User) {
@@ -12,8 +18,7 @@ export async function create(payload: User) {
     expiresIn: '15d',
   });
 
-  return {user, token};
-
+  return { user, token };
 }
 
 export async function login(payload: LoginPayload) {
@@ -43,8 +48,18 @@ export async function getUser(payload: TJwtPayload) {
   return user;
 }
 
-export async function logout(payload: TJwtPayload) {
-  const user = await UserModel.findByIdAndDelete(payload._id);
+export async function logout(payload: LogoutPayload) {
+  const user = await UserModel.findOne({ email: payload.email });
 
   if (!user) throw new AppError(404, 'User does not exist.');
+
+  return user;
+}
+
+export async function deleteAccount(payload: DeleteAccountPayload) {
+  const user = await UserModel.findOneAndDelete({ email: payload.email });
+
+  if (!user) throw new AppError(404, 'User does not exist.');
+
+  return user;
 }

@@ -15,3 +15,9 @@ export const loginPayload = z.object({
 export const jwtPayload = z.object({
   _id: z.custom<Types.ObjectId>(),
 });
+
+export const logoutPayload = z.object({
+  email: z.string().email(),
+});
+
+export const deleteAccountPayload = logoutPayload;
