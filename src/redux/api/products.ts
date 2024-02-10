@@ -9,7 +9,7 @@ export const productsApi = baseApi.injectEndpoints({
     products: build.query<Product[], Params | undefined>({
       query: (params) => ({ url: '/products', method: 'GET', params }),
       transformResponse: (res: { data: Product[] }) => res.data,
-      providesTags: ['Products'],
+      providesTags: ['products'],
     }),
     addProduct: build.mutation({
       query: (body) => ({
@@ -18,7 +18,7 @@ export const productsApi = baseApi.injectEndpoints({
         body,
       }),
       transformResponse: (res: { data: Product[] }) => res.data,
-      invalidatesTags: ['Products'],
+      invalidatesTags: ['products'],
     }),
     updateProduct: build.mutation<
       Product,
@@ -30,14 +30,14 @@ export const productsApi = baseApi.injectEndpoints({
         body,
       }),
       transformResponse: (res: { data: Product }) => res.data,
-      invalidatesTags: ['Products'],
+      invalidatesTags: ['products'],
     }),
     deleteProduct: build.mutation({
       query: (id) => ({
         url: `/products/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Products'],
+      invalidatesTags: ['products'],
     }),
     sellProduct: build.mutation<
       any,
@@ -48,7 +48,7 @@ export const productsApi = baseApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Products'],
+      invalidatesTags: ['products'],
     }),
   }),
 });
