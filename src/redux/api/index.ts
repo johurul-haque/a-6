@@ -16,7 +16,14 @@ export const baseApi = createApi({
       transformResponse: (response: any) => response.data,
       invalidatesTags: ['profile'],
     }),
+    deleteAccount: build.mutation({
+      query: (body: { password: string }) => ({
+        url: '/profile/delete',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useProfileQuery, useLogoutMutation } = baseApi;
+export const { useProfileQuery, useLogoutMutation , useDeleteAccountMutation} = baseApi;
