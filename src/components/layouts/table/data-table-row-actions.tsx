@@ -21,14 +21,7 @@ interface DataTableRowActionsProps {
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isFormVisible, setIsFormVisible] = useState(false);
-
-  // const ref = useClickAway<HTMLDivElement>(() => {
-  //   if (!isFormVisible) {
-  //     setIsOpen(false);
-  //   }
-  // });
-
+  
   const [deleteProduct, { isLoading }] = useDeleteProductMutation();
 
   return (
