@@ -1,13 +1,13 @@
 import { AppError } from '@/utils';
 import { Types, startSession } from 'mongoose';
 import { ProductModel } from '../product/product.model';
-import { ProductSellPayload } from './sell.interface';
-import { ProductSellModel } from './sell.model';
+import { ProductSalePayload } from './sales.interface';
+import { ProductSaleModel } from './sales.model';
 
 export async function sell(
   userId: Types.ObjectId,
   productId: Types.ObjectId,
-  payload: ProductSellPayload
+  payload: ProductSalePayload
 ) {
   const product = await ProductModel.findById(productId);
 
@@ -26,7 +26,7 @@ export async function sell(
       { quantity: remainingQuantity < 0 ? 0 : remainingQuantity }
     );
 
-    data = await ProductSellModel.create({ userId, productId, ...payload });
+    data = await ProductSaleModel.create({ userId, productId, ...payload });
 
     await session.commitTransaction();
     await session.endSession();

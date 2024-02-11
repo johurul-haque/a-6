@@ -1,14 +1,14 @@
 import { verifyToken } from '@/middlewares/auth';
 import { validateRequest } from '@/middlewares/validate-request';
 import { Router } from 'express';
-import { sellProduct } from './sell.controller';
-import { productSellSchema } from './sell.validation';
+import { sellProduct } from './sales.controller';
+import { productSaleSchema } from './sales.validation';
 
 const router = Router();
 
 router.post(
   '/sell/:productId',
-  [verifyToken, validateRequest(productSellSchema)],
+  [verifyToken, validateRequest(productSaleSchema)],
   sellProduct
 );
 

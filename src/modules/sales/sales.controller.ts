@@ -1,11 +1,11 @@
 import { catchAsync } from '@/utils';
 import { sendResponse } from '@/utils/send-response';
-import * as sellServices from './sell.service';
-import { objectId, productSellSchema } from './sell.validation';
+import * as sellServices from './sales.service';
+import { objectId, productSaleSchema } from './sales.validation';
 
 export const sellProduct = catchAsync(async (req, res) => {
   const productId = objectId.parse(req.params.productId);
-  const payload = productSellSchema.parse(req.body);
+  const payload = productSaleSchema.parse(req.body);
 
   const data = await sellServices.sell(req.jwtPayload._id, productId, payload);
 

@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
-import { ProductSell } from './sell.interface';
+import { ProductSale } from './sales.interface';
 
-const productSellModelSchema = new Schema<ProductSell>(
+const productSaleModelSchema = new Schema<ProductSale>(
   {
     userId: {
       type: Schema.Types.ObjectId,
@@ -34,4 +34,4 @@ const productSellModelSchema = new Schema<ProductSell>(
   }
 );
 
-export const ProductSellModel = model('sell', productSellModelSchema);
+export const ProductSaleModel = model('sale', productSaleModelSchema);

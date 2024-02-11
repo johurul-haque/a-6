@@ -2,8 +2,9 @@ import { env } from '@/config';
 import { AppError } from '@/utils';
 import { compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { Types } from 'mongoose';
+import { Types, startSession } from 'mongoose';
 import { ProductModel } from '../product/product.model';
+import { ProductSaleModel } from '../sales/sales.model';
 import {
   DeleteAccountPayload,
   LoginPayload,
@@ -70,8 +71,21 @@ export async function deleteAccount(
 
   if (!isMatched) throw new AppError(401, 'Password does not match.');
 
-  await UserModel.findByIdAndDelete(user._id);
-  await ProductModel.deleteMany({ userId: user._id });
+  const session = await startSession();
+
+  try {
+    session.startTransaction();
+
+    await ProductModel.deleteMany({ userId: user._id });
+    await ProductSaleModel.deleteMany({ userId: user._id });
+    await UserModel.findByIdAndDelete(user._id);
+
+    session.commitTransaction();
+    session.endSession();
+  } catch (error) {
+    session.abortTransaction();
+    session.endSession();
+  }
 
   return user;
 }
