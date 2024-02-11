@@ -12,4 +12,4 @@ router.post(
   sellProduct
 );
 
-export const SellRoutes = router;
+export const SalesRoutes = router;
