@@ -2,10 +2,12 @@ import { Button } from '@/components/ui/button';
 import { ProductsContext } from '@/pages/dashboard';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { Table } from '@tanstack/react-table';
+import { HistoryIcon } from 'lucide-react';
 import { useContext } from 'react';
 import { AddProduct } from './actions/add-product';
 import { FilterTable } from './data-table-filter';
 import { DataTableViewOptions } from './data-table-view-options';
+import { SalesHistory } from '../sales-history';
 
 export interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -40,6 +42,7 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
+      <SalesHistory />
       <AddProduct />
     </div>
   );

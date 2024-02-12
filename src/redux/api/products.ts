@@ -44,11 +44,20 @@ export const productsApi = baseApi.injectEndpoints({
       { productId: string; body: z.infer<typeof sellingFormSchema> }
     >({
       query: ({ productId, body }) => ({
-        url: `/sell/${productId}`,
+        url: `/sales`,
         method: 'POST',
-        body,
+        body: {
+          productId,
+          ...body,
+        },
       }),
       invalidatesTags: ['products'],
+    }),
+    salesHistory: build.mutation({
+      query: () => ({
+        url: '/sales-history',
+        method: 'GET',
+      }),
     }),
   }),
 });
@@ -59,4 +68,5 @@ export const {
   useUpdateProductMutation,
   useDeleteProductMutation,
   useSellProductMutation,
+  useSalesHistoryMutation,
 } = productsApi;
