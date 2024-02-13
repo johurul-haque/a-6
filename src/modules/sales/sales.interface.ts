@@ -5,6 +5,7 @@ import { productSaleSchema } from './sales.validation';
 
 export type ProductSale = z.infer<typeof productSaleSchema> & {
   userId: Types.ObjectId;
+  total_sale: number;
   date_info: {
     day: number;
     week_of_year: number;

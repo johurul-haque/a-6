@@ -2,7 +2,7 @@ import { AppError } from '@/utils';
 import { Types, startSession } from 'mongoose';
 import { ProductModel } from '../product/product.model';
 import { ProductSalePayload } from './sales.interface';
-import { ProductSaleModel } from './sales.model';
+import { ProductSalesModel } from './sales.model';
 import { getMonthName, getWeekOfYear } from './sales.utils';
 
 export async function sell(
@@ -33,8 +33,9 @@ export async function sell(
       year: payload.sold_on.split('-')[0],
     };
 
-    data = await ProductSaleModel.create({
+    data = await ProductSalesModel.create({
       userId,
+      total_sale: product.price * payload.quantity_sold,
       ...payload,
       date_info: dateInfo,
     });
@@ -49,4 +50,31 @@ export async function sell(
   return data;
 }
 
-export async function salesHistory() {}
+export async function salesHistory(
+  userId: Types.ObjectId,
+  categorizeBy: string
+) {
+  if (categorizeBy === 'monthly') {
+    return ProductSalesModel.aggregate([
+      {
+        $match: {
+          userId: new Types.ObjectId(userId),
+          'date_info.year': new Date().getFullYear(),
+        },
+      },
+      {
+        $sort: {
+          'date_info.year': -1,
+        },
+      },
+      {
+        $group: {
+          _id: '$date_info.month',
+          total_sales: {
+            $sum: '$total_sale',
+          },
+        },
+      },
+    ]);
+  }
+}

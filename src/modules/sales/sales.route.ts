@@ -11,6 +11,6 @@ router.post(
   [verifyToken, validateRequest(productSaleSchema)],
   sellProduct
 );
-router.get('/sales-history', getSalesHistory);
+router.get('/sales-history', [verifyToken], getSalesHistory);
 
 export const SalesRoutes = router;

@@ -4,7 +4,7 @@ import { compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Types, startSession } from 'mongoose';
 import { ProductModel } from '../product/product.model';
-import { ProductSaleModel } from '../sales/sales.model';
+import { ProductSalesModel } from '../sales/sales.model';
 import {
   DeleteAccountPayload,
   LoginPayload,
@@ -77,7 +77,7 @@ export async function deleteAccount(
     session.startTransaction();
 
     await ProductModel.deleteMany({ userId: user._id });
-    await ProductSaleModel.deleteMany({ userId: user._id });
+    await ProductSalesModel.deleteMany({ userId: user._id });
     await UserModel.findByIdAndDelete(user._id);
 
     session.commitTransaction();

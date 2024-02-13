@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { ProductSale } from './sales.interface';
 
-const productSaleModelSchema = new Schema<ProductSale>(
+const productSalesModelSchema = new Schema<ProductSale>(
   {
     userId: {
       type: Schema.Types.ObjectId,
@@ -13,6 +13,10 @@ const productSaleModelSchema = new Schema<ProductSale>(
       required: true,
     },
     quantity_sold: {
+      type: Number,
+      required: true,
+    },
+    total_sale: {
       type: Number,
       required: true,
     },
@@ -39,4 +43,4 @@ const productSaleModelSchema = new Schema<ProductSale>(
   }
 );
 
-export const ProductSaleModel = model('sale', productSaleModelSchema);
+export const ProductSalesModel = model('sale', productSalesModelSchema);
