@@ -10,6 +10,7 @@ import {
   YAxis,
 } from 'recharts';
 
+import { useSalesHistoryQuery } from '@/redux/api/sales';
 import { useState } from 'react';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
@@ -20,57 +21,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-
-const data = [
-  {
-    name: 'Jan',
-    total: Math.floor(Math.random() * 500) + 1000,
-  },
-  {
-    name: 'Feb',
-    total: Math.floor(Math.random() * 500) + 1000,
-  },
-  {
-    name: 'Mar',
-    total: Math.floor(Math.random() * 500) + 1000,
-  },
-  {
-    name: 'Apr',
-    total: Math.floor(Math.random() * 500) + 1000,
-  },
-  {
-    name: 'May',
-    total: Math.floor(Math.random() * 500) + 1000,
-  },
-  {
-    name: 'Jun',
-    total: Math.floor(Math.random() * 500) + 1000,
-  },
-  {
-    name: 'Jul',
-    total: Math.floor(Math.random() * 500) + 1000,
-  },
-  {
-    name: 'Aug',
-    total: Math.floor(Math.random() * 500) + 1000,
-  },
-  {
-    name: 'Sep',
-    total: Math.floor(Math.random() * 500) + 1000,
-  },
-  {
-    name: 'Oct',
-    total: Math.floor(Math.random() * 500) + 1000,
-  },
-  {
-    name: 'Nov',
-    total: Math.floor(Math.random() * 500) + 1000,
-  },
-  {
-    name: 'Dec',
-    total: Math.floor(Math.random() * 500) + 1000,
-  },
-];
 
 const tabs = [
   {
@@ -89,10 +39,13 @@ const tabs = [
     label: 'Yearly',
     handler: () => {},
   },
-];
+] as const;
+
+type Label = (typeof tabs)[number]['label'];
 
 export function SalesHistory() {
-  const [salesIn, setSalesIn] = useState('Weekly');
+  const [salesIn, setSalesIn] = useState<Label>('Monthly');
+  const { data } = useSalesHistoryQuery(salesIn.toLowerCase());
 
   return (
     <D.Dialog>
@@ -113,13 +66,13 @@ export function SalesHistory() {
             Sales History <Badge className="capitalize">{salesIn}</Badge>
           </D.DialogTitle>
           <div className="w-36">
-            <Select onValueChange={setSalesIn}>
+            <Select onValueChange={(value: Label) => setSalesIn(value)}>
               <SelectTrigger className="font-normal h-9">
                 <SelectValue placeholder="Categorize by" />
               </SelectTrigger>
-              <SelectContent defaultValue={'weekly'}>
-                {tabs.map(({ label, handler }) => (
-                  <SelectItem key={label} value={label.toLowerCase()}>
+              <SelectContent>
+                {tabs.map(({ label }) => (
+                  <SelectItem key={label} value={label}>
                     {label}
                   </SelectItem>
                 ))}
@@ -127,27 +80,38 @@ export function SalesHistory() {
             </Select>
           </div>
         </D.DialogHeader>
-        <ResponsiveContainer width="100%" height={350}>
-          <BarChart data={data}>
-            <XAxis
-              dataKey="name"
-              stroke="#888888"
-              fontSize={12}
-              tickLine={false}
-              axisLine={false}
-            />
-            <YAxis
-              stroke="#888888"
-              fontSize={12}
-              tickLine={false}
-              axisLine={false}
-              tickFormatter={(value) => `$${value}`}
-            />
-            <CartesianGrid strokeDasharray="3 3" />
-            <Tooltip />
-            <Bar dataKey="total" fill="currentColor" radius={[4, 4, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
+
+        {data && data.length < 2 ? (
+          <p className="text-center sm:text-lg -mt-5">
+            Not enough data to display
+          </p>
+        ) : (
+          <ResponsiveContainer width="100%" height={350}>
+            <BarChart data={data}>
+              <XAxis
+                dataKey="_id"
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+              />
+              <YAxis
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(value) => `$${value}`}
+              />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Tooltip />
+              <Bar
+                dataKey="total_sales"
+                fill="currentColor"
+                radius={[4, 4, 0, 0]}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        )}
       </D.DialogContent>
     </D.Dialog>
   );

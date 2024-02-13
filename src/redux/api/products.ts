@@ -51,13 +51,7 @@ export const productsApi = baseApi.injectEndpoints({
           ...body,
         },
       }),
-      invalidatesTags: ['products'],
-    }),
-    salesHistory: build.mutation({
-      query: () => ({
-        url: '/sales-history',
-        method: 'GET',
-      }),
+      invalidatesTags: ['products', 'sales'],
     }),
   }),
 });
@@ -68,5 +62,4 @@ export const {
   useUpdateProductMutation,
   useDeleteProductMutation,
   useSellProductMutation,
-  useSalesHistoryMutation,
 } = productsApi;

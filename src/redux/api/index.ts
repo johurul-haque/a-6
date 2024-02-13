@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_DOMAIN, credentials: 'include' }),
-  tagTypes: ['products', 'profile'],
+  tagTypes: ['products', 'profile', 'sales'],
   endpoints: (build) => ({
     profile: build.query({
       query: () => '/profile',
