@@ -1,4 +1,5 @@
 import * as D from '@/components/ui/dialog';
+import { formatCurrency } from '@/lib/format-currency';
 import { useSalesHistoryQuery } from '@/redux/api/sales';
 import { HistoryIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -100,7 +101,7 @@ export function SalesHistory() {
                 tickFormatter={(value) => `$${value}`}
               />
               <CartesianGrid strokeDasharray="3 3" />
-              <Tooltip />
+              <Tooltip formatter={formatCurrency} />
               <Bar
                 dataKey="total_sales"
                 fill="currentColor"
