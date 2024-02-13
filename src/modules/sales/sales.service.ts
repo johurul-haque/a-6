@@ -1,10 +1,13 @@
 import { AppError } from '@/utils';
 import { Types, startSession } from 'mongoose';
 import { ProductModel } from '../product/product.model';
-import { months } from './sales.constants';
+import {
+  categorizeBy as categorizeByConstant,
+  months,
+} from './sales.constants';
 import { ProductSalePayload } from './sales.interface';
 import { ProductSalesModel } from './sales.model';
-import { getMonthName, getWeekOfYear } from './sales.utils';
+import { getMonthName, getWeeksNumberInMonth } from './sales.utils';
 
 export async function sell(
   userId: Types.ObjectId,
@@ -28,10 +31,10 @@ export async function sell(
     );
 
     const dateInfo = {
-      day: payload.sold_on.split('-')[2],
-      week_of_year: getWeekOfYear(payload.sold_on),
+      day: new Date(payload.sold_on).getDate(),
+      week_of_year: getWeeksNumberInMonth(payload.sold_on),
       month: getMonthName(payload.sold_on),
-      year: payload.sold_on.split('-')[0],
+      year: new Date(payload.sold_on).getFullYear(),
     };
 
     data = await ProductSalesModel.create({
@@ -53,7 +56,7 @@ export async function sell(
 
 export async function salesHistory(
   userId: Types.ObjectId,
-  categorizeBy: string
+  categorizeBy: (typeof categorizeByConstant)[number]
 ) {
   if (categorizeBy === 'monthly') {
     const data = await ProductSalesModel.aggregate([
@@ -61,11 +64,6 @@ export async function salesHistory(
         $match: {
           userId: new Types.ObjectId(userId),
           'date_info.year': new Date().getFullYear(),
-        },
-      },
-      {
-        $sort: {
-          'date_info.year': -1,
         },
       },
       {
@@ -81,5 +79,35 @@ export async function salesHistory(
     return data.sort((a, b) => {
       return months.indexOf(a._id) - months.indexOf(b._id);
     });
+  }
+
+  if (categorizeBy === 'daily') {
+    return ProductSalesModel.aggregate([
+      {
+        $match: {
+          userId: new Types.ObjectId(userId),
+          'date_info.month': months[new Date().getMonth()],
+        },
+      },
+      {
+        $group: {
+          _id: '$date_info.day',
+          total_sales: {
+            $sum: '$total_sale',
+          },
+        },
+      },
+      {
+        $sort: {
+          _id: -1,
+        },
+      },
+    ]);
+  }
+
+  if (categorizeBy === 'weekly') {
+  }
+
+  if (categorizeBy === 'yearly') {
   }
 }

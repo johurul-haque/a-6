@@ -3,12 +3,9 @@ import { sendResponse } from '@/utils/send-response';
 import { z } from 'zod';
 import { categorizeBy } from './sales.constants';
 import * as sellServices from './sales.service';
-import { productSaleSchema } from './sales.validation';
 
 export const sellProduct = catchAsync(async (req, res) => {
-  const payload = productSaleSchema.parse(req.body);
-
-  const data = await sellServices.sell(req.jwtPayload._id, payload);
+  const data = await sellServices.sell(req.jwtPayload._id, req.body);
 
   sendResponse(res, {
     status: 201,
