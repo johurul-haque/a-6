@@ -22,24 +22,7 @@ import {
   SelectValue,
 } from '../ui/select';
 
-const tabs = [
-  {
-    label: 'Daily',
-    handler: () => {},
-  },
-  {
-    label: 'Weekly',
-    handler: () => {},
-  },
-  {
-    label: 'Monthly',
-    handler: () => {},
-  },
-  {
-    label: 'Yearly',
-    handler: () => {},
-  },
-];
+const categorizeByOptions = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
 
 export function SalesHistory() {
   const [categorizeBy, setCategorizeBy] = useState('monthly');
@@ -69,7 +52,7 @@ export function SalesHistory() {
                 <SelectValue placeholder="Categorize by" />
               </SelectTrigger>
               <SelectContent>
-                {tabs.map(({ label }) => (
+                {categorizeByOptions.map((label) => (
                   <SelectItem key={label} value={label}>
                     {label}
                   </SelectItem>
@@ -79,7 +62,7 @@ export function SalesHistory() {
           </div>
         </D.DialogHeader>
 
-        {data && data.length < 2 ? (
+        {!data || data.length < 2 ? (
           <p className="text-center sm:text-lg -mt-5">
             Not enough data to display
           </p>
