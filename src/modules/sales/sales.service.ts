@@ -1,6 +1,7 @@
 import { AppError } from '@/utils';
 import { Types, startSession } from 'mongoose';
 import { ProductModel } from '../product/product.model';
+import { months } from './sales.constants';
 import { ProductSalePayload } from './sales.interface';
 import { ProductSalesModel } from './sales.model';
 import { getMonthName, getWeekOfYear } from './sales.utils';
@@ -55,7 +56,7 @@ export async function salesHistory(
   categorizeBy: string
 ) {
   if (categorizeBy === 'monthly') {
-    return ProductSalesModel.aggregate([
+    const data = await ProductSalesModel.aggregate([
       {
         $match: {
           userId: new Types.ObjectId(userId),
@@ -76,5 +77,9 @@ export async function salesHistory(
         },
       },
     ]);
+
+    return data.sort((a, b) => {
+      return months.indexOf(a._id) - months.indexOf(b._id);
+    });
   }
 }
