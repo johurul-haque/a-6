@@ -47,13 +47,13 @@ export function SalesHistory() {
             Sales History <Badge className="capitalize">{categorizeBy}</Badge>
           </D.DialogTitle>
           <div className="w-36">
-            <Select onValueChange={setCategorizeBy}>
+            <Select onValueChange={setCategorizeBy} defaultValue={categorizeBy}>
               <SelectTrigger className="font-normal h-9">
                 <SelectValue placeholder="Categorize by" />
               </SelectTrigger>
               <SelectContent>
                 {categorizeByOptions.map((label) => (
-                  <SelectItem key={label} value={label}>
+                  <SelectItem key={label} value={label.toLowerCase()}>
                     {label}
                   </SelectItem>
                 ))}
