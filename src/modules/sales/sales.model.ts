@@ -25,12 +25,17 @@ const productSaleModelSchema = new Schema<ProductSale>(
       ref: 'product',
       required: true,
     },
+    date_info: {
+      day: { type: Number, required: true },
+      week_of_year: { type: Number, required: true },
+      month: { type: String, required: true },
+      year: { type: Number, required: true },
+    },
   },
   {
     toJSON: {
-      transform: (doc, { __v, createdAt, updatedAt, ...rest }) => rest,
+      transform: (doc, { __v, ...rest }) => rest,
     },
-    timestamps: true,
   }
 );
 
