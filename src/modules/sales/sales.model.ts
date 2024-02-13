@@ -31,7 +31,7 @@ const productSalesModelSchema = new Schema<ProductSale>(
     },
     date_info: {
       day: { type: Number, required: true },
-      week_of_year: { type: Number, required: true },
+      week_in_month: { type: Number, required: true },
       month: { type: String, required: true },
       year: { type: Number, required: true },
     },

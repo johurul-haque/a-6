@@ -13,4 +13,9 @@ export const months = [
   'Dec',
 ] as const;
 
-export const categorizeBy = ['daily', 'weekly', 'monthly', 'yearly'] as const;
+export const categorizeByOptions = [
+  'daily',
+  'weekly',
+  'monthly',
+  'yearly',
+] as const;

@@ -1,10 +1,7 @@
 import { AppError } from '@/utils';
 import { Types, startSession } from 'mongoose';
 import { ProductModel } from '../product/product.model';
-import {
-  categorizeBy as categorizeByConstant,
-  months,
-} from './sales.constants';
+import { categorizeByOptions, months } from './sales.constants';
 import { ProductSalePayload } from './sales.interface';
 import { ProductSalesModel } from './sales.model';
 import { getMonthName, getWeeksNumberInMonth } from './sales.utils';
@@ -32,7 +29,7 @@ export async function sell(
 
     const dateInfo = {
       day: new Date(payload.sold_on).getDate(),
-      week_of_year: getWeeksNumberInMonth(payload.sold_on),
+      week_in_month: getWeeksNumberInMonth(payload.sold_on),
       month: getMonthName(payload.sold_on),
       year: new Date(payload.sold_on).getFullYear(),
     };
@@ -56,7 +53,7 @@ export async function sell(
 
 export async function salesHistory(
   userId: Types.ObjectId,
-  categorizeBy: (typeof categorizeByConstant)[number]
+  categorizeBy: (typeof categorizeByOptions)[number]
 ) {
   if (categorizeBy === 'monthly') {
     const data = await ProductSalesModel.aggregate([
@@ -106,8 +103,50 @@ export async function salesHistory(
   }
 
   if (categorizeBy === 'weekly') {
+    return ProductSalesModel.aggregate([
+      {
+        $match: {
+          userId: new Types.ObjectId(userId),
+          'date_info.month': months[new Date().getMonth()],
+        },
+      },
+      {
+        $group: {
+          _id: '$date_info.week_in_month',
+          total_sales: {
+            $sum: '$total_sale',
+          },
+        },
+      },
+      {
+        $sort: {
+          _id: 1,
+        },
+      },
+    ]);
   }
 
   if (categorizeBy === 'yearly') {
+    return ProductSalesModel.aggregate([
+      {
+        $match: {
+          userId: new Types.ObjectId(userId),
+        },
+      },
+      {
+        $group: {
+          _id: '$date_info.year',
+          total_sales: {
+            $sum: '$total_sale',
+          },
+        },
+      },
+      { $limit: 12 },
+      {
+        $sort: {
+          _id: 1,
+        },
+      },
+    ]);
   }
 }

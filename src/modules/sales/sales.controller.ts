@@ -1,7 +1,7 @@
 import { catchAsync } from '@/utils';
 import { sendResponse } from '@/utils/send-response';
 import { z } from 'zod';
-import { categorizeBy } from './sales.constants';
+import { categorizeByOptions } from './sales.constants';
 import * as sellServices from './sales.service';
 
 export const sellProduct = catchAsync(async (req, res) => {
@@ -15,7 +15,9 @@ export const sellProduct = catchAsync(async (req, res) => {
 });
 
 export const getSalesHistory = catchAsync(async (req, res) => {
-  const categorize_by = z.enum(categorizeBy).parse(req.query.categorize_by);
+  const categorize_by = z
+    .enum(categorizeByOptions)
+    .parse(req.query.categorize_by);
 
   const data = await sellServices.salesHistory(
     req.jwtPayload._id,

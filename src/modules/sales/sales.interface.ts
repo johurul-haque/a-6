@@ -8,7 +8,7 @@ export type ProductSale = z.infer<typeof productSaleSchema> & {
   total_sale: number;
   date_info: {
     day: number;
-    week_of_year: number;
+    week_in_month: number;
     month: (typeof months)[number];
     year: number;
   };
