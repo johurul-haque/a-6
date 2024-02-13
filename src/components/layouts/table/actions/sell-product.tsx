@@ -108,6 +108,8 @@ export function SellProduct({ row }: { row: Row<Product> }) {
                       className="transition-all"
                       placeholder="Enter how many products were sold"
                       disabled={isLoading}
+                      min={1}
+                      max={quantity}
                       {...field}
                     />
                   </FormControl>
