@@ -1,5 +1,7 @@
 import * as D from '@/components/ui/dialog';
+import { useSalesHistoryQuery } from '@/redux/api/sales';
 import { HistoryIcon } from 'lucide-react';
+import { useState } from 'react';
 import {
   Bar,
   BarChart,
@@ -9,9 +11,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-
-import { useSalesHistoryQuery } from '@/redux/api/sales';
-import { useState } from 'react';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import {
@@ -39,13 +38,11 @@ const tabs = [
     label: 'Yearly',
     handler: () => {},
   },
-] as const;
-
-type Label = (typeof tabs)[number]['label'];
+];
 
 export function SalesHistory() {
-  const [salesIn, setSalesIn] = useState<Label>('Monthly');
-  const { data } = useSalesHistoryQuery(salesIn.toLowerCase());
+  const [categorizeBy, setCategorizeBy] = useState('monthly');
+  const { data } = useSalesHistoryQuery(categorizeBy.toLowerCase());
 
   return (
     <D.Dialog>
@@ -63,10 +60,10 @@ export function SalesHistory() {
         <D.DialogHeader className="mb-8 mt-2 flex flex-row justify-between items-center">
           <D.DialogTitle className="flex items-center gap-2">
             <HistoryIcon className="size-5" />
-            Sales History <Badge className="capitalize">{salesIn}</Badge>
+            Sales History <Badge className="capitalize">{categorizeBy}</Badge>
           </D.DialogTitle>
           <div className="w-36">
-            <Select onValueChange={(value: Label) => setSalesIn(value)}>
+            <Select onValueChange={setCategorizeBy}>
               <SelectTrigger className="font-normal h-9">
                 <SelectValue placeholder="Categorize by" />
               </SelectTrigger>
