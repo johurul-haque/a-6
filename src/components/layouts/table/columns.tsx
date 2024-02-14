@@ -1,9 +1,9 @@
 import { regexSearch } from '@/lib/regex-search';
 import { Product } from '@/types/product';
 import { ColumnDef } from '@tanstack/react-table';
-import { SellProduct } from './actions/sell-product';
 import { DataTableColumnHeader } from './data-table-column-header';
 import { DataTableRowActions } from './data-table-row-actions';
+import { SellProduct } from './row-actions/sell-product';
 
 export const columns: ColumnDef<Product>[] = [
   {

@@ -73,12 +73,13 @@ export function DeleteAccount({
         <D.DialogFooter className="mt-3">
           <Button
             variant={'secondary'}
+            type="button"
             disabled={isLoading}
             onClick={() => setIsOpen(false)}
           >
             Cancel
           </Button>
-          <Button type="submit" variant={'destructive'} disabled={isLoading}>
+          <Button type="button" variant={'destructive'} disabled={isLoading}>
             Confirm
           </Button>
         </D.DialogFooter>
