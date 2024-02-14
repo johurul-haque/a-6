@@ -14,11 +14,13 @@ import { ProductFormFields } from '../../product-form-fields';
 type DuplicateRowProps = {
   row: Product;
   children: ReactNode;
+  setIsDropdownOpen: SetStateActionType<boolean>;
 };
 
 export function DuplicateRow({
   row,
   children,
+  setIsDropdownOpen,
 }: DuplicateRowProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [addProduct, { isLoading }] = useAddProductMutation();
@@ -30,12 +32,7 @@ export function DuplicateRow({
 
   return (
     <>
-      <D.Dialog
-        open={isOpen}
-        onOpenChange={(open) => {
-          setIsOpen(open);
-        }}
-      >
+      <D.Dialog open={isOpen} onOpenChange={setIsOpen}>
         <D.DialogTrigger asChild>{children}</D.DialogTrigger>
         <D.DialogContent className="sm:max-w-[550px] overflow-y-auto max-h-[94svh]">
           <D.DialogHeader className="mt-2">
@@ -52,6 +49,7 @@ export function DuplicateRow({
               onSubmit={form.handleSubmit((values) => {
                 addProduct(values);
                 setIsOpen(false);
+                setIsDropdownOpen(false);
               })}
               className="grid gap-3"
             >

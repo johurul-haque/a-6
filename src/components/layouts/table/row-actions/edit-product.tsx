@@ -14,9 +14,14 @@ import { ProductFormFields } from '../../product-form-fields';
 type EditProductProps = {
   row: Product;
   children: ReactNode;
+  setIsDropdownOpen: SetStateActionType<boolean>;
 };
 
-export function EditProduct({ row, children }: EditProductProps) {
+export function EditProduct({
+  row,
+  children,
+  setIsDropdownOpen,
+}: EditProductProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const [updateProduct, { isLoading }] = useUpdateProductMutation();
@@ -27,12 +32,7 @@ export function EditProduct({ row, children }: EditProductProps) {
   });
 
   return (
-    <D.Dialog
-      open={isOpen}
-      onOpenChange={(open) => {
-        setIsOpen(open);
-      }}
-    >
+    <D.Dialog open={isOpen} onOpenChange={setIsOpen}>
       <D.DialogTrigger asChild>{children}</D.DialogTrigger>
       <D.DialogContent className="sm:max-w-[550px] overflow-y-auto max-h-[94svh]">
         <D.DialogHeader className="mt-2">
@@ -50,6 +50,7 @@ export function EditProduct({ row, children }: EditProductProps) {
             onSubmit={form.handleSubmit((values) => {
               updateProduct({ body: values, id: row._id });
               setIsOpen(false);
+              setIsDropdownOpen(false);
             })}
             className="grid gap-3"
           >
