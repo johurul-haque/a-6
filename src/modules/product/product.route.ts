@@ -3,11 +3,12 @@ import { validateRequest } from '@/middlewares/validate-request';
 import { Router } from 'express';
 import {
   addProduct,
+  bulkDeleteProducts,
   deleteProduct,
   getProducts,
   updateProduct,
 } from './product.controller';
-import { productSchema } from './product.validation';
+import { bulkDeleteSchema, productSchema } from './product.validation';
 
 const router = Router();
 
@@ -17,6 +18,11 @@ router.patch(
   '/:productId',
   [verifyToken, validateRequest(productSchema.deepPartial())],
   updateProduct
+);
+router.delete(
+  '/bulk-delete',
+  [verifyToken, validateRequest(bulkDeleteSchema)],
+  bulkDeleteProducts
 );
 router.delete('/:productId', [verifyToken], deleteProduct);
 

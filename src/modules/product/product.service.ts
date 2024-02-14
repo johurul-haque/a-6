@@ -1,5 +1,5 @@
 import { Types } from 'mongoose';
-import { Product, Query } from './product.interface';
+import { BulkDeletePayload, Product, Query } from './product.interface';
 import { ProductModel } from './product.model';
 import { queryBuilder } from './product.utils';
 
@@ -40,4 +40,8 @@ export async function update(payload: Partial<Product>, productId: string) {
 
 export async function remove(productId: string) {
   return ProductModel.deleteOne({ _id: productId });
+}
+
+export async function bulkDelete(payload: BulkDeletePayload) {
+  return ProductModel.deleteMany({ _id: { $in: payload.productIds } });
 }

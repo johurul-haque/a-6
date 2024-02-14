@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { z } from 'zod';
 import { hinge } from './product.interface';
 
@@ -16,4 +17,8 @@ export const productSchema = z.object({
   temple_length: z.number(),
   bridge_size: z.number(),
   hinge_type: z.enum(hinge),
+});
+
+export const bulkDeleteSchema = z.object({
+  productIds: z.custom<Types.ObjectId>().array(),
 });

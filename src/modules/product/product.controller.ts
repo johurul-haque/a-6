@@ -54,3 +54,12 @@ export const deleteProduct = catchAsync(async (req, res) => {
     data: null,
   });
 });
+
+export const bulkDeleteProducts = catchAsync(async (req, res) => {
+  const result = await productServices.bulkDelete(req.body);
+
+  sendResponse(res, {
+    status: 200,
+    message: `${result.deletedCount} products were deleted successfully!`,
+  });
+});
