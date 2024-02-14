@@ -1,29 +1,24 @@
 import { catchAsync } from '@/utils';
 import { sendResponse } from '@/utils/send-response';
-import { setCookie } from '@/utils/set-cookie';
 import { LoginPayload, User } from './user.interface';
 import * as userServices from './user.service';
 
 export const registerUser = catchAsync<User>(async (req, res) => {
-  const { user, token } = await userServices.create(req.body);
-
-  setCookie(res, token);
+  const data = await userServices.create(req.body);
 
   return sendResponse(res, {
     status: 201,
     message: 'User created successfully',
-    data: user,
+    data,
   });
 });
 
 export const loginUser = catchAsync<LoginPayload>(async (req, res) => {
-  const { token, user } = await userServices.login(req.body);
-
-  setCookie(res, token);
+  const data = await userServices.login(req.body);
 
   return sendResponse(res, {
     message: 'Login successful',
-    data: user,
+    data,
   });
 });
 
