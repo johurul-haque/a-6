@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ProductsContext } from '@/pages/dashboard';
+import { useBulkDeleteMutation } from '@/redux/api/products';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { Row, Table } from '@tanstack/react-table';
 import { Trash2Icon } from 'lucide-react';
@@ -19,9 +20,11 @@ export function DataTableToolbar<TData>({
   const isFiltered = table.getState().columnFilters.length > 0;
   const isSelected =
     table.getIsSomeRowsSelected() || table.getIsAllRowsSelected();
-  const selectedRows = table.getSelectedRowModel().rows;
 
+  const selectedRows = table.getSelectedRowModel().rows;
   const selectedRowsId = getSelectedRowsId(selectedRows);
+
+  const [bulkDelete, { isLoading }] = useBulkDeleteMutation();
 
   const context = useContext(ProductsContext);
 
@@ -49,7 +52,15 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       {isSelected && (
-        <Button variant="destructive" className="h-8 px-2 lg:px-3">
+        <Button
+          variant="destructive"
+          className="h-8 px-2 lg:px-3"
+          onClick={() => {
+            bulkDelete(selectedRowsId);
+            table.toggleAllRowsSelected(false);
+          }}
+          disabled={isLoading}
+        >
           <Trash2Icon className="mr-2 size-4" />
           Delete selected
         </Button>

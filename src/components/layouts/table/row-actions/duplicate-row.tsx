@@ -4,7 +4,6 @@ import { Form } from '@/components/ui/form';
 import { useAddProductMutation } from '@/redux/api/products';
 import { productSchema } from '@/schema/products-form-schema';
 import { Product, ProductSchema } from '@/types/product';
-import { SetStateActionType } from '@/types/set-state-action';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CopyPlusIcon } from 'lucide-react';
 import { ReactNode, useState } from 'react';
@@ -14,14 +13,9 @@ import { ProductFormFields } from '../../product-form-fields';
 type DuplicateRowProps = {
   row: Product;
   children: ReactNode;
-  setIsDropdownOpen: SetStateActionType<boolean>;
 };
 
-export function DuplicateRow({
-  row,
-  children,
-  setIsDropdownOpen,
-}: DuplicateRowProps) {
+export function DuplicateRow({ row, children }: DuplicateRowProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [addProduct, { isLoading }] = useAddProductMutation();
 
@@ -49,7 +43,6 @@ export function DuplicateRow({
               onSubmit={form.handleSubmit((values) => {
                 addProduct(values);
                 setIsOpen(false);
-                setIsDropdownOpen(false);
               })}
               className="grid gap-3"
             >

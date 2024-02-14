@@ -14,13 +14,11 @@ import { ProductFormFields } from '../../product-form-fields';
 type EditProductProps = {
   row: Product;
   children: ReactNode;
-  setIsDropdownOpen: SetStateActionType<boolean>;
 };
 
 export function EditProduct({
   row,
   children,
-  setIsDropdownOpen,
 }: EditProductProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -50,7 +48,6 @@ export function EditProduct({
             onSubmit={form.handleSubmit((values) => {
               updateProduct({ body: values, id: row._id });
               setIsOpen(false);
-              setIsDropdownOpen(false);
             })}
             className="grid gap-3"
           >

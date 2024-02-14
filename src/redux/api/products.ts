@@ -39,6 +39,14 @@ export const productsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['products'],
     }),
+    bulkDelete: build.mutation({
+      query: (productIds: string[]) => ({
+        url: '/products/bulk-delete',
+        method: 'DELETE',
+        body: { productIds },
+      }),
+      invalidatesTags: ['products'],
+    }),
     sellProduct: build.mutation<
       any,
       { productId: string; body: z.infer<typeof sellingFormSchema> }
@@ -60,6 +68,7 @@ export const {
   useProductsQuery,
   useAddProductMutation,
   useUpdateProductMutation,
+  useBulkDeleteMutation,
   useDeleteProductMutation,
   useSellProductMutation,
 } = productsApi;

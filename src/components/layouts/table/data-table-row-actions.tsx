@@ -34,7 +34,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-[160px]">
-        <EditProduct setIsDropdownOpen={setIsOpen} row={row.original}>
+        <EditProduct row={row.original}>
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
             Edit
             <DropdownMenuShortcut>
@@ -43,7 +43,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           </DropdownMenuItem>
         </EditProduct>
 
-        <DuplicateRow setIsDropdownOpen={setIsOpen} row={row.original}>
+        <DuplicateRow row={row.original}>
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
             Duplicate
             <DropdownMenuShortcut>
