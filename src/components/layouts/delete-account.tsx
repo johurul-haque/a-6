@@ -1,6 +1,7 @@
 import * as D from '@/components/ui/dialog';
 import { useDeleteAccountMutation } from '@/redux/api/auth';
 import { SetStateActionType } from '@/types/set-state-action';
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
 import { Eye } from '../icons';
@@ -27,7 +28,8 @@ export function DeleteAccount({
   };
 
   if (data) {
-    router.reload();
+    Cookies.remove('token');
+    router.push('/register');
     setIsOpen(false);
   }
 
