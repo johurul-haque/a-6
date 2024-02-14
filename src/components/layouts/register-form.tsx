@@ -6,6 +6,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { setTokenCookie } from '@/lib/set-cookie';
 import { cn } from '@/lib/utils';
 import { useRegisterMutation } from '@/redux/api/auth';
 import { RegisterPayload, registerFormSchema } from '@/schema/auth-form-schema';
@@ -38,7 +39,10 @@ export function RegisterForm({
     resolver: zodResolver(registerFormSchema),
   });
 
-  if (data) router.reload();
+  if (data) {
+    setTokenCookie(data.token);
+    router.reload();
+  }
 
   if (error && 'message' in error) {
     setError(error.message);

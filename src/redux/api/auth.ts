@@ -1,5 +1,11 @@
 import { LoginPayload, RegisterPayload } from '@/schema/auth-form-schema';
+import { User } from '@/types/user';
 import { baseApi } from '.';
+
+type LoginResponse = {
+  user: User;
+  token: string;
+};
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -17,6 +23,7 @@ const authApi = baseApi.injectEndpoints({
         method: 'POST',
         body,
       }),
+      transformResponse: ({ data }: { data: LoginResponse }) => data,
       transformErrorResponse: (response) => response.data,
     }),
     logout: build.mutation({

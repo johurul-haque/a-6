@@ -6,6 +6,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { setTokenCookie } from '@/lib/set-cookie';
 import { cn } from '@/lib/utils';
 import { useLoginMutation } from '@/redux/api/auth';
 import { LoginPayload, loginFormSchema } from '@/schema/auth-form-schema';
@@ -36,7 +37,10 @@ export function LoginForm({ className, setError }: LoginFormProps) {
     setError(error.message);
   }
 
-  if (data) router.reload();
+  if (data) {
+    setTokenCookie(data.token);
+    router.reload();
+  }
 
   return (
     <div className={cn('grid gap-6', className)}>
