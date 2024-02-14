@@ -6,11 +6,12 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useDeleteProductMutation } from '@/redux/api/products';
 import { Product } from '@/types/product';
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
 import { CopyPlusIcon, Edit, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import { DeleteRow } from './row-actions/delete-row';
 import { DuplicateRow } from './row-actions/duplicate-row';
 import { EditProduct } from './row-actions/edit-product';
 
@@ -19,10 +20,10 @@ interface DataTableRowActionsProps {
 }
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {
-  const [deleteProduct, { isLoading }] = useDeleteProductMutation();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
@@ -51,18 +52,17 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           </DropdownMenuItem>
         </DuplicateRow>
 
-        <DropdownMenuItem
-          className="w-full text-rose-600 hover:bg-rose-100 hover:text-rose-600 focus:bg-rose-100 focus:text-rose-600"
-          onClick={() => {
-            deleteProduct(row.original._id);
-          }}
-          disabled={isLoading}
-        >
-          Delete
-          <DropdownMenuShortcut>
-            <Trash2 className="size-4 stroke-current" />
-          </DropdownMenuShortcut>
-        </DropdownMenuItem>
+        <DeleteRow setIsDropdownOpen={setIsOpen} rowId={row.original._id}>
+          <DropdownMenuItem
+            className="w-full text-rose-600 hover:bg-rose-100 hover:text-rose-600 focus:bg-rose-100 focus:text-rose-600"
+            onSelect={(e) => e.preventDefault()}
+          >
+            Delete
+            <DropdownMenuShortcut>
+              <Trash2 className="size-4 stroke-current" />
+            </DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DeleteRow>
       </DropdownMenuContent>
     </DropdownMenu>
   );
