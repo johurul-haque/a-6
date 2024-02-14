@@ -56,9 +56,6 @@ dependencies:
   date-fns:
     specifier: ^3.3.1
     version: 3.3.1
-  envalid:
-    specifier: ^8.0.0
-    version: 8.0.0
   js-cookie:
     specifier: ^3.0.5
     version: 3.0.5
@@ -1997,13 +1994,6 @@ packages:
       graceful-fs: 4.2.11
       tapable: 2.2.1
     dev: true
-
-  /envalid@8.0.0:
-    resolution: {integrity: sha512-PGeYJnJB5naN0ME6SH8nFcDj9HVbLpYIfg1p5lAyM9T4cH2lwtu2fLbozC/bq+HUUOIFxhX/LP0/GmlqPHT4tQ==}
-    engines: {node: '>=8.12'}
-    dependencies:
-      tslib: 2.6.2
-    dev: false
 
   /es-abstract@1.22.3:
     resolution: {integrity: sha512-eiiY8HQeYfYH2Con2berK+To6GrK2RxbPawDkGq4UiCQQfZHb6wX9qQqkbpPqaxQFcl8d9QzZqo0tGE0VcrdwA==}

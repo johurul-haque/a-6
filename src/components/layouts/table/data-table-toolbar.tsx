@@ -32,7 +32,7 @@ export function DataTableToolbar<TData>({
             variant="ghost"
             onClick={() => {
               table.resetColumnFilters();
-              context.setParams(undefined);
+              context.removeUrlParams();
             }}
             className="h-8 px-2 lg:px-3"
           >

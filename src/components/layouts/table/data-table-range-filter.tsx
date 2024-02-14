@@ -22,9 +22,7 @@ export function DataTableRangeFilter({ title }: DataTableRangeFilterProps) {
   const [inputValues, setInputValues] = useState(defaultValues);
   const context = useContext(ProductsContext);
 
-  if (!context) {
-    return;
-  }
+  if (!context) return;
 
   return (
     <Popover>
@@ -113,21 +111,21 @@ function handleSave(
 ) {
   if (title === 'price') {
     if (inputValues.min_price && inputValues.max_price) {
-      context.setParams({
+      context.setUrlParams({
         min_price: inputValues.min_price,
         max_price: inputValues.max_price,
       });
     } else if (inputValues.min_price) {
-      context.setParams({
+      context.setUrlParams({
         min_price: inputValues.min_price,
       });
     } else if (inputValues.max_price) {
-      context.setParams({
+      context.setUrlParams({
         max_price: inputValues.max_price,
       });
     }
   } else {
-    context.setParams({
+    context.setUrlParams({
       [title.split(' ').join('_')]: inputValues.value,
     });
   }

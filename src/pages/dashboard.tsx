@@ -3,11 +3,11 @@ import { columns } from '@/components/layouts/table/columns';
 import { DataTable } from '@/components/layouts/table/data-table';
 import { useProductsQuery } from '@/redux/api/products';
 import { Params } from '@/types/query-params';
-import { SetStateActionType } from '@/types/set-state-action';
 import { createContext, useState } from 'react';
 
 export type ContextType = {
-  setParams: SetStateActionType<Params | undefined>;
+  setUrlParams: (params: Params) => void;
+  removeUrlParams: () => void;
   params: Params | undefined;
 };
 
@@ -17,11 +17,21 @@ export default function Dashboard() {
   const [params, setParams] = useState<Params | undefined>(undefined);
   const { data: products, isSuccess } = useProductsQuery(params);
 
+  function setUrlParams(params: Params) {
+    setParams((prev) => ({ ...prev, ...params }));
+  }
+
+  function removeUrlParams() {
+    setParams(undefined);
+  }
+
   return (
     <>
       <Header />
 
-      <ProductsContext.Provider value={{ setParams, params }}>
+      <ProductsContext.Provider
+        value={{ setUrlParams, params, removeUrlParams }}
+      >
         <main className="container py-10">
           {isSuccess && <DataTable data={products} columns={columns} />}
         </main>
