@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useProfileQuery } from '@/redux/api';
 import { useLogoutMutation } from '@/redux/api/auth';
+import Cookies from 'js-cookie';
 import { LogOut, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -25,7 +26,10 @@ export function UserProfile() {
 
   const router = useRouter();
 
-  if (data) router.reload();
+  if (data) {
+    Cookies.remove('token');
+    router.reload();
+  }
 
   return (
     <D.Dialog open={isOpen} onOpenChange={setIsOpen}>

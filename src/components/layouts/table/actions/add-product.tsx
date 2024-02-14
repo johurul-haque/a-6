@@ -33,7 +33,7 @@ export function AddProduct() {
               <BadgePlus className="size-5" />
               Add new product
             </D.DialogTitle>
-            <D.DialogDescription>
+            <D.DialogDescription className="text-left">
               Provide details of the new product here. Click save when you are
               done.
             </D.DialogDescription>

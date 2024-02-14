@@ -25,14 +25,14 @@ export function EditProduct({ row, setIsOpen }: EditProductProps) {
 
   return (
     <>
-      <D.DialogContent className="sm:max-w-[550px]">
+      <D.DialogContent className="sm:max-w-[550px] overflow-y-auto max-h-[94svh]">
         <D.DialogHeader className="mt-2">
           <D.DialogTitle className="flex gap-2">
             <Edit className="size-5" />
             Edit product
           </D.DialogTitle>
 
-          <D.DialogDescription>
+          <D.DialogDescription className="text-left">
             Modify details of the product here. Click save when you are done.
           </D.DialogDescription>
         </D.DialogHeader>
