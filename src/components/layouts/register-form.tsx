@@ -12,6 +12,7 @@ import { useRegisterMutation } from '@/redux/api/auth';
 import { RegisterPayload, registerFormSchema } from '@/schema/auth-form-schema';
 import { SetStateActionType } from '@/types/set-state-action';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { EyeOffIcon } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -32,7 +33,7 @@ export function RegisterForm({
 }: RegisterFormProps) {
   const [register, { isLoading, data, error }] = useRegisterMutation();
 
-  const [showPassword, setShowPassword] = useState(false);
+  const [isShowing, setIsShowing] = useState(false);
   const router = useRouter();
 
   const form = useForm<RegisterPayload>({
@@ -106,7 +107,7 @@ export function RegisterForm({
                     <FormControl>
                       <Input
                         className="transition-all"
-                        type={showPassword ? 'text' : 'password'}
+                        type={isShowing ? 'text' : 'password'}
                         placeholder="****"
                         disabled={isLoading}
                         {...field}
@@ -114,16 +115,23 @@ export function RegisterForm({
                     </FormControl>
                     <button
                       type="button"
-                      onClick={() => setShowPassword(!showPassword)}
+                      onClick={() => setIsShowing(!isShowing)}
                       className="absolute translate-y-1/2 bottom-1/2 right-3"
                     >
                       <span className="sr-only">
-                        {showPassword ? 'Hide' : 'Show'} password
+                        {isShowing ? 'Hide' : 'Show'} password
                       </span>
-                      <Eye
-                        aria-hidden={true}
-                        className="stroke-gray-700 hover:stroke-gray-800"
-                      />
+                      {isShowing ? (
+                        <Eye
+                          aria-hidden={true}
+                          className="stroke-gray-700 hover:stroke-gray-800"
+                        />
+                      ) : (
+                        <EyeOffIcon
+                          aria-hidden={true}
+                          className="stroke-gray-700 hover:stroke-gray-800"
+                        />
+                      )}
                     </button>
                   </div>
                   <FormMessage />

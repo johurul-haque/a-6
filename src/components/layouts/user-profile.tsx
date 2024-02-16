@@ -28,7 +28,7 @@ export function UserProfile() {
 
   if (data) {
     Cookies.remove('token');
-    router.push('/login');
+    router.reload();
   }
 
   return (

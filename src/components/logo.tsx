@@ -12,7 +12,7 @@ export function Logo({ className }: LogoProps) {
   return (
     <div
       className={cn(
-        'relative z-20 flex items-center text-lg font-medium',
+        'relative z-20 flex items-center text-lg font-medium select-none',
         className?.wrapper
       )}
     >
