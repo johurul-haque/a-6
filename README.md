@@ -1,26 +1,53 @@
-## Getting Started
-After installing all of the dependencies change the `.env.example` file `.env` and add the necessary variables.
+<h1 align="center">
+  A-5
+</h1>
 
-Now you can use the following commands to spin up your app.
-> ⚠️ Only use npm when building for production
+<p align="center">
+ Inventory management system for an Eye-glass selling store.
+</p>
+
+<div align="center">
+  <a href="https://a-5-by-johurul.vercel.app/">Live Site</a>
+</div>
+
+## Tech stack
+- **TypeScript** - Static type checking
+- **Express.js** - Route handling and middleware
+- **MongoDB** - Storing and managing data
+- **Mongoose** - Data modeling and query building
+- **Zod** - Validating and parsing incoming and inferring types
+- **JWT** - Authenticating users
+
+## Getting started
+Create a `.env` file at the root of your project and add the following variables
+
+```ini
+NODE_ENV=development
+
+MONGODB_URI=mongodb+srv://...
+JWT_SECRET=****
+
+CLIENT_DOMAIN=http://localhost:3000
+```
+
+To generate a **JWT secret** use the following commands
 ```bash
-# dev server
-npm run dev
+$ node
+$ require('crypto').randomBytes(32).toString('hex')
+```
 
-# production build
+Now you can use the following commands
+
+```bash
+# install dependencies
+pnpm install
+
+# dev server
+pnpm dev
+
+# build for production only using npm
 npm run build
 
 # running in production
-npm start
-```
-
-After starting the dev server run the following command to check if it's working
-
-```bash
-curl http://localhost:8080/api/
-```
-
-This should send back the following response:
-```
-{"message":"Hello word!"}
+pnpm start
 ```
