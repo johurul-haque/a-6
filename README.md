@@ -16,8 +16,7 @@
 
 ## Tech stack
 - **Next.js (Pages router)** - Only for routing and middleware
-- **Redux** - For client-side state management
-- **RTK Query** - Data querying and mutating 
+- **Redux Toolkit** - For client-side state management and data fetching
 - **TypeScript** - Static type checking
 - **Shadcn** - For building complex user interfaces with *Tailwind CSS*
 - **Tanstack Table** - For creating dynamic data table
