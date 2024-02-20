@@ -15,7 +15,7 @@
 </div>
 
 ## Tech stack
-- **Next.js (page router)** - Only for routing and middleware
+- **Next.js (Pages router)** - Only for routing and middleware
 - **Redux** - For client-side state management
 - **RTK Query** - Data querying and mutating 
 - **TypeScript** - Static type checking
