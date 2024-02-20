@@ -3,7 +3,11 @@
 </h1>
 
 <p align="center">
- Inventory management system for an Eye-glass selling store.
+ Inventory Management Dashboard for eye-glass selling store.
+</p>
+
+<p align="center">
+ <strong>Johurul Haque (L2B2-0699)</strong>
 </p>
 
 <div align="center">
