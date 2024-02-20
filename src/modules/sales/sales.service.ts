@@ -1,3 +1,4 @@
+import { env } from '@/config';
 import { AppError } from '@/utils';
 import { Types, startSession } from 'mongoose';
 import { ProductModel } from '../product/product.model';
@@ -16,6 +17,13 @@ export async function sell(
 
   const remainingQuantity = product.quantity - payload.quantity_sold;
 
+  const dateInfo = {
+    day: new Date(payload.sold_on).getDate() + (env.isDevelopment ? 0 : 1),
+    week_in_month: getWeeksNumberInMonth(payload.sold_on),
+    month: getMonthName(payload.sold_on),
+    year: new Date(payload.sold_on).getFullYear(),
+  };
+
   let data;
   const session = await startSession();
 
@@ -26,13 +34,6 @@ export async function sell(
       { _id: product._id },
       { quantity: remainingQuantity < 0 ? 0 : remainingQuantity }
     );
-
-    const dateInfo = {
-      day: new Date(payload.sold_on).getDate(),
-      week_in_month: getWeeksNumberInMonth(payload.sold_on),
-      month: getMonthName(payload.sold_on),
-      year: new Date(payload.sold_on).getFullYear(),
-    };
 
     data = await ProductSalesModel.create({
       userId,
@@ -46,6 +47,8 @@ export async function sell(
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
+
+    throw new Error();
   }
 
   return data;

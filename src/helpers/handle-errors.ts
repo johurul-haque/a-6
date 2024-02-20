@@ -22,7 +22,7 @@ export function appError(error: AppError): ErrorResponse {
 export function serverError(error: Error): ErrorResponse {
   return {
     status: 500,
-    message: error.message,
+    message: 'Internal Server Error',
     error: {
       sources: [],
       stack: getStack(error.stack),
