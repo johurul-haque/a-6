@@ -16,10 +16,9 @@ export const addProduct = catchAsync(async (req, res) => {
 });
 
 export const getProducts = catchAsync(async (req, res) => {
-  const queries = req.query as Query,
-    { _id } = req.jwtPayload;
+  const queries = req.query as Query;
 
-  const data = await productServices.get(queries, _id);
+  const data = await productServices.get(queries, req.jwtPayload);
 
   sendResponse(res, {
     message: 'Product successfully retrieved',
@@ -30,7 +29,7 @@ export const getProducts = catchAsync(async (req, res) => {
 export const updateProduct = catchAsync(async (req, res) => {
   const { productId } = req.params;
 
-  const data = await productServices.update(req.body, productId);
+  const data = await productServices.update(req.jwtPayload, productId ,req.body);
 
   if (!data) throw new AppError(404, 'Product not found.');
 
@@ -44,7 +43,7 @@ export const updateProduct = catchAsync(async (req, res) => {
 export const deleteProduct = catchAsync(async (req, res) => {
   const { productId } = req.params;
 
-  const result = await productServices.remove(productId);
+  const result = await productServices.remove(productId, req.jwtPayload);
 
   if (!result.deletedCount) throw new AppError(404, 'Product not found.');
 
@@ -56,7 +55,7 @@ export const deleteProduct = catchAsync(async (req, res) => {
 });
 
 export const bulkDeleteProducts = catchAsync(async (req, res) => {
-  const result = await productServices.bulkDelete(req.body);
+  const result = await productServices.bulkDelete(req.body, req.jwtPayload);
 
   sendResponse(res, {
     status: 200,

@@ -17,7 +17,7 @@ import { UserModel } from './user.model';
 export async function create(payload: User) {
   const user = await UserModel.create(payload);
 
-  const token = jwt.sign({ _id: user._id }, env.JWT_SECRET, {
+  const token = jwt.sign({ _id: user._id, role: user.role }, env.JWT_SECRET, {
     expiresIn: '15d',
   });
 
@@ -33,7 +33,7 @@ export async function login(payload: LoginPayload) {
 
   if (!isMatched) throw new AppError(401, 'Password does not match.');
 
-  const token = jwt.sign({ _id: user._id }, env.JWT_SECRET, {
+  const token = jwt.sign({ _id: user._id, role: user.role }, env.JWT_SECRET, {
     expiresIn: '15d',
   });
 

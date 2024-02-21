@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { Role } from './user.constants';
 import {
   deleteAccountPayload,
   jwtPayload,
@@ -7,7 +8,9 @@ import {
   userSchema,
 } from './user.validation';
 
-export type User = z.infer<typeof userSchema>;
+export type User = z.infer<typeof userSchema> & {
+  role: Role;
+};
 export type LoginPayload = z.infer<typeof loginPayload>;
 export type TJwtPayload = z.infer<typeof jwtPayload>;
 export type LogoutPayload = z.infer<typeof logoutPayload>;

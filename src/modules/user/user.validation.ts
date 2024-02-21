@@ -1,5 +1,6 @@
 import { Types } from 'mongoose';
 import { z } from 'zod';
+import { role } from './user.constants';
 
 export const userSchema = z.object({
   name: z.string(),
@@ -14,6 +15,7 @@ export const loginPayload = z.object({
 
 export const jwtPayload = z.object({
   _id: z.custom<Types.ObjectId>(),
+  role: z.enum(role),
 });
 
 export const logoutPayload = z.object({
