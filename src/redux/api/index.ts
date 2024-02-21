@@ -7,8 +7,14 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: SERVER_DOMAIN,
     credentials: 'include',
-    headers: {
-      Authorization: Cookies.get('token') as string,
+    prepareHeaders: (headers) => {
+      const token = Cookies.get('token');
+
+      if (token) {
+        headers.set('authorization', token);
+      }
+
+      return headers;
     },
   }),
   tagTypes: ['products', 'profile', 'sales'],
