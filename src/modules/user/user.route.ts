@@ -20,16 +20,16 @@ const router = Router();
 router.post('/register', validateRequest(userSchema), registerUser);
 router.post('/login', validateRequest(loginPayload), loginUser);
 
-router.get('/profile', verifyToken, getUserData);
+router.get('/profile', verifyToken(), getUserData);
 
 router.post(
   '/logout',
-  [verifyToken, validateRequest(logoutPayload)],
+  [verifyToken(), validateRequest(logoutPayload)],
   logoutUser
 );
 router.post(
   '/profile/delete',
-  [verifyToken, validateRequest(deleteAccountPayload)],
+  [verifyToken(), validateRequest(deleteAccountPayload)],
   deleteUser
 );
 

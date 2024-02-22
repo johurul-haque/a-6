@@ -12,18 +12,22 @@ import { bulkDeleteSchema, productSchema } from './product.validation';
 
 const router = Router();
 
-router.get('/', verifyToken, getProducts);
-router.post('/add', [verifyToken, validateRequest(productSchema)], addProduct);
+router.get('/', verifyToken(), getProducts);
+router.post(
+  '/add',
+  [verifyToken(), validateRequest(productSchema)],
+  addProduct
+);
 router.patch(
   '/:productId',
-  [verifyToken, validateRequest(productSchema.deepPartial())],
+  [verifyToken(), validateRequest(productSchema.deepPartial())],
   updateProduct
 );
 router.delete(
   '/bulk-delete',
-  [verifyToken, validateRequest(bulkDeleteSchema)],
+  [verifyToken(), validateRequest(bulkDeleteSchema)],
   bulkDeleteProducts
 );
-router.delete('/:productId', [verifyToken], deleteProduct);
+router.delete('/:productId', [verifyToken()], deleteProduct);
 
 export const ProductRoutes = router;
