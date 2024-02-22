@@ -120,7 +120,7 @@ export function RegisterForm({
                       <span className="sr-only">
                         {isShowing ? 'Hide' : 'Show'} password
                       </span>
-                      {isShowing ? <Eye /> : <EyeClosed />}
+                      {isShowing ? <EyeClosed /> : <Eye />}
                     </button>
                   </div>
                   <FormMessage />
