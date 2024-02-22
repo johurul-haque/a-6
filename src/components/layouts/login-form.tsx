@@ -12,11 +12,10 @@ import { useLoginMutation } from '@/redux/api/auth';
 import { LoginPayload, loginFormSchema } from '@/schema/auth-form-schema';
 import { SetStateActionType } from '@/types/set-state-action';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { EyeOffIcon } from 'lucide-react';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Eye } from '../icons';
+import { Eye, EyeClosed } from '../icons';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 
@@ -93,17 +92,7 @@ export function LoginForm({ className, setError }: LoginFormProps) {
                       <span className="sr-only">
                         {isShowing ? 'Hide' : 'Show'} password
                       </span>
-                      {isShowing ? (
-                        <Eye
-                          aria-hidden={true}
-                          className="stroke-gray-700 hover:stroke-gray-800"
-                        />
-                      ) : (
-                        <EyeOffIcon
-                          aria-hidden={true}
-                          className="stroke-gray-700 hover:stroke-gray-800"
-                        />
-                      )}
+                      {isShowing ? <EyeClosed /> : <Eye />}
                     </button>
                   </div>
                 </FormControl>
