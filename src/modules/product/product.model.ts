@@ -25,7 +25,7 @@ const productModelSchema = new Schema<TProductModel>(
   },
   {
     toJSON: {
-      transform: (doc, { __v, userId, quantity, ...rest }) => rest,
+      transform: (doc, { __v, userId, ...rest }) => rest,
     },
   }
 );

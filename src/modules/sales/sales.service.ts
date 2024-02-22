@@ -58,7 +58,7 @@ export async function getAllTransactions(userId: Types.ObjectId) {
   return ProductSalesModel.find(
     { userId },
     { userId: 0, date_info: 0 }
-  ).populate('productId');
+  ).populate('productId', 'name -_id');
 }
 
 export async function salesHistory(
