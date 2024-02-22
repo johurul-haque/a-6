@@ -19,7 +19,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { useSellProductMutation } from '@/redux/api/products';
+import { useSellProductMutation } from '@/redux/api/sales';
 import { Product } from '@/types/product';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Row } from '@tanstack/react-table';

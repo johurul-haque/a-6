@@ -47,20 +47,6 @@ export const productsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['products'],
     }),
-    sellProduct: build.mutation<
-      any,
-      { productId: string; body: z.infer<typeof sellingFormSchema> }
-    >({
-      query: ({ productId, body }) => ({
-        url: `/sales`,
-        method: 'POST',
-        body: {
-          productId,
-          ...body,
-        },
-      }),
-      invalidatesTags: ['products', 'sales'],
-    }),
   }),
 });
 
@@ -70,5 +56,4 @@ export const {
   useUpdateProductMutation,
   useBulkDeleteMutation,
   useDeleteProductMutation,
-  useSellProductMutation,
 } = productsApi;

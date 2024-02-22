@@ -10,14 +10,18 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useProfileQuery } from '@/redux/api';
 import { useLogoutMutation } from '@/redux/api/auth';
+import { useTransactionsQuery } from '@/redux/api/sales';
 import Cookies from 'js-cookie';
-import { LogOut, Trash2 } from 'lucide-react';
+import { ArrowRightLeftIcon, LogOut, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { DeleteAccountModal } from './delete-account';
+import { ViewTransactionsModal } from './transactions';
 
 export function UserProfile() {
-  const { data: user } = useProfileQuery(undefined);
+  const { data: user } = useProfileQuery();
+  const { data: transactions } = useTransactionsQuery();
+
   const [logout, { isLoading, data }] = useLogoutMutation();
 
   const router = useRouter();
@@ -58,6 +62,21 @@ export function UserProfile() {
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />
+
+        {transactions?.length && (
+          <>
+            <ViewTransactionsModal>
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                Transactions
+                <DropdownMenuShortcut>
+                  <ArrowRightLeftIcon className="size-4 stroke-current" />
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </ViewTransactionsModal>
+
+            <DropdownMenuSeparator />
+          </>
+        )}
 
         <DropdownMenuItem asChild>
           <button

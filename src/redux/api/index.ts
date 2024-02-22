@@ -17,9 +17,9 @@ export const baseApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['products', 'profile', 'sales'],
+  tagTypes: ['products', 'profile', 'sales', 'transactions'],
   endpoints: (build) => ({
-    profile: build.query({
+    profile: build.query<User, void>({
       query: () => '/profile',
       transformResponse: (res: { data: User }) => res.data,
       providesTags: ['profile'],
