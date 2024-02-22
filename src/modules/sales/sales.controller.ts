@@ -29,3 +29,12 @@ export const getSalesHistory = catchAsync(async (req, res) => {
     data,
   });
 });
+
+export const getTransactions = catchAsync(async (req, res) => {
+  const data = await sellServices.getAllTransactions(req.jwtPayload._id);
+
+  sendResponse(res, {
+    message: 'Successfully retrieved all transactions',
+    data,
+  });
+});

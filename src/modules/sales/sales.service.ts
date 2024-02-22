@@ -54,6 +54,13 @@ export async function sell(
   return data;
 }
 
+export async function getAllTransactions(userId: Types.ObjectId) {
+  return ProductSalesModel.find(
+    { userId },
+    { userId: 0, date_info: 0 }
+  ).populate('productId');
+}
+
 export async function salesHistory(
   userId: Types.ObjectId,
   categorizeBy: (typeof categorizeByOptions)[number]

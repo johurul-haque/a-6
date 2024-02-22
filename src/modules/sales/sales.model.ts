@@ -8,27 +8,15 @@ const productSalesModelSchema = new Schema<ProductSale>(
       ref: 'user',
       required: true,
     },
-    buyer_name: {
-      type: String,
-      required: true,
-    },
-    quantity_sold: {
-      type: Number,
-      required: true,
-    },
-    total_sale: {
-      type: Number,
-      required: true,
-    },
-    sold_on: {
-      type: String,
-      required: true,
-    },
     productId: {
       type: Schema.Types.ObjectId,
       ref: 'product',
       required: true,
     },
+    buyer_name: { type: String, required: true },
+    quantity_sold: { type: Number, required: true },
+    total_sale: { type: Number, required: true },
+    sold_on: { type: String, required: true },
     date_info: {
       day: { type: Number, required: true },
       week_in_month: { type: Number, required: true },
