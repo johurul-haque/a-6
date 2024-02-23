@@ -65,7 +65,7 @@ export function UserProfile() {
 
         {transactions?.length && (
           <>
-            <ViewTransactionsModal>
+            <ViewTransactionsModal data={transactions}>
               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                 Transactions
                 <DropdownMenuShortcut>
