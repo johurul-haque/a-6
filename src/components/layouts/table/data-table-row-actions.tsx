@@ -3,17 +3,19 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Product } from '@/types/product';
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
-import { CopyPlusIcon, Edit, Trash2 } from 'lucide-react';
+import { CopyPlusIcon, Edit, ImageIcon, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { DeleteRow } from './row-actions/delete-row';
 import { DuplicateRow } from './row-actions/duplicate-row';
 import { EditProduct } from './row-actions/edit-product';
+import { ProductDetails } from './row-actions/product-details';
 
 interface DataTableRowActionsProps {
   row: Row<Product>;
@@ -34,6 +36,17 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-[160px]">
+        <ProductDetails row={row.original}>
+          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+            View Image
+            <DropdownMenuShortcut>
+              <ImageIcon className="size-4 stroke-current" />
+            </DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </ProductDetails>
+
+        <DropdownMenuSeparator />
+
         <EditProduct row={row.original}>
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
             Edit
@@ -51,6 +64,8 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
             </DropdownMenuShortcut>
           </DropdownMenuItem>
         </DuplicateRow>
+
+        <DropdownMenuSeparator />
 
         <DeleteRow setIsDropdownOpen={setIsOpen} rowId={row.original._id}>
           <DropdownMenuItem
