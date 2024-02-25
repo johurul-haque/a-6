@@ -1,16 +1,16 @@
-export const HINGES = ['standard', 'spring-loaded', 'flexible'] as const;
+export const HINGES = ['Standard', 'Spring-loaded', 'Flexible'] as const;
 export const MATERIALS = [
-  'acetate',
-  'plastic',
-  'titanium',
-  'tr-90',
-  'wood',
+  'Acetate',
+  'Plastic',
+  'Titanium',
+  'Tr-90',
+  'Wood',
 ] as const;
 export const SHAPES = [
-  'aviator',
-  'cat-eye',
-  'oval',
-  'rectangular',
-  'round',
+  'Aviator',
+  'Cat-eye',
+  'Oval',
+  'Rectangular',
+  'Round',
 ] as const;
-export const GENDERS = ['male', 'female', 'unisex'] as const;
+export const GENDERS = ['Male', 'Female', 'Unisex'] as const;

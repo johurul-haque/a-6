@@ -29,7 +29,7 @@ type Props = {
 
 export function ProductFormFields({ form, isLoading }: Props) {
   return (
-    <div className="sm:grid grid-cols-2 gap-3">
+    <div className="grid sm:grid-cols-2 gap-1.5 sm:gap-3">
       <FormField
         control={form.control}
         name="name"
