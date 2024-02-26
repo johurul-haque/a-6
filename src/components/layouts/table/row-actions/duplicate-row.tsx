@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import * as D from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
+import { saveToCloudinary } from '@/lib/save-to-cloudinary';
 import { useAddProductMutation } from '@/redux/api/products';
 import { productSchema } from '@/schema/products-form-schema';
 import { Product, ProductSchema } from '@/types/product';
@@ -17,10 +18,12 @@ type DuplicateRowProps = {
 
 export function DuplicateRow({ row, children }: DuplicateRowProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [addProduct, { isLoading }] = useAddProductMutation();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [addProduct] = useAddProductMutation();
 
   const form = useForm<ProductSchema>({
-    resolver: zodResolver(productSchema),
+    resolver: zodResolver(productSchema.partial({ image: true })),
     defaultValues: row,
   });
 
@@ -40,13 +43,29 @@ export function DuplicateRow({ row, children }: DuplicateRowProps) {
           </D.DialogHeader>
           <Form {...form}>
             <form
-              onSubmit={form.handleSubmit((values) => {
-                addProduct(values);
+              onSubmit={form.handleSubmit(async (values) => {
+                setIsLoading(true);
+
+                const { image, ...rest } = values;
+
+                let imageSrc = row.imageSrc;
+
+                if (image) {
+                  imageSrc = (await saveToCloudinary(image)).secure_url;
+                }
+
+                addProduct({ ...values, imageSrc });
+
+                setIsLoading(false);
                 setIsOpen(false);
               })}
               className="grid gap-3"
             >
-              <ProductFormFields form={form} isLoading={isLoading} />
+              <ProductFormFields
+                form={form}
+                isLoading={isLoading}
+                defaultImgSrc={row.imageSrc}
+              />
 
               <Button
                 disabled={isLoading}

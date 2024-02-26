@@ -359,7 +359,7 @@ export function ProductFormFields({
                   src={imgSrc}
                   width={500}
                   height={333}
-                  alt="Image preview"
+                  alt="Preview image"
                 />
 
                 {imgSrc.startsWith('data:image') && (

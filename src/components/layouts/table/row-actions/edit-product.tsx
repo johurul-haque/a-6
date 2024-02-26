@@ -18,8 +18,9 @@ type EditProductProps = {
 
 export function EditProduct({ row, children }: EditProductProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [updateProduct, { isLoading }] = useUpdateProductMutation();
+  const [updateProduct] = useUpdateProductMutation();
 
   const form = useForm<ProductSchema>({
     resolver: zodResolver(productSchema.partial()),
@@ -43,6 +44,8 @@ export function EditProduct({ row, children }: EditProductProps) {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(async (values) => {
+              setIsLoading(true);
+
               const { image, ...rest } = values;
 
               let imageSrc;
@@ -52,6 +55,8 @@ export function EditProduct({ row, children }: EditProductProps) {
               }
 
               updateProduct({ body: { ...rest, imageSrc }, id: row._id });
+
+              setIsLoading(false);
               setIsOpen(false);
             })}
             className="grid gap-3"
