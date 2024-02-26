@@ -41,9 +41,12 @@ export function AddProduct() {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit((values) => {
-                addProduct(values);
-                setIsOpen(false);
-                form.reset();
+                const { image, ...rest } = values;
+
+                console.log(image);
+                // addProduct(rest);
+                // setIsOpen(false);
+                // form.reset();
               })}
               className="grid gap-3"
             >

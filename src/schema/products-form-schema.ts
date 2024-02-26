@@ -8,6 +8,9 @@ import { z } from 'zod';
 
 export const productSchema = z.object({
   name: z.string(),
+  image: z.instanceof(File).refine((file) => file.type.startsWith('image'), {
+    message: 'Please choose an image file.',
+  }),
   brand: z.string(),
   price: z.coerce.number(),
   quantity: z.coerce.number(),

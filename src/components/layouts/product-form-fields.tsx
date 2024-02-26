@@ -20,6 +20,9 @@ import {
   SHAPES,
 } from '@/constants/product-constants';
 import { ProductSchema } from '@/types/product';
+import { X } from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
 type Props = {
@@ -28,6 +31,8 @@ type Props = {
 };
 
 export function ProductFormFields({ form, isLoading }: Props) {
+  const [imgSrc, setImgSrc] = useState<any>('');
+
   return (
     <div className="grid sm:grid-cols-2 gap-1.5 sm:gap-3">
       <FormField
@@ -288,6 +293,7 @@ export function ProductFormFields({ form, isLoading }: Props) {
           </FormItem>
         )}
       />
+
       <FormField
         control={form.control}
         name="bridge_size"
@@ -304,6 +310,56 @@ export function ProductFormFields({ form, isLoading }: Props) {
               />
             </FormControl>
             <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="image"
+        render={({ field }) => (
+          <FormItem className="col-span-full">
+            <FormLabel>Product Image</FormLabel>
+            <FormControl>
+              <Input
+                accept=".jpg, .jpeg, .png, .svg, .webp"
+                type="file"
+                defaultValue={undefined}
+                onChange={(e) => {
+                  field.onChange(e.target.files ? e.target.files[0] : null);
+
+                  if (e.target.files) {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(e.target.files[0]);
+                    reader.onload = (e) => setImgSrc(e.target?.result);
+                  }
+                }}
+              />
+            </FormControl>
+            <FormMessage />
+
+            {imgSrc.startsWith('data:image') && (
+              <div className="border rounded-md overflow-hidden relative">
+                <Image
+                  className="object-cover aspect-square object-center"
+                  src={imgSrc}
+                  width={500}
+                  height={500}
+                  alt="Image preview"
+                />
+
+                <button
+                  className="absolute top-2 right-2 bg-white border p-1 rounded shadow-sm group"
+                  onClick={() => {
+                    form.resetField('image');
+                    setImgSrc('');
+                  }}
+                >
+                  <span className="sr-only">Unselect image</span>
+                  <X className="size-3 stroke-gray-500 group-hover:stroke-gray-800" />
+                </button>
+              </div>
+            )}
           </FormItem>
         )}
       />
