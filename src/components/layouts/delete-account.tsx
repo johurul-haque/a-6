@@ -28,7 +28,6 @@ export function DeleteAccountModal({ children }: { children: ReactNode }) {
   if (data) {
     Cookies.remove('token');
     router.reload();
-    setIsOpen(false);
   }
 
   return (
