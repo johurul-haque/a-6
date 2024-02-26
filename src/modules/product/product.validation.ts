@@ -4,6 +4,7 @@ import { hinge } from './product.interface';
 
 export const productSchema = z.object({
   name: z.string(),
+  imageSrc: z.string().url(),
   brand: z.string(),
   price: z.number(),
   quantity: z.number(),

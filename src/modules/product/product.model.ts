@@ -9,6 +9,7 @@ const productModelSchema = new Schema<TProductModel>(
       ref: 'user',
     },
     name: { type: String, required: true },
+    imageSrc: { type: String, required: true },
     brand: { type: String, required: true },
     price: { type: Number, required: true },
     quantity: { type: Number, required: true },
