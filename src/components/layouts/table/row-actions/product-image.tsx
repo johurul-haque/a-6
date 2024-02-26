@@ -30,7 +30,7 @@ export function ViewProductImage({ children, row }: ProductDetailsProps) {
           width={500}
           height={333}
           alt={`Image of ${row.name}`}
-          className="object-cover object-center aspect-[6/4]"
+          className="object-cover object-center aspect-[6/4] border rounded-md"
         />
       </D.DialogContent>
     </D.Dialog>

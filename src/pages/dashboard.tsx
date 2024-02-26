@@ -32,7 +32,7 @@ export default function Dashboard() {
       <ProductsContext.Provider
         value={{ setUrlParams, params, removeUrlParams }}
       >
-        <main className="container py-10">
+        <main className="container py-9 sm:py-10">
           {isSuccess && <DataTable data={products} columns={columns} />}
         </main>
       </ProductsContext.Provider>

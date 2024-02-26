@@ -62,7 +62,7 @@ export function SellProduct({ row }: { row: Row<Product> }) {
             <BadgeDollarSign className="size-5" />
             Sell product
           </D.DialogTitle>
-          <D.DialogDescription>
+          <D.DialogDescription className="text-start">
             Provide selling details of the product. Click save when you are
             done.
           </D.DialogDescription>

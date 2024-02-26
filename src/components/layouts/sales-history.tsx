@@ -35,7 +35,7 @@ export function SalesHistory({ children }: { children: ReactNode }) {
           <D.DialogTitle className="flex items-center gap-2">
             <HistoryIcon className="size-4 min-[400px]:size-5" />
 
-            <span className="max-sm:text-sm text-start">Sales History</span>
+            <span className="max-sm:text-base text-start">Sales History</span>
 
             <Badge className="capitalize max-[400px]:hidden">
               {categorizeBy}
