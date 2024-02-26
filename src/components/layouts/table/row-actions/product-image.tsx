@@ -24,11 +24,11 @@ export function ViewProductImage({ children, row }: ProductDetailsProps) {
         </D.DialogHeader>
 
         <Image
-          src={'/demo.webp'}
+          src={row.imageSrc}
           width={500}
           height={500}
           alt={`Image of ${row.name}`}
-          className="object-cover"
+          className="object-cover aspect-square"
         />
       </D.DialogContent>
     </D.Dialog>
