@@ -17,9 +17,6 @@ dependencies:
   dotenv:
     specifier: ^16.3.1
     version: 16.4.1
-  envalid:
-    specifier: ^8.0.0
-    version: 8.0.0
   express:
     specifier: ^4.18.2
     version: 4.18.2
@@ -658,13 +655,6 @@ packages:
   /encodeurl@1.0.2:
     resolution: {integrity: sha512-TPJXq8JqFaVYm2CWmPvnP2Iyo4ZSM7/QKcSmuMLDObfpH5fi7RUGmd/rTDf+rut/saiDiQEeVTNgAmJEdAOx0w==}
     engines: {node: '>= 0.8'}
-    dev: false
-
-  /envalid@8.0.0:
-    resolution: {integrity: sha512-PGeYJnJB5naN0ME6SH8nFcDj9HVbLpYIfg1p5lAyM9T4cH2lwtu2fLbozC/bq+HUUOIFxhX/LP0/GmlqPHT4tQ==}
-    engines: {node: '>=8.12'}
-    dependencies:
-      tslib: 2.6.2
     dev: false
 
   /escape-html@1.0.3:
@@ -1793,10 +1783,6 @@ packages:
       strip-bom: 3.0.0
       strip-json-comments: 2.0.1
     dev: true
-
-  /tslib@2.6.2:
-    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
-    dev: false
 
   /type-is@1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
