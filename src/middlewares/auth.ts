@@ -1,9 +1,10 @@
 import { env } from '@/config';
+import { Role } from '@/modules/user/user.constants';
 import { jwtPayload } from '@/modules/user/user.validation';
 import { AppError, catchAsync } from '@/utils';
 import jwt from 'jsonwebtoken';
 
-export function verifyToken (role?: 'user' | 'admin') {
+export function verifyToken(role?: Role) {
   return catchAsync((req, res, next) => {
     try {
       const bearerHeader: string =
