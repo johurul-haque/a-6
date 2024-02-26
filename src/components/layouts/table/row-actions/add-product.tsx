@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import * as D from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
+import { saveToCloudinary } from '@/lib/save-to-cloudinary';
 import { useAddProductMutation } from '@/redux/api/products';
 import { productSchema } from '@/schema/products-form-schema';
 import { ProductSchema } from '@/types/product';
@@ -12,7 +13,9 @@ import { ProductFormFields } from '../../product-form-fields';
 
 export function AddProduct() {
   const [isOpen, setIsOpen] = useState(false);
-  const [addProduct, { isLoading }] = useAddProductMutation();
+  const [addProduct] = useAddProductMutation();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<ProductSchema>({
     resolver: zodResolver(productSchema),
@@ -40,13 +43,16 @@ export function AddProduct() {
           </D.DialogHeader>
           <Form {...form}>
             <form
-              onSubmit={form.handleSubmit((values) => {
+              onSubmit={form.handleSubmit(async (values) => {
                 const { image, ...rest } = values;
 
-                console.log(image);
-                // addProduct(rest);
-                // setIsOpen(false);
-                // form.reset();
+                setIsLoading(true);
+                const data = await saveToCloudinary(image);
+
+                addProduct({ ...rest, imageSrc: data.secure_url });
+                setIsOpen(false);
+                setIsLoading(false);
+                form.reset();
               })}
               className="grid gap-3"
             >
@@ -57,7 +63,7 @@ export function AddProduct() {
                 type="submit"
                 className="w-full mt-3"
               >
-                Save
+                {isLoading ? 'Uploading...' : 'Save'}
               </Button>
             </form>
           </Form>

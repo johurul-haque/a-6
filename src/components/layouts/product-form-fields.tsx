@@ -19,6 +19,7 @@ import {
   MATERIALS,
   SHAPES,
 } from '@/constants/product-constants';
+import { cn } from '@/lib/utils';
 import { ProductSchema } from '@/types/product';
 import { X } from 'lucide-react';
 import Image from 'next/image';
@@ -123,7 +124,7 @@ export function ProductFormFields({ form, isLoading }: Props) {
             <FormLabel>Frame Material</FormLabel>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
-                <SelectTrigger>
+                <SelectTrigger disabled={isLoading}>
                   <SelectValue placeholder="Select frame material" />
                 </SelectTrigger>
               </FormControl>
@@ -152,7 +153,7 @@ export function ProductFormFields({ form, isLoading }: Props) {
             <FormLabel>Frame Shape</FormLabel>
             <FormControl>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger>
+                <SelectTrigger disabled={isLoading}>
                   <SelectValue placeholder="Select frame shape" />
                 </SelectTrigger>
 
@@ -182,7 +183,7 @@ export function ProductFormFields({ form, isLoading }: Props) {
             <FormLabel>Hinge Type</FormLabel>
             <FormControl>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger>
+                <SelectTrigger disabled={isLoading}>
                   <SelectValue placeholder="Select hinge type" />
                 </SelectTrigger>
 
@@ -232,7 +233,7 @@ export function ProductFormFields({ form, isLoading }: Props) {
             <FormLabel>Gender</FormLabel>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
-                <SelectTrigger>
+                <SelectTrigger disabled={isLoading}>
                   <SelectValue placeholder="Select gender" />
                 </SelectTrigger>
               </FormControl>
@@ -325,6 +326,7 @@ export function ProductFormFields({ form, isLoading }: Props) {
                 accept=".jpg, .jpeg, .png, .svg, .webp"
                 type="file"
                 defaultValue={undefined}
+                disabled={isLoading}
                 onChange={(e) => {
                   field.onChange(e.target.files ? e.target.files[0] : null);
 
@@ -339,7 +341,11 @@ export function ProductFormFields({ form, isLoading }: Props) {
             <FormMessage />
 
             {imgSrc.startsWith('data:image') && (
-              <div className="border rounded-md overflow-hidden relative">
+              <div
+                className={cn('border rounded-md overflow-hidden relative', {
+                  'opacity-50': isLoading,
+                })}
+              >
                 <Image
                   className="object-cover aspect-square object-center"
                   src={imgSrc}
