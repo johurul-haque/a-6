@@ -10,7 +10,7 @@ type ProductDetailsProps = {
   children: React.ReactNode;
 };
 
-export function ProductDetails({ children, row }: ProductDetailsProps) {
+export function ViewProductImage({ children, row }: ProductDetailsProps) {
   return (
     <D.Dialog>
       <D.DialogTrigger asChild>{children}</D.DialogTrigger>
@@ -23,7 +23,13 @@ export function ProductDetails({ children, row }: ProductDetailsProps) {
           </D.DialogTitle>
         </D.DialogHeader>
 
-        <Image src={'/demo.webp'} width={1000} height={1000} alt="" />
+        <Image
+          src={'/demo.webp'}
+          width={500}
+          height={500}
+          alt={`Image of ${row.name}`}
+          className="object-cover"
+        />
       </D.DialogContent>
     </D.Dialog>
   );

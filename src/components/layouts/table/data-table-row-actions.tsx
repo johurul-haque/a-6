@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { DeleteRow } from './row-actions/delete-row';
 import { DuplicateRow } from './row-actions/duplicate-row';
 import { EditProduct } from './row-actions/edit-product';
-import { ProductDetails } from './row-actions/product-details';
+import { ViewProductImage } from './row-actions/product-image';
 
 interface DataTableRowActionsProps {
   row: Row<Product>;
@@ -36,14 +36,14 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-[160px]">
-        <ProductDetails row={row.original}>
+        <ViewProductImage row={row.original}>
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
             View Image
             <DropdownMenuShortcut>
               <ImageIcon className="size-4 stroke-current" />
             </DropdownMenuShortcut>
           </DropdownMenuItem>
-        </ProductDetails>
+        </ViewProductImage>
 
         <DropdownMenuSeparator />
 
