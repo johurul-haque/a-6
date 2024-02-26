@@ -26,9 +26,9 @@ export function ViewProductImage({ children, row }: ProductDetailsProps) {
         <Image
           src={row.imageSrc}
           width={500}
-          height={500}
+          height={333}
           alt={`Image of ${row.name}`}
-          className="object-cover aspect-square"
+          className="object-cover object-center aspect-[6/4]"
         />
       </D.DialogContent>
     </D.Dialog>

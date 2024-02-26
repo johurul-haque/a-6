@@ -342,15 +342,18 @@ export function ProductFormFields({ form, isLoading }: Props) {
 
             {imgSrc.startsWith('data:image') && (
               <div
-                className={cn('border rounded-md overflow-hidden relative', {
-                  'opacity-50': isLoading,
-                })}
+                className={cn(
+                  'border rounded-md overflow-hidden max-w-full relative',
+                  {
+                    'opacity-50': isLoading,
+                  }
+                )}
               >
                 <Image
-                  className="object-cover aspect-square object-center"
+                  className="object-cover object-center aspect-[6/4]"
                   src={imgSrc}
                   width={500}
-                  height={500}
+                  height={333}
                   alt="Image preview"
                 />
 

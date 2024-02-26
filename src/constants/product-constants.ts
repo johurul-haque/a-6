@@ -12,5 +12,6 @@ export const SHAPES = [
   'Oval',
   'Rectangular',
   'Round',
+  'Wayfarer',
 ] as const;
 export const GENDERS = ['Male', 'Female', 'Unisex'] as const;

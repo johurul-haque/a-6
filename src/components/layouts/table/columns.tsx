@@ -153,8 +153,8 @@ export const columns: ColumnDef<Product>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Color" />
     ),
-    cell: (row) => {
-      return <>{row.getValue()}</>;
+    cell: ({ row }) => {
+      return <div className="max-w-36 truncate">{row.getValue('color')}</div>;
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
@@ -178,14 +178,16 @@ export const columns: ColumnDef<Product>[] = [
     enableSorting: false,
     header: ({ column }) => (
       <DataTableColumnHeader
-        className="max-w-fit mx-auto"
+        className="max-w-fit"
         column={column}
         title="Hinge Type"
       />
     ),
     cell: ({ row }) => {
       return (
-        <div className="whitespace-nowrap">{row.getValue('hinge_type')}</div>
+        <div className="whitespace-nowrap capitalize">
+          {row.getValue('hinge_type')}
+        </div>
       );
     },
     filterFn: (row, id, value) => {
@@ -217,8 +219,10 @@ export const columns: ColumnDef<Product>[] = [
         title="Bridge Size"
       />
     ),
-    cell: (row) => {
-      return <>{row.getValue() + ' mm'}</>;
+    cell: ({ row }) => {
+      return (
+        <div className="text-center">{row.getValue('bridge_size') + ' mm'}</div>
+      );
     },
     filterFn: (row, id, value) => {
       return row.getValue<number>(id) === Number(value);
