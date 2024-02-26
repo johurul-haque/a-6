@@ -19,6 +19,7 @@ import {
   MATERIALS,
   SHAPES,
 } from '@/constants/product-constants';
+import { isFromCloudinary } from '@/lib/is-from-cloudinary';
 import { cn } from '@/lib/utils';
 import { ProductSchema } from '@/types/product';
 import { X } from 'lucide-react';
@@ -29,10 +30,15 @@ import { UseFormReturn } from 'react-hook-form';
 type Props = {
   form: UseFormReturn<ProductSchema, any, undefined>;
   isLoading: boolean;
+  defaultImgSrc?: string;
 };
 
-export function ProductFormFields({ form, isLoading }: Props) {
-  const [imgSrc, setImgSrc] = useState<any>('');
+export function ProductFormFields({
+  form,
+  isLoading,
+  defaultImgSrc = '',
+}: Props) {
+  const [imgSrc, setImgSrc] = useState<any>(defaultImgSrc);
 
   return (
     <div className="grid sm:grid-cols-2 gap-1.5 sm:gap-3">
@@ -325,7 +331,6 @@ export function ProductFormFields({ form, isLoading }: Props) {
               <Input
                 accept=".jpg, .jpeg, .png, .svg, .webp"
                 type="file"
-                defaultValue={undefined}
                 disabled={isLoading}
                 onChange={(e) => {
                   field.onChange(e.target.files ? e.target.files[0] : null);
@@ -340,7 +345,7 @@ export function ProductFormFields({ form, isLoading }: Props) {
             </FormControl>
             <FormMessage />
 
-            {imgSrc.startsWith('data:image') && (
+            {(imgSrc.startsWith('data:image') || isFromCloudinary(imgSrc)) && (
               <div
                 className={cn(
                   'border rounded-md overflow-hidden max-w-full relative',
@@ -357,16 +362,18 @@ export function ProductFormFields({ form, isLoading }: Props) {
                   alt="Image preview"
                 />
 
-                <button
-                  className="absolute top-2 right-2 bg-white border p-1 rounded shadow-sm group"
-                  onClick={() => {
-                    form.resetField('image');
-                    setImgSrc('');
-                  }}
-                >
-                  <span className="sr-only">Unselect image</span>
-                  <X className="size-3 stroke-gray-500 group-hover:stroke-gray-800" />
-                </button>
+                {imgSrc.startsWith('data:image') && (
+                  <button
+                    className="absolute top-2 right-2 bg-white border p-1 rounded shadow-sm group"
+                    onClick={() => {
+                      form.resetField('image');
+                      setImgSrc(defaultImgSrc);
+                    }}
+                  >
+                    <span className="sr-only">Unselect image</span>
+                    <X className="size-3 stroke-gray-500 group-hover:stroke-gray-800" />
+                  </button>
+                )}
               </div>
             )}
           </FormItem>

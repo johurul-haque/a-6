@@ -44,12 +44,14 @@ export function AddProduct() {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(async (values) => {
+                setIsLoading(true);
+
                 const { image, ...rest } = values;
 
-                setIsLoading(true);
                 const data = await saveToCloudinary(image);
 
                 addProduct({ ...rest, imageSrc: data.secure_url });
+
                 setIsOpen(false);
                 setIsLoading(false);
                 form.reset();

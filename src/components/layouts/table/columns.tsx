@@ -1,4 +1,5 @@
 import { Checkbox } from '@/components/ui/checkbox';
+import { formatCurrency } from '@/lib/format-currency';
 import { regexSearch } from '@/lib/regex-search';
 import { Product } from '@/types/product';
 import { ColumnDef } from '@tanstack/react-table';
@@ -86,7 +87,11 @@ export const columns: ColumnDef<Product>[] = [
       <DataTableColumnHeader column={column} title="Price" />
     ),
     cell: ({ row }) => {
-      return <>{'$ ' + row.getValue('price')}</>;
+      return (
+        <div className="text-right">
+          {formatCurrency(row.getValue('price'))}
+        </div>
+      );
     },
     filterFn: (row, id, value) => {
       return row.getValue<number>(id) >= Number(value);

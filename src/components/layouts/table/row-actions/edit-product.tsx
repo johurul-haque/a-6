@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button';
 import * as D from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
+import { saveToCloudinary } from '@/lib/save-to-cloudinary';
 import { useUpdateProductMutation } from '@/redux/api/products';
 import { productSchema } from '@/schema/products-form-schema';
 import { Product, ProductSchema } from '@/types/product';
-import { SetStateActionType } from '@/types/set-state-action';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Edit } from 'lucide-react';
 import { ReactNode, useState } from 'react';
@@ -16,16 +16,13 @@ type EditProductProps = {
   children: ReactNode;
 };
 
-export function EditProduct({
-  row,
-  children,
-}: EditProductProps) {
+export function EditProduct({ row, children }: EditProductProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
   const form = useForm<ProductSchema>({
-    resolver: zodResolver(productSchema),
+    resolver: zodResolver(productSchema.partial()),
     defaultValues: row,
   });
 
@@ -45,13 +42,25 @@ export function EditProduct({
         </D.DialogHeader>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit((values) => {
-              updateProduct({ body: values, id: row._id });
+            onSubmit={form.handleSubmit(async (values) => {
+              const { image, ...rest } = values;
+
+              let imageSrc;
+
+              if (image) {
+                imageSrc = (await saveToCloudinary(image)).secure_url;
+              }
+
+              updateProduct({ body: { ...rest, imageSrc }, id: row._id });
               setIsOpen(false);
             })}
             className="grid gap-3"
           >
-            <ProductFormFields form={form} isLoading={isLoading} />
+            <ProductFormFields
+              form={form}
+              isLoading={isLoading}
+              defaultImgSrc={row.imageSrc}
+            />
 
             <Button disabled={isLoading} type="submit" className="w-full mt-3">
               Save
