@@ -1,4 +1,4 @@
-export const HINGES = ['Standard', 'Spring-loaded', 'Flexible'] as const;
+export const HINGES = ['standard', 'spring-loaded', 'flexible'] as const;
 export const MATERIALS = [
   'Acetate',
   'Plastic',

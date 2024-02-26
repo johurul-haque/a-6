@@ -118,7 +118,7 @@ export function ProductFormFields({ form, isLoading }: Props) {
             <FormLabel>Frame Material</FormLabel>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
-                <SelectTrigger className="font-normal">
+                <SelectTrigger>
                   <SelectValue placeholder="Select frame material" />
                 </SelectTrigger>
               </FormControl>
@@ -147,7 +147,7 @@ export function ProductFormFields({ form, isLoading }: Props) {
             <FormLabel>Frame Shape</FormLabel>
             <FormControl>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger className="font-normal">
+                <SelectTrigger>
                   <SelectValue placeholder="Select frame shape" />
                 </SelectTrigger>
 
@@ -177,7 +177,7 @@ export function ProductFormFields({ form, isLoading }: Props) {
             <FormLabel>Hinge Type</FormLabel>
             <FormControl>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger className="font-normal">
+                <SelectTrigger>
                   <SelectValue placeholder="Select hinge type" />
                 </SelectTrigger>
 
@@ -227,7 +227,7 @@ export function ProductFormFields({ form, isLoading }: Props) {
             <FormLabel>Gender</FormLabel>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
-                <SelectTrigger className="font-normal">
+                <SelectTrigger>
                   <SelectValue placeholder="Select gender" />
                 </SelectTrigger>
               </FormControl>
