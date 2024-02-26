@@ -28,6 +28,7 @@ const productModelSchema = new Schema<TProductModel>(
     toJSON: {
       transform: (doc, { __v, userId, ...rest }) => rest,
     },
+    timestamps: true,
   }
 );
 

@@ -28,7 +28,9 @@ export function get(query: Query, jwtPayload: TJwtPayload) {
       },
     },
     ...pipelines,
-  ]).project({ __v: 0, userId: 0 });
+  ])
+    .project({ __v: 0, userId: 0 })
+    .sort({ createdAt: -1 });
 }
 
 export async function update(
