@@ -16,10 +16,12 @@ export function ViewProductImage({ children, row }: ProductDetailsProps) {
       <D.DialogTrigger asChild>{children}</D.DialogTrigger>
       <D.DialogContent className="sm:max-w-[550px] overflow-y-auto max-h-[94svh]">
         <D.DialogHeader>
-          <D.DialogTitle className="flex gap-2">
-            <ImageIcon className="size-5" />
-            {row.name}
-            <Badge>{formatCurrency(row.price)}</Badge>
+          <D.DialogTitle className="flex items-center gap-2">
+            <ImageIcon className="size-4 sm:size-5" />
+            <span className="max-sm:text-sm text-start max-sm:truncate max-[300px]:max-w-32">
+              {row.name}
+            </span>
+            <Badge className="max-sm:hidden">{formatCurrency(row.price)}</Badge>
           </D.DialogTitle>
         </D.DialogHeader>
 

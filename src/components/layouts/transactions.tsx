@@ -30,10 +30,10 @@ export function ViewTransactionsModal({
       <D.DialogContent className="md:max-w-[900px] overflow-y-auto max-h-[94svh]">
         <D.DialogHeader>
           <D.DialogTitle className="flex items-center gap-2">
-            <ArrowRightLeftIcon className="size-5" />
-            Transactions
+            <ArrowRightLeftIcon className="max-[400px]:size-4 size-5" />
+            <span className="max-[400px]:text-base">Transactions</span>
           </D.DialogTitle>
-          <D.DialogDescription>
+          <D.DialogDescription className="text-start">
             A list of transactions you made from selling products
           </D.DialogDescription>
         </D.DialogHeader>
@@ -41,22 +41,18 @@ export function ViewTransactionsModal({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[150px]">Date</TableHead>
-              <TableHead className="w-[180px]">Buyer</TableHead>
-              <TableHead>Product</TableHead>
-              <TableHead className="text-right">Total Sale</TableHead>
               <TableHead className="text-center">Invoice</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Buyer</TableHead>
+              <TableHead>Product</TableHead>
+              <TableHead className="text-right whitespace-nowrap">
+                Total Sale
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {data.map((row) => (
               <TableRow key={row._id}>
-                <TableCell>{formatDate(row.sold_on)}</TableCell>
-                <TableCell>{row.buyer_name}</TableCell>
-                <TableCell>{row.productId?.name}</TableCell>
-                <TableCell className="text-right">
-                  {formatCurrency(row.total_sale)}
-                </TableCell>
                 <TableCell>
                   <Button
                     size={'sm'}
@@ -66,6 +62,19 @@ export function ViewTransactionsModal({
                     <span className="sr-only">Download Invoice</span>
                     <DownloadIcon />
                   </Button>
+                </TableCell>
+
+                <TableCell className="max-w-[150px] truncate">
+                  {formatDate(row.sold_on)}
+                </TableCell>
+                <TableCell className="max-w-[180px] truncate">
+                  {row.buyer_name}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {row.productId?.name}
+                </TableCell>
+                <TableCell className="text-right">
+                  {formatCurrency(row.total_sale)}
                 </TableCell>
               </TableRow>
             ))}

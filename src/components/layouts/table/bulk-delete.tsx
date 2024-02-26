@@ -36,8 +36,8 @@ export function BulkDelete<TData>({ table }: BulkDeleteProps<TData>) {
           className="h-8 px-2 lg:px-3"
           disabled={isLoading}
         >
-          <Trash2Icon className="mr-2 size-4" />
-          Delete selected
+          <Trash2Icon className="sm:mr-2 size-4" />
+          <span className="max-sm:sr-only">Delete selected</span>
         </Button>
       </AlertDialogTrigger>
 

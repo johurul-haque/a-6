@@ -12,10 +12,11 @@ import { useProfileQuery } from '@/redux/api';
 import { useLogoutMutation } from '@/redux/api/auth';
 import { useTransactionsQuery } from '@/redux/api/sales';
 import Cookies from 'js-cookie';
-import { ArrowRightLeftIcon, LogOut, Trash2 } from 'lucide-react';
+import { ArrowRightLeftIcon, HistoryIcon, LogOut, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { DeleteAccountModal } from './delete-account';
+import { SalesHistory } from './sales-history';
 import { ViewTransactionsModal } from './transactions';
 
 export function UserProfile() {
@@ -38,7 +39,8 @@ export function UserProfile() {
           variant="ghost"
           className="relative size-8 rounded-full focus-visible:ring-0 group"
         >
-          <span className="relative flex shrink-0 overflow-hidden rounded-full size-9 group-focus-visible:ring-2 group-focus-visible:ring-slate-300">
+          <span className="sr-only">My Account</span>
+          <span className="relative flex shrink-0 overflow-hidden rounded-full size-8 sm:size-9 group-focus-visible:ring-2 group-focus-visible:ring-slate-300">
             <Image
               alt={`Picture for ${user?.name}`}
               role="presentation"
@@ -73,10 +75,21 @@ export function UserProfile() {
                 </DropdownMenuShortcut>
               </DropdownMenuItem>
             </ViewTransactionsModal>
-
-            <DropdownMenuSeparator />
           </>
         )}
+
+        <div className="sm:hidden">
+          <SalesHistory>
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+              Sales History
+              <DropdownMenuShortcut>
+                <HistoryIcon className="size-4 stroke-current" />
+              </DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </SalesHistory>
+
+          <DropdownMenuSeparator />
+        </div>
 
         <DropdownMenuItem asChild>
           <button

@@ -2,7 +2,7 @@ import * as D from '@/components/ui/dialog';
 import { formatCurrency } from '@/lib/format-currency';
 import { useSalesHistoryQuery } from '@/redux/api/sales';
 import { HistoryIcon } from 'lucide-react';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import {
   Bar,
   BarChart,
@@ -13,7 +13,6 @@ import {
   YAxis,
 } from 'recharts';
 import { Badge } from '../ui/badge';
-import { Button } from '../ui/button';
 import {
   Select,
   SelectContent,
@@ -24,31 +23,28 @@ import {
 
 const categorizeByOptions = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
 
-export function SalesHistory() {
+export function SalesHistory({ children }: { children: ReactNode }) {
   const [categorizeBy, setCategorizeBy] = useState('monthly');
   const { data } = useSalesHistoryQuery(categorizeBy.toLowerCase());
 
   return (
     <D.Dialog>
-      <D.DialogTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="hidden h-8 lg:flex border-dashed"
-        >
-          <HistoryIcon className="mr-2 size-4" />
-          Sales History
-        </Button>
-      </D.DialogTrigger>
+      <D.DialogTrigger asChild>{children}</D.DialogTrigger>
       <D.DialogContent className="md:max-w-[900px] overflow-y-auto max-h-[94svh]">
         <D.DialogHeader className="mb-8 mt-2 flex flex-row justify-between items-center">
           <D.DialogTitle className="flex items-center gap-2">
-            <HistoryIcon className="size-5" />
-            Sales History <Badge className="capitalize">{categorizeBy}</Badge>
+            <HistoryIcon className="size-4 min-[400px]:size-5" />
+
+            <span className="max-sm:text-sm text-start">Sales History</span>
+
+            <Badge className="capitalize max-[400px]:hidden">
+              {categorizeBy}
+            </Badge>
           </D.DialogTitle>
-          <div className="w-36">
+
+          <div className="w-24 sm:w-36">
             <Select onValueChange={setCategorizeBy} defaultValue={categorizeBy}>
-              <SelectTrigger className="font-normal h-9">
+              <SelectTrigger className="h-8 sm:h-9">
                 <SelectValue placeholder="Categorize by" />
               </SelectTrigger>
               <SelectContent>

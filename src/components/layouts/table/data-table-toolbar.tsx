@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { ProductsContext } from '@/pages/dashboard';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { Table } from '@tanstack/react-table';
+import { HistoryIcon } from 'lucide-react';
 import { useContext } from 'react';
 import { SalesHistory } from '../sales-history';
 import { BulkDelete } from './bulk-delete';
@@ -48,7 +49,16 @@ export function DataTableToolbar<TData>({
 
       {isSelected && <BulkDelete table={table} />}
 
-      <SalesHistory />
+      <SalesHistory>
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-8 hidden sm:flex border-dashed"
+        >
+          <HistoryIcon className="mr-2 size-4" />
+          Sales History
+        </Button>
+      </SalesHistory>
       <AddProduct />
     </div>
   );
