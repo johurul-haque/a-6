@@ -1,11 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { ProductsContext } from '@/pages/dashboard';
-import { useBulkDeleteMutation } from '@/redux/api/products';
 import { Cross2Icon } from '@radix-ui/react-icons';
-import { Row, Table } from '@tanstack/react-table';
-import { Trash2Icon } from 'lucide-react';
+import { Table } from '@tanstack/react-table';
 import { useContext } from 'react';
 import { SalesHistory } from '../sales-history';
+import { BulkDelete } from './bulk-delete';
 import { FilterTable } from './data-table-filter';
 import { DataTableViewOptions } from './data-table-view-options';
 import { AddProduct } from './row-actions/add-product';
@@ -20,11 +19,6 @@ export function DataTableToolbar<TData>({
   const isFiltered = table.getState().columnFilters.length > 0;
   const isSelected =
     table.getIsSomeRowsSelected() || table.getIsAllRowsSelected();
-
-  const selectedRows = table.getSelectedRowModel().rows;
-  const selectedRowsId = getSelectedRowsId(selectedRows);
-
-  const [bulkDelete, { isLoading }] = useBulkDeleteMutation();
 
   const context = useContext(ProductsContext);
 
@@ -51,26 +45,12 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
-      {isSelected && (
-        <Button
-          variant="destructive"
-          className="h-8 px-2 lg:px-3"
-          onClick={() => {
-            bulkDelete(selectedRowsId);
-            table.toggleAllRowsSelected(false);
-          }}
-          disabled={isLoading}
-        >
-          <Trash2Icon className="mr-2 size-4" />
-          Delete selected
-        </Button>
-      )}
+
+      {isSelected && <BulkDelete table={table} />}
+
       <SalesHistory />
       <AddProduct />
     </div>
   );
 }
 
-function getSelectedRowsId(rows: Row<any>[]): string[] {
-  return rows.map((row) => row.original._id);
-}
