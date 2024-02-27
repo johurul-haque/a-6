@@ -18,18 +18,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import { useSellProductMutation } from '@/redux/api/sales';
 import { Product } from '@/types/product';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DownloadIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
 import { BadgeDollarSign } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { DownloadInvoice } from '../../invoice';
 
 export function SellProduct({ row }: { row: Row<Product> }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,14 +52,8 @@ export function SellProduct({ row }: { row: Row<Product> }) {
   useEffect(() => {
     if (data) {
       toast({
-        title: 'Created record successfully',
-        action: (
-          <ToastAction altText="Download invoice">
-            <DownloadIcon className="size-4" />
-            <span className="sr-only">Download</span>
-            Invoice
-          </ToastAction>
-        ),
+        description: 'Sales record created successfully',
+        action: <DownloadInvoice data={data} isToast={true} />,
       });
     }
 

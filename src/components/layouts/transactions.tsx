@@ -10,10 +10,9 @@ import {
 import { formatCurrency } from '@/lib/format-currency';
 import { formatDate } from '@/lib/format-date';
 import { TransactionsData } from '@/types/transactions-data';
-import { DownloadIcon } from '@radix-ui/react-icons';
 import { ArrowRightLeftIcon } from 'lucide-react';
 import { ReactNode } from 'react';
-import { Button } from '../ui/button';
+import { DownloadInvoice } from './invoice';
 
 type ViewTransactionsModalProps = {
   data: TransactionsData[];
@@ -54,14 +53,7 @@ export function ViewTransactionsModal({
             {data.map((row) => (
               <TableRow key={row._id}>
                 <TableCell>
-                  <Button
-                    size={'sm'}
-                    variant={'outline'}
-                    className="block mx-auto border-dashed"
-                  >
-                    <span className="sr-only">Download Invoice</span>
-                    <DownloadIcon />
-                  </Button>
+                  <DownloadInvoice data={row} />
                 </TableCell>
 
                 <TableCell className="max-w-[150px] truncate">

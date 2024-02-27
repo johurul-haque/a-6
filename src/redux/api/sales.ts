@@ -25,6 +25,7 @@ const salesApi = baseApi.injectEndpoints({
           ...body,
         },
       }),
+      transformResponse: ({ data }) => data,
       invalidatesTags: ['products', 'sales', 'transactions'],
     }),
     salesHistory: build.query({
