@@ -75,6 +75,8 @@ export function UserProfile() {
                 </DropdownMenuShortcut>
               </DropdownMenuItem>
             </ViewTransactionsModal>
+
+            <DropdownMenuSeparator className="max-sm:hidden" />
           </>
         )}
 

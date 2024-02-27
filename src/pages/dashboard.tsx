@@ -1,6 +1,7 @@
 import { Header } from '@/components/layouts/header';
 import { columns } from '@/components/layouts/table/columns';
 import { DataTable } from '@/components/layouts/table/data-table';
+import { Toaster } from '@/components/ui/toaster';
 import { useProductsQuery } from '@/redux/api/products';
 import { Params } from '@/types/query-params';
 import { createContext, useState } from 'react';
@@ -36,6 +37,8 @@ export default function Dashboard() {
           {isSuccess && <DataTable data={products} columns={columns} />}
         </main>
       </ProductsContext.Provider>
+
+      <Toaster />
     </>
   );
 }

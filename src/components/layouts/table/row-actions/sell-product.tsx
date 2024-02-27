@@ -18,19 +18,24 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { ToastAction } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import { useSellProductMutation } from '@/redux/api/sales';
 import { Product } from '@/types/product';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { DownloadIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
 import { BadgeDollarSign } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 export function SellProduct({ row }: { row: Row<Product> }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [sellProduct, { isLoading }] = useSellProductMutation();
+  const [sellProduct, { isLoading, data, error }] = useSellProductMutation();
+
+  const { toast } = useToast();
 
   const productId = row.original._id;
   const quantity = row.original.quantity;
@@ -44,6 +49,29 @@ export function SellProduct({ row }: { row: Row<Product> }) {
   const form = useForm<z.infer<typeof sellingFormSchema>>({
     resolver: zodResolver(sellingFormSchema),
   });
+
+  useEffect(() => {
+    if (data) {
+      toast({
+        title: 'Created record successfully',
+        action: (
+          <ToastAction altText="Download invoice">
+            <DownloadIcon className="size-4" />
+            <span className="sr-only">Download</span>
+            Invoice
+          </ToastAction>
+        ),
+      });
+    }
+
+    if (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong.',
+        description: 'There was a problem with your request.',
+      });
+    }
+  }, [data, error, toast]);
 
   return (
     <D.Dialog open={isOpen} onOpenChange={setIsOpen}>
