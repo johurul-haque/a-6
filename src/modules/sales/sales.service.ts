@@ -51,14 +51,13 @@ export async function sell(
     throw new Error();
   }
 
-  return data;
+  return data?.populate('productId', 'name price -_id');
 }
 
 export async function getAllTransactions(userId: Types.ObjectId) {
-  return ProductSalesModel.find(
-    { userId },
-    { userId: 0, date_info: 0 }
-  ).populate('productId', 'name price -_id');
+  return ProductSalesModel.find({ userId }, { userId: 0, date_info: 0 })
+    .populate('productId', 'name price -_id')
+    .sort({ sold_on: -1 });
 }
 
 export async function salesHistory(
