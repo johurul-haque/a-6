@@ -27,7 +27,7 @@ router.post(
   [verifyToken(), validateRequest(logoutPayload)],
   logoutUser
 );
-router.post(
+router.delete(
   '/profile/delete',
   [verifyToken(), validateRequest(deleteAccountPayload)],
   deleteUser
