@@ -10,8 +10,6 @@
  <strong>Johurul Haque (L2B2-0699)</strong>
 </p>
 
-
-
 <div align="center">
   <a href="https://a-5-by-johurul.vercel.app/">Live Site</a>
 </div>
@@ -28,12 +26,10 @@
 Create a `.env` file at the root of your project and add the following variables
 
 ```ini
-NODE_ENV=development | production
-
+NODE_ENV= # development | production
 MONGODB_URI=mongodb+srv://...
 JWT_SECRET=****
-
-CLIENT_DOMAIN=http://localhost:3000
+CLIENT_DOMAIN= # http://localhost:3000
 ```
 
 To generate a new **JWT secret** use the following commands
