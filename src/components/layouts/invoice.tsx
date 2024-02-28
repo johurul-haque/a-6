@@ -19,7 +19,7 @@ export function DownloadInvoice({
   data,
 }: DownloadInvoiceProps) {
   const ref = useRef<PDFExport>(null);
-  const invoiceNumber = `#${randomFourDigits()}`;
+  const invoiceNumber = randomFourDigits();
 
   const handleClick = () => {
     if (ref.current) ref.current.save();
@@ -46,12 +46,17 @@ export function DownloadInvoice({
       )}
 
       <div className="sr-only" aria-hidden={true}>
-        <PDFExport ref={ref} paperSize="A4" margin="1cm">
+        <PDFExport
+          ref={ref}
+          paperSize="A4"
+          margin="1cm"
+          fileName={`invoice-${invoiceNumber}.pdf`}
+        >
           <div className="w-[500px] mx-auto border rounded-md font-sans">
             <header className="flex justify-between items-center p-6">
               <div>
                 <h3 className="text-2xl font-bold tracking-tight">Invoice</h3>
-                <p className="text-gray-400 font-medium">{invoiceNumber}</p>
+                <p className="text-gray-400 font-medium">{`#${invoiceNumber}`}</p>
               </div>
 
               <div className="text-sm text-right">

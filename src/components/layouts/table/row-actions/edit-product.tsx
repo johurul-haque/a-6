@@ -68,7 +68,7 @@ export function EditProduct({ row, children }: EditProductProps) {
             />
 
             <Button disabled={isLoading} type="submit" className="w-full mt-3">
-              Save
+              {isLoading ? 'Uploading...' : 'Save'}
             </Button>
           </form>
         </Form>

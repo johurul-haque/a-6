@@ -72,7 +72,7 @@ export function DuplicateRow({ row, children }: DuplicateRowProps) {
                 type="submit"
                 className="w-full mt-3"
               >
-                Save
+                {isLoading ? 'Uploading...' : 'Save'}
               </Button>
             </form>
           </Form>

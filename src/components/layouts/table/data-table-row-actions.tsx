@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { DeleteRow } from './row-actions/delete-row';
 import { DuplicateRow } from './row-actions/duplicate-row';
 import { EditProduct } from './row-actions/edit-product';
-import { ViewProductImage } from './row-actions/product-image';
+import { ViewProductImage } from './row-actions/view-image';
 
 interface DataTableRowActionsProps {
   row: Row<Product>;
