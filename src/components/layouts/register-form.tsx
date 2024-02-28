@@ -14,7 +14,7 @@ import { SetStateActionType } from '@/types/set-state-action';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { UseFormReturn, useForm } from 'react-hook-form';
 import { Eye, EyeClosed } from '../icons';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -32,7 +32,6 @@ export function RegisterForm({
 }: RegisterFormProps) {
   const [register, { isLoading, data, error }] = useRegisterMutation();
 
-  const [isShowing, setIsShowing] = useState(false);
   const router = useRouter();
 
   const form = useForm<RegisterPayload>({
@@ -95,37 +94,12 @@ export function RegisterForm({
           />
 
           {passwordFields.map((name, i) => (
-            <FormField
-              key={name}
-              control={form.control}
+            <PasswordField
+              form={form}
               name={name}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{i > 0 && 'Confirm'} Password</FormLabel>
-                  <div className="relative">
-                    <FormControl>
-                      <Input
-                        className="transition-all"
-                        type={isShowing ? 'text' : 'password'}
-                        placeholder="****"
-                        disabled={isLoading}
-                        {...field}
-                      />
-                    </FormControl>
-                    <button
-                      type="button"
-                      onClick={() => setIsShowing(!isShowing)}
-                      className="absolute translate-y-1/2 bottom-1/2 right-3"
-                    >
-                      <span className="sr-only">
-                        {isShowing ? 'Hide' : 'Show'} password
-                      </span>
-                      {isShowing ? <EyeClosed /> : <Eye />}
-                    </button>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
+              i={i}
+              isLoading={isLoading}
+              key={name}
             />
           ))}
 
@@ -135,5 +109,53 @@ export function RegisterForm({
         </form>
       </Form>
     </div>
+  );
+}
+
+function PasswordField({
+  form,
+  name,
+  i,
+  isLoading,
+}: {
+  form: UseFormReturn<RegisterPayload, any, undefined>;
+  name: 'password' | 'confirm_password';
+  i: number;
+  isLoading: boolean;
+}) {
+  const [isShowing, setIsShowing] = useState(false);
+
+  return (
+    <FormField
+      control={form.control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>{i > 0 && 'Confirm'} Password</FormLabel>
+          <div className="relative">
+            <FormControl>
+              <Input
+                className="transition-all"
+                type={isShowing ? 'text' : 'password'}
+                placeholder="****"
+                disabled={isLoading}
+                {...field}
+              />
+            </FormControl>
+            <button
+              type="button"
+              onClick={() => setIsShowing(!isShowing)}
+              className="absolute translate-y-1/2 bottom-1/2 right-3"
+            >
+              <span className="sr-only">
+                {isShowing ? 'Hide' : 'Show'} password
+              </span>
+              {isShowing ? <EyeClosed /> : <Eye />}
+            </button>
+          </div>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
   );
 }
