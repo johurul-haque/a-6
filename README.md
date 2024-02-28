@@ -13,7 +13,7 @@
 <div align="center">
   <a href="./NOTES.md">Overview</a>
   |
-  <a href="https://a-5-by-johurul.vercel.app/" target="_blank">Live Site</a>
+  <a href="https://a-6-by-johurul.vercel.app/" target="_blank">Live Site</a>
 </div>
 
 ## Tech stack
