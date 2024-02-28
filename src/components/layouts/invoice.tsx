@@ -11,7 +11,7 @@ import { ToastAction } from '../ui/toast';
 
 type DownloadInvoiceProps = {
   isToast?: boolean;
-  data: TransactionsData;
+  data: Omit<TransactionsData, '_id'>;
 };
 
 export function DownloadInvoice({

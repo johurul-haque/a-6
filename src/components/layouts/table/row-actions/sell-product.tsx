@@ -1,9 +1,6 @@
 import { Button } from '@/components/ui/button';
-import * as D from '@/components/ui/dialog';
-import { format } from 'date-fns';
-import { Calendar as CalendarIcon } from 'lucide-react';
-
 import { Calendar } from '@/components/ui/calendar';
+import * as D from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -24,7 +21,8 @@ import { useSellProductMutation } from '@/redux/api/sales';
 import { Product } from '@/types/product';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Row } from '@tanstack/react-table';
-import { BadgeDollarSign } from 'lucide-react';
+import { format } from 'date-fns';
+import { BadgeDollarSign, Calendar as CalendarIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -32,7 +30,7 @@ import { DownloadInvoice } from '../../invoice';
 
 export function SellProduct({ row }: { row: Row<Product> }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [sellProduct, { isLoading, data, error }] = useSellProductMutation();
+  const [sellProduct, { isLoading, error }] = useSellProductMutation();
 
   const { toast } = useToast();
 
@@ -50,13 +48,6 @@ export function SellProduct({ row }: { row: Row<Product> }) {
   });
 
   useEffect(() => {
-    if (data) {
-      toast({
-        description: 'Sales record created successfully',
-        action: <DownloadInvoice data={data} isToast={true} />,
-      });
-    }
-
     if (error) {
       toast({
         variant: 'destructive',
@@ -64,7 +55,7 @@ export function SellProduct({ row }: { row: Row<Product> }) {
         description: 'There was a problem with your request.',
       });
     }
-  }, [data, error, toast]);
+  }, [error, toast]);
 
   return (
     <D.Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -92,6 +83,24 @@ export function SellProduct({ row }: { row: Row<Product> }) {
           <form
             onSubmit={form.handleSubmit((values) => {
               sellProduct({ body: values, productId });
+
+              toast({
+                description: 'Sales record created successfully',
+                action: (
+                  <DownloadInvoice
+                    data={{
+                      ...values,
+                      total_sale: row.original.price * values.quantity_sold,
+                      productId: {
+                        name: row.original.name,
+                        price: row.original.price,
+                      },
+                    }}
+                    isToast={true}
+                  />
+                ),
+              });
+
               form.reset();
               setIsOpen(false);
             })}

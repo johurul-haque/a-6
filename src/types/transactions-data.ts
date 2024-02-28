@@ -5,7 +5,7 @@ export type TransactionsData = {
     price: number;
   };
   buyer_name: string;
-  sold_on: string;
+  sold_on: Date;
   quantity_sold: number;
   total_sale: number;
 };
