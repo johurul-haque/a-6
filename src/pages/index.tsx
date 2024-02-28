@@ -10,9 +10,12 @@ export default function Home() {
   }, [router]);
 
   return (
-    <main className="font-mono text-xl font-medium">
-      <h1>You should not see this page😶‍🌫️</h1>
-      Go to <Link href="/dashboard">dashboard page</Link>
+    <main className="font-mono text-xl font-medium text-centers pt-20">
+      <h1 className="text-xl font-medium">You should not see this page😶‍🌫️</h1>
+      Go to{' '}
+      <Link href="/dashboard" className="underline">
+        /dashboard <span className="sr-only">page</span>
+      </Link>
     </main>
   );
 }

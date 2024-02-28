@@ -26,7 +26,7 @@ import { BadgeDollarSign, Calendar as CalendarIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { DownloadInvoice } from '../../invoice';
+import { DownloadInvoice } from '../../download-invoice';
 
 export function SellProduct({ row }: { row: Row<Product> }) {
   const [isOpen, setIsOpen] = useState(false);

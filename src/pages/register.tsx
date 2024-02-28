@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { RegisterForm } from '@/components/layouts/register-form';
+import { RegisterForm } from '@/components/layouts/form/register-form';
 import { Logo } from '@/components/logo';
 import { NextHead } from '@/components/next-head';
 import { AlertDestructive } from '@/components/ui/alert';

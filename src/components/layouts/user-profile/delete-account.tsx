@@ -3,11 +3,11 @@ import { useDeleteAccountMutation } from '@/redux/api/auth';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { FormEvent, ReactNode, useState } from 'react';
-import { Eye, EyeClosed } from '../icons';
-import { AlertDestructive } from '../ui/alert';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
+import { Eye, EyeClosed } from '../../icons';
+import { AlertDestructive } from '../../ui/alert';
+import { Button } from '../../ui/button';
+import { Input } from '../../ui/input';
+import { Label } from '../../ui/label';
 
 export function DeleteAccountModal({ children }: { children: ReactNode }) {
   const [deleteAccount, { isLoading, data, error }] =
@@ -38,7 +38,7 @@ export function DeleteAccountModal({ children }: { children: ReactNode }) {
         <D.DialogHeader>
           <D.DialogTitle>Are you absolutely sure?</D.DialogTitle>
           <D.DialogDescription>
-            This action cannot be undone. It will permanently delete your
+            This action can&apos;t be undone. It will permanently erase your
             account and all of the data associated with it.
           </D.DialogDescription>
         </D.DialogHeader>
@@ -55,6 +55,7 @@ export function DeleteAccountModal({ children }: { children: ReactNode }) {
               disabled={isLoading}
               required
             />
+
             <button
               type="button"
               onClick={() => setIsPasswordShowing(!isPasswordShowing)}
@@ -86,7 +87,7 @@ export function DeleteAccountModal({ children }: { children: ReactNode }) {
             >
               Cancel
             </Button>
-            <Button type="button" variant={'destructive'} disabled={isLoading}>
+            <Button type="submit" variant={'destructive'} disabled={isLoading}>
               Confirm
             </Button>
           </D.DialogFooter>

@@ -12,7 +12,7 @@ import { formatDate } from '@/lib/format-date';
 import { TransactionsData } from '@/types/transactions-data';
 import { ArrowRightLeftIcon } from 'lucide-react';
 import { ReactNode } from 'react';
-import { DownloadInvoice } from './invoice';
+import { DownloadInvoice } from '../download-invoice';
 
 type ViewTransactionsModalProps = {
   data: TransactionsData[];

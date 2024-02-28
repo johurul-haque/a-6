@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CopyPlusIcon } from 'lucide-react';
 import { ReactNode, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ProductFormFields } from '../../product-form-fields';
+import { ProductFormFields } from '../../form/product-form-fields';
 
 type DuplicateRowProps = {
   row: Product;

@@ -15,9 +15,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { UseFormReturn, useForm } from 'react-hook-form';
-import { Eye, EyeClosed } from '../icons';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
+import { Eye, EyeClosed } from '../../icons';
+import { Button } from '../../ui/button';
+import { Input } from '../../ui/input';
 
 const passwordFields = ['password', 'confirm_password'] as const;
 

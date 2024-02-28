@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { BadgePlus } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ProductFormFields } from '../../product-form-fields';
+import { ProductFormFields } from '../../form/product-form-fields';
 
 export function AddProduct() {
   const [isOpen, setIsOpen] = useState(false);

@@ -15,22 +15,25 @@ import Cookies from 'js-cookie';
 import { ArrowRightLeftIcon, HistoryIcon, LogOut, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { DeleteAccountModal } from './delete-account';
 import { SalesHistory } from './sales-history';
 import { ViewTransactionsModal } from './transactions';
 
 export function UserProfile() {
-  const { data: user } = useProfileQuery();
+  const { data: user, error: profileError } = useProfileQuery();
   const { data: transactions } = useTransactionsQuery();
 
-  const [logout, { isLoading, data }] = useLogoutMutation();
+  const [logout, { isLoading, data: logoutData }] = useLogoutMutation();
 
   const router = useRouter();
 
-  if (data) {
-    Cookies.remove('token');
-    router.reload();
-  }
+  useEffect(() => {
+    if (logoutData || profileError) {
+      Cookies.remove('token');
+      router.reload();
+    }
+  }, [logoutData, profileError, router]);
 
   return (
     <DropdownMenu>
@@ -65,7 +68,7 @@ export function UserProfile() {
 
         <DropdownMenuSeparator />
 
-        {transactions?.length && (
+        {!!transactions?.length && (
           <>
             <ViewTransactionsModal data={transactions}>
               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>

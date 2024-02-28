@@ -12,14 +12,14 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { Badge } from '../ui/badge';
+import { Badge } from '../../ui/badge';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../ui/select';
+} from '../../ui/select';
 
 const categorizeByOptions = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
 

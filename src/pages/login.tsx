@@ -1,4 +1,4 @@
-import { LoginForm } from '@/components/layouts/login-form';
+import { LoginForm } from '@/components/layouts/form/login-form';
 import { Logo } from '@/components/logo';
 import { NextHead } from '@/components/next-head';
 import { AlertDestructive } from '@/components/ui/alert';
