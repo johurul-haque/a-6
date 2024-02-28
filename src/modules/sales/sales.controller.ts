@@ -28,7 +28,7 @@ export const getSalesHistory = catchAsync(async (req, res) => {
 });
 
 export const getTransactions = catchAsync(async (req, res) => {
-  const data = await sellServices.getAllTransactions(req.jwtPayload._id);
+  const data = await sellServices.getAllTransactions(req.jwtPayload);
 
   sendResponse(res, {
     message: 'Successfully retrieved all transactions',

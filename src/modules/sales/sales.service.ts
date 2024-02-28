@@ -55,8 +55,14 @@ export async function sell(
   return data?.populate('productId', 'name price -_id');
 }
 
-export async function getAllTransactions(userId: Types.ObjectId) {
-  return ProductSalesModel.find({ userId }, { userId: 0, date_info: 0 })
+export async function getAllTransactions(jwtPayload: TJwtPayload) {
+  const filter: Record<string, unknown> = {};
+
+  if (jwtPayload.role === 'user') {
+    filter.userId = jwtPayload._id;
+  }
+
+  return ProductSalesModel.find(filter, { userId: 0, date_info: 0 })
     .populate('productId', 'name price -_id')
     .sort({ sold_on: -1 });
 }
