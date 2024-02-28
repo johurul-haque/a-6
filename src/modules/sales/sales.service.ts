@@ -2,6 +2,7 @@ import { env } from '@/config';
 import { AppError } from '@/utils';
 import { Types, startSession } from 'mongoose';
 import { ProductModel } from '../product/product.model';
+import { TJwtPayload } from '../user/user.interface';
 import { categorizeByOptions, months } from './sales.constants';
 import { ProductSalePayload } from './sales.interface';
 import { ProductSalesModel } from './sales.model';
@@ -61,14 +62,22 @@ export async function getAllTransactions(userId: Types.ObjectId) {
 }
 
 export async function salesHistory(
-  userId: Types.ObjectId,
+  jwtPayload: TJwtPayload,
   categorizeBy: (typeof categorizeByOptions)[number]
 ) {
+  const matcher = [];
+
+  if (jwtPayload.role === 'user') {
+    matcher.push({
+      $match: { userId: new Types.ObjectId(jwtPayload._id) },
+    });
+  }
+
   if (categorizeBy === 'monthly') {
     const data = await ProductSalesModel.aggregate([
+      ...matcher,
       {
         $match: {
-          userId: new Types.ObjectId(userId),
           'date_info.year': new Date().getFullYear(),
         },
       },
@@ -89,9 +98,9 @@ export async function salesHistory(
 
   if (categorizeBy === 'daily') {
     return ProductSalesModel.aggregate([
+      ...matcher,
       {
         $match: {
-          userId: new Types.ObjectId(userId),
           'date_info.month': months[new Date().getMonth()],
         },
       },
@@ -113,9 +122,9 @@ export async function salesHistory(
 
   if (categorizeBy === 'weekly') {
     return ProductSalesModel.aggregate([
+      ...matcher,
       {
         $match: {
-          userId: new Types.ObjectId(userId),
           'date_info.month': months[new Date().getMonth()],
         },
       },
@@ -137,11 +146,7 @@ export async function salesHistory(
 
   if (categorizeBy === 'yearly') {
     return ProductSalesModel.aggregate([
-      {
-        $match: {
-          userId: new Types.ObjectId(userId),
-        },
-      },
+      ...matcher,
       {
         $group: {
           _id: '$date_info.year',

@@ -19,10 +19,7 @@ export const getSalesHistory = catchAsync(async (req, res) => {
     .enum(categorizeByOptions)
     .parse(req.query.categorize_by);
 
-  const data = await sellServices.salesHistory(
-    req.jwtPayload._id,
-    categorize_by
-  );
+  const data = await sellServices.salesHistory(req.jwtPayload, categorize_by);
 
   sendResponse(res, {
     message: 'Successfully retrieved sales history',

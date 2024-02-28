@@ -16,6 +16,6 @@ router.post(
   sellProduct
 );
 router.get('/sales-history', [verifyToken()], getSalesHistory);
-router.get('/transactions', [verifyToken('user')], getTransactions);
+router.get('/transactions', [verifyToken()], getTransactions);
 
 export const SalesRoutes = router;
