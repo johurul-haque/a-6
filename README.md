@@ -27,7 +27,12 @@
 - **kendo-react-pdf**: For converting JSX to a downloadable PDF file.
 
 ## Getting started
-Create a `.env.local` file and add the following variables.
+Create a `.env.local` file and add the following variables
+
+```ini
+NEXT_PUBLIC_CLOUDINARY_URI=https://api.cloudinary.com/v1_1/:cloud_name/image/upload
+NEXT_PUBLIC_UPLOAD_PRESET=
+```
 
 Now from the `src/config/index.ts` file change `SERVER_DOMAIN` to where the server is running.
 
