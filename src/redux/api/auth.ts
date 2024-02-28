@@ -35,7 +35,7 @@ const authApi = baseApi.injectEndpoints({
     deleteAccount: build.mutation({
       query: (body: { password: string }) => ({
         url: '/profile/delete',
-        method: 'POST',
+        method: 'DELETE',
         body,
       }),
     }),
