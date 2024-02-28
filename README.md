@@ -22,13 +22,13 @@
 - **MongoDB** - Storing and managing data
 - **Mongoose** - Data modeling and query building
 - **Zod** - Validating and parsing incoming and inferring types
-- **JWT** - Authenticating users
+- **JSON Web Token** - Authenticating users
 
 ## Getting started
 Create a `.env` file at the root of your project and add the following variables
 
 ```ini
-NODE_ENV=development
+NODE_ENV=development | production
 
 MONGODB_URI=mongodb+srv://...
 JWT_SECRET=****
@@ -36,7 +36,7 @@ JWT_SECRET=****
 CLIENT_DOMAIN=http://localhost:3000
 ```
 
-To generate a **JWT secret** use the following commands
+To generate a new **JWT secret** use the following commands
 ```bash
 $ node
 $ require('crypto').randomBytes(32).toString('hex')
