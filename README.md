@@ -27,6 +27,8 @@
 - **kendo-react-pdf**: For converting JSX to a downloadable PDF file.
 
 ## Getting started
+> **System Requirement:** NodeJs v20
+
 Create a `.env.local` file and add the following variables
 
 ```ini
