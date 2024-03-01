@@ -19,6 +19,7 @@ import {
   MATERIALS,
   SHAPES,
 } from '@/constants/product-constants';
+import { decryptUrl } from '@/lib/encryption';
 import { isFromCloudinary } from '@/lib/is-from-cloudinary';
 import { cn } from '@/lib/utils';
 import { ProductSchema } from '@/types/product';
@@ -38,7 +39,8 @@ export function ProductFormFields({
   isLoading,
   defaultImgSrc = '',
 }: Props) {
-  const [imgSrc, setImgSrc] = useState<any>(defaultImgSrc);
+  const src = defaultImgSrc ? decryptUrl(defaultImgSrc) : '';
+  const [imgSrc, setImgSrc] = useState<any>(src);
 
   return (
     <div className="grid sm:grid-cols-2 gap-1.5 sm:gap-3">

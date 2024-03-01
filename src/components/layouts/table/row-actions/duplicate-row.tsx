@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import * as D from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
+import { encryptUrl } from '@/lib/encryption';
 import { saveToCloudinary } from '@/lib/save-to-cloudinary';
 import { useAddProductMutation } from '@/redux/api/products';
 import { productSchema } from '@/schema/products-form-schema';
@@ -51,7 +52,8 @@ export function DuplicateRow({ row, children }: DuplicateRowProps) {
                 let imageSrc = row.imageSrc;
 
                 if (image) {
-                  imageSrc = (await saveToCloudinary(image)).secure_url;
+                  const data = await saveToCloudinary(image);
+                  imageSrc = encryptUrl(data.secure_url);
                 }
 
                 addProduct({ ...values, imageSrc });

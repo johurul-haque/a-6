@@ -1,5 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 import * as D from '@/components/ui/dialog';
+import { decryptUrl } from '@/lib/encryption';
 import { formatCurrency } from '@/lib/format-currency';
 import { Product } from '@/types/product';
 import { ImageIcon } from 'lucide-react';
@@ -11,6 +12,8 @@ type ProductDetailsProps = {
 };
 
 export function ViewProductImage({ children, row }: ProductDetailsProps) {
+  const imageSrc = decryptUrl(row.imageSrc);
+
   return (
     <D.Dialog>
       <D.DialogTrigger asChild>{children}</D.DialogTrigger>
@@ -26,7 +29,7 @@ export function ViewProductImage({ children, row }: ProductDetailsProps) {
         </D.DialogHeader>
 
         <Image
-          src={row.imageSrc}
+          src={imageSrc}
           width={500}
           height={333}
           alt={`Image of ${row.name}`}

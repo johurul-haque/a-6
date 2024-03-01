@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import * as D from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
+import { encryptUrl } from '@/lib/encryption';
 import { saveToCloudinary } from '@/lib/save-to-cloudinary';
 import { useAddProductMutation } from '@/redux/api/products';
 import { productSchema } from '@/schema/products-form-schema';
@@ -50,7 +51,9 @@ export function AddProduct() {
 
                 const data = await saveToCloudinary(image);
 
-                addProduct({ ...rest, imageSrc: data.secure_url });
+                const imageSrc = encryptUrl(data.secure_url);
+
+                addProduct({ ...rest, imageSrc });
 
                 setIsOpen(false);
                 setIsLoading(false);
