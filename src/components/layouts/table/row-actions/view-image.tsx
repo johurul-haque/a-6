@@ -12,7 +12,9 @@ type ProductDetailsProps = {
 };
 
 export function ViewProductImage({ children, row }: ProductDetailsProps) {
+  console.log(row.imageSrc);
   const imageSrc = decryptUrl(row.imageSrc);
+  console.log(imageSrc);
 
   return (
     <D.Dialog>

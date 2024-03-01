@@ -369,7 +369,7 @@ export function ProductFormFields({
                     className="absolute top-2 right-2 bg-white border p-1 rounded shadow-sm group"
                     onClick={() => {
                       form.resetField('image');
-                      setImgSrc(defaultImgSrc);
+                      setImgSrc(src);
                     }}
                   >
                     <span className="sr-only">Unselect image</span>
