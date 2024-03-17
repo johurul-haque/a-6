@@ -1,8 +1,7 @@
 import { Button } from '@/components/ui/button';
 import * as D from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
-import { encryptUrl } from '@/lib/encryption';
-import { saveToCloudinary } from '@/lib/save-to-cloudinary';
+import { handleImageUpload } from '@/lib/handle-image-upload';
 import { useUpdateProductMutation } from '@/redux/api/products';
 import { productSchema } from '@/schema/products-form-schema';
 import { Product, ProductSchema } from '@/types/product';
@@ -20,8 +19,12 @@ type EditProductProps = {
 export function EditProduct({ row, children }: EditProductProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const [updateProduct] = useUpdateProductMutation();
+
+  const loaderText =
+    progress === 100 ? 'Saving...' : `Uploading image... ${progress}%`;
 
   const form = useForm<ProductSchema>({
     resolver: zodResolver(productSchema.partial()),
@@ -52,11 +55,10 @@ export function EditProduct({ row, children }: EditProductProps) {
               let imageSrc;
 
               if (image) {
-                const data = await saveToCloudinary(image);
-                imageSrc = encryptUrl(data.secure_url);
+                imageSrc = await handleImageUpload(image, setProgress);
               }
 
-              updateProduct({ body: { ...rest, imageSrc }, id: row._id });
+              await updateProduct({ body: { ...rest, imageSrc }, id: row._id });
 
               setIsLoading(false);
               setIsOpen(false);
@@ -70,7 +72,7 @@ export function EditProduct({ row, children }: EditProductProps) {
             />
 
             <Button disabled={isLoading} type="submit" className="w-full mt-3">
-              {isLoading ? 'Uploading...' : 'Save'}
+              {isLoading ? loaderText : 'Save'}
             </Button>
           </form>
         </Form>

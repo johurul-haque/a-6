@@ -1,8 +1,7 @@
 import { Button } from '@/components/ui/button';
 import * as D from '@/components/ui/dialog';
 import { Form } from '@/components/ui/form';
-import { encryptUrl } from '@/lib/encryption';
-import { saveToCloudinary } from '@/lib/save-to-cloudinary';
+import { handleImageUpload } from '@/lib/handle-image-upload';
 import { useAddProductMutation } from '@/redux/api/products';
 import { productSchema } from '@/schema/products-form-schema';
 import { ProductSchema } from '@/types/product';
@@ -14,9 +13,13 @@ import { ProductFormFields } from '../../form/product-form-fields';
 
 export function AddProduct() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+
   const [addProduct] = useAddProductMutation();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const loaderText =
+    progress === 100 ? 'Saving...' : `Uploading image... ${progress}%`;
 
   const form = useForm<ProductSchema>({
     resolver: zodResolver(productSchema),
@@ -49,11 +52,9 @@ export function AddProduct() {
 
                 const { image, ...rest } = values;
 
-                const data = await saveToCloudinary(image);
+                const imageSrc = await handleImageUpload(image, setProgress);
 
-                const imageSrc = encryptUrl(data.secure_url);
-
-                addProduct({ ...rest, imageSrc });
+                await addProduct({ ...rest, imageSrc });
 
                 setIsOpen(false);
                 setIsLoading(false);
@@ -68,7 +69,7 @@ export function AddProduct() {
                 type="submit"
                 className="w-full mt-3"
               >
-                {isLoading ? 'Uploading...' : 'Save'}
+                {isLoading ? loaderText : 'Save'}
               </Button>
             </form>
           </Form>
