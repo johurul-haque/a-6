@@ -3,11 +3,7 @@
 </h1>
 
 <p align="center">
- Inventory Management Dashboard for eye-glass selling store.
-</p>
-
-<p align="center">
- <strong>Johurul Haque (L2B2-0699)</strong>
+ Inventory Management System for eye-glass selling store.
 </p>
 
 <div align="center">
@@ -17,10 +13,10 @@
 </div>
 
 ## Tech stack
-- **Next.js (Pages router)** - Only for routing and middleware
+- **Next.js** - For routing and middleware
 - **Redux Toolkit** - For client-side state management and data fetching
 - **TypeScript** - Static type checking
-- **Shadcn** - For building complex user interfaces with *Tailwind CSS*
+- **Shadcn** - For complex user interfaces with *Tailwind CSS*
 - **Tanstack Table** - For creating a dynamic data table
 - **React Hook Form** - For handling form submission
 - **Zod** - Validating form data
@@ -32,11 +28,12 @@
 Create a `.env.local` file and add the following variables
 
 ```ini
-NEXT_PUBLIC_CLOUDINARY_URI=https://api.cloudinary.com/v1_1/:cloud_name/image/upload
-NEXT_PUBLIC_UPLOAD_PRESET=
+NEXT_PUBLIC_CLOUDINARY_URI='https://api.cloudinary.com/v1_1/:cloud_name/image/upload'
+NEXT_PUBLIC_UPLOAD_PRESET=''
+NEXT_PUBLIC_SECRET_KEY=''
 ```
 
-Now from the `src/config/index.ts` file change `SERVER_DOMAIN` to where the server is running.
+Now from the `src/config/index.ts` file change `SERVER_DOMAIN` to where your server is running.
 
 Now you can start the application with the following commands
 
@@ -46,12 +43,6 @@ pnpm install
 
 # dev server
 pnpm dev
-
-# build for production
-pnpm run build
-
-# running in production
-pnpm start
 ```
 
 ## Demo credentials
