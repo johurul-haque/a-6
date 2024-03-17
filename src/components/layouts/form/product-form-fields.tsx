@@ -42,6 +42,9 @@ export function ProductFormFields({
   const src = defaultImgSrc ? decryptUrl(defaultImgSrc) : '';
   const [imgSrc, setImgSrc] = useState<any>(src);
 
+  // For manually resetting input field
+  const [imgInputKey, setImgInputKey] = useState(0);
+
   return (
     <div className="grid sm:grid-cols-2 gap-1.5 sm:gap-3">
       <FormField
@@ -333,6 +336,7 @@ export function ProductFormFields({
               <Input
                 accept=".jpg, .jpeg, .png, .svg, .webp"
                 type="file"
+                key={imgInputKey}
                 disabled={isLoading}
                 onChange={(e) => {
                   field.onChange(e.target.files ? e.target.files[0] : null);
@@ -369,6 +373,7 @@ export function ProductFormFields({
                     className="absolute top-2 right-2 bg-white border p-1 rounded shadow-sm group"
                     onClick={() => {
                       form.resetField('image');
+                      setImgInputKey((prev) => prev + 1);
                       setImgSrc(src);
                     }}
                   >
