@@ -16,8 +16,6 @@ export async function middleware(request: NextRequest) {
   });
 
   if (res.status === 401 && path !== '/login' && path !== '/register') {
-    const result = await res.json();
-    console.log(result);
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
