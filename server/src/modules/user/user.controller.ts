@@ -38,10 +38,8 @@ export const logoutUser = catchAsync(async (req, res) => {
 });
 
 export const deleteUser = catchAsync(async (req, res) => {
-  const data = await userServices.deleteAccount(req.body, req.jwtPayload._id);
-
   return sendResponse(res, {
-    message: 'User deleted successfully.',
-    data,
+    status: 403,
+    message: "Project has been archived. Demo users can't be deleted.",
   });
 });
