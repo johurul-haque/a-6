@@ -4,12 +4,9 @@ import { LoginPayload, User } from './user.interface';
 import * as userServices from './user.service';
 
 export const registerUser = catchAsync<User>(async (req, res) => {
-  const data = await userServices.create(req.body);
-
   return sendResponse(res, {
-    status: 201,
-    message: 'User created successfully',
-    data,
+    status: 403,
+    message: "Project has been archived. New user can't be created.",
   });
 });
 

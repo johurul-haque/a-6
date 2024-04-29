@@ -35,7 +35,17 @@ export default function Register() {
             }}
           />
         </div>
-        <div className="lg:p-8">
+
+        <div className="lg:p-8 relative">
+          <div className="bg-white/80 absolute inset-0 z-30 flex flex-col justify-center text-center">
+            <h2 className="text-lg sm:text-xl font-bold mb-1">
+              Archived Project
+            </h2>
+            <p className="md:text-lg max-w-[15rem] mx-auto leading-5">
+              Use demo accounts from the login page.
+            </p>
+          </div>
+
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
