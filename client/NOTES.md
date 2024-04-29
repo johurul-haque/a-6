@@ -1,9 +1,9 @@
 # Eye Glass Management Dashboard
 
 ## Objective
-The primary objective of this assignment is to design and implement a comprehensive Eye Glasses Management Dashboard, providing the tools to efficiently manage the eyeglasses inventory, track sales, and analyze sales history. The assignment will incorporate features such as authentication, CRUD operations, state management, real-time UI updates, and eyeglasses filtering.
+The primary objective is to design and implement a comprehensive Eye Glasses Management Dashboard, providing the tools to efficiently manage the eyeglasses inventory, track sales, and analyze sales history. The assignment will incorporate features such as authentication, CRUD operations, state management, real-time UI updates, and eyeglasses filtering.
 
-Each product must have following information
+Each product will have the following information
 
 - Product name
 - Product price

@@ -25,17 +25,9 @@
 ## Getting started
 > **System Requirement:** NodeJs v20
 
-Create a `.env.local` file and add the following variables
+- Rename `.env.example` to `.env.local` and add the variables.
+- Go to `src/config/index.ts` and change `SERVER_DOMAIN` to where your server is running.
 
-```ini
-NEXT_PUBLIC_CLOUDINARY_URI='https://api.cloudinary.com/v1_1/:cloud_name/image/upload'
-NEXT_PUBLIC_UPLOAD_PRESET=''
-NEXT_PUBLIC_SECRET_KEY=''
-```
-
-Now from the `src/config/index.ts` file change `SERVER_DOMAIN` to where your server is running.
-
-Now you can start the application with the following commands
 
 ```bash
 # install dependencies
