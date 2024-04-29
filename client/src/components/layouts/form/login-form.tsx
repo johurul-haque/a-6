@@ -10,10 +10,11 @@ import { setTokenCookie } from '@/lib/set-cookie';
 import { cn } from '@/lib/utils';
 import { useLoginMutation } from '@/redux/api/auth';
 import { LoginPayload, loginFormSchema } from '@/schema/auth-form-schema';
+import { DemoCredentials } from '@/types/demo-credentials';
 import { SetStateActionType } from '@/types/set-state-action';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeClosed } from '../../icons';
 import { Button } from '../../ui/button';
@@ -21,13 +22,24 @@ import { Input } from '../../ui/input';
 
 type LoginFormProps = React.HTMLAttributes<HTMLDivElement> & {
   setError: SetStateActionType<string | undefined>;
+  demoCredentials?: DemoCredentials;
 };
 
-export function LoginForm({ className, setError }: LoginFormProps) {
+export function LoginForm({
+  className,
+  setError,
+  demoCredentials,
+}: LoginFormProps) {
   const [isShowing, setIsShowing] = useState(false);
   const router = useRouter();
 
   const [login, { data, isLoading, error }] = useLoginMutation();
+
+  useEffect(() => {
+    if (demoCredentials) {
+      login(demoCredentials);
+    }
+  }, [login, demoCredentials]);
 
   const form = useForm<LoginPayload>({
     resolver: zodResolver(loginFormSchema),
@@ -59,7 +71,7 @@ export function LoginForm({ className, setError }: LoginFormProps) {
                     autoCapitalize="none"
                     autoComplete="email"
                     autoCorrect="off"
-                    disabled={isLoading}
+                    disabled={isLoading || !!demoCredentials}
                     className="transition-all"
                     {...field}
                   />
@@ -81,7 +93,7 @@ export function LoginForm({ className, setError }: LoginFormProps) {
                       className="transition-all"
                       type={isShowing ? 'text' : 'password'}
                       placeholder="****"
-                      disabled={isLoading}
+                      disabled={isLoading || !!demoCredentials}
                       {...field}
                     />
                     <button

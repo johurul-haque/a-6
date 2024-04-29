@@ -1,14 +1,17 @@
+import { DemoAccounts } from '@/components/layouts/demo-accounts';
 import { LoginForm } from '@/components/layouts/form/login-form';
 import { Logo } from '@/components/logo';
 import { NextHead } from '@/components/next-head';
 import { AlertDestructive } from '@/components/ui/alert';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { DemoCredentials } from '@/types/demo-credentials';
 import Link from 'next/link';
 import { useState } from 'react';
 
 export default function LoginPage() {
   const [error, setError] = useState<string | undefined>('');
+  const [demoCredentials, setDemoCredentials] = useState<DemoCredentials>();
 
   return (
     <>
@@ -36,8 +39,8 @@ export default function LoginPage() {
         </div>
 
         <div className="lg:p-8">
-          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-            <div className="flex flex-col space-y-2 text-center">
+          <div className="mx-auto flex w-full flex-col justify-center sm:w-[350px]">
+            <div className="flex flex-col mb-6 space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
                 Welcome back!
               </h1>
@@ -46,7 +49,9 @@ export default function LoginPage() {
               </p>
             </div>
             {error && <AlertDestructive message={error} />}
-            <LoginForm setError={setError} />
+            <LoginForm demoCredentials={demoCredentials} setError={setError} />
+
+            <DemoAccounts setDemoCredentials={setDemoCredentials} />
           </div>
         </div>
       </main>
