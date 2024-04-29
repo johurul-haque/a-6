@@ -9,6 +9,7 @@ export async function handleImageUpload(
   const formData = new FormData();
 
   formData.append('file', image);
+  formData.append('folder', 'a-6');
   formData.append('upload_preset', process.env.NEXT_PUBLIC_UPLOAD_PRESET!);
 
   const { data } = await axios.post(
