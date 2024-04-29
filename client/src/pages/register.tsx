@@ -37,12 +37,12 @@ export default function Register() {
         </div>
 
         <div className="lg:p-8 relative">
-          <div className="bg-white/80 absolute inset-0 z-30 flex flex-col justify-center text-center">
+          <div className="bg-white/90 absolute inset-0 z-30 flex flex-col justify-center text-center">
             <h2 className="text-lg sm:text-xl font-bold mb-1">
               Archived Project
             </h2>
-            <p className="md:text-lg max-w-[15rem] mx-auto leading-5">
-              Use demo accounts from the login page.
+            <p className="max-w-[15rem] mx-auto leading-5">
+              Use a demo account from the login page.
             </p>
           </div>
 

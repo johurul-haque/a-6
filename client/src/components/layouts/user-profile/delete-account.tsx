@@ -77,7 +77,7 @@ export function DeleteAccountModal({ children }: { children: ReactNode }) {
             </button>
           </div>
 
-          {error && <AlertDestructive message={'Password does not match.'} />}
+          {error && <AlertDestructive message={(error as any).data.message} />}
           <D.DialogFooter className="mt-3">
             <Button
               variant={'secondary'}

@@ -12,10 +12,11 @@ import { useProfileQuery } from '@/redux/api';
 import { useLogoutMutation } from '@/redux/api/auth';
 import { useTransactionsQuery } from '@/redux/api/sales';
 import Cookies from 'js-cookie';
-import { ArrowRightLeftIcon, HistoryIcon, LogOut } from 'lucide-react';
+import { ArrowRightLeftIcon, HistoryIcon, LogOut, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { DeleteAccountModal } from './delete-account';
 import { SalesHistory } from './sales-history';
 import { ViewTransactionsModal } from './transactions';
 
@@ -110,7 +111,7 @@ export function UserProfile() {
           </button>
         </DropdownMenuItem>
 
-        {/* <DeleteAccountModal>
+        <DeleteAccountModal>
           <DropdownMenuItem
             onSelect={(e) => e.preventDefault()}
             className="w-full text-rose-600 focus:bg-rose-100 focus:text-rose-600"
@@ -120,7 +121,7 @@ export function UserProfile() {
               <Trash2 className="size-4 stroke-current" />
             </DropdownMenuShortcut>
           </DropdownMenuItem>
-        </DeleteAccountModal> */}
+        </DeleteAccountModal>
       </DropdownMenuContent>
     </DropdownMenu>
   );
