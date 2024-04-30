@@ -33,3 +33,6 @@
 
 ## Getting Started
 There's a `README.md` file in both the [client](./client) and [server](./server) directory. It contains the getting started guides along with additional information about the project.
+
+## License
+This project is licensed under the MIT License.
